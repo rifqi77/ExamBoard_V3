@@ -1,0 +1,854 @@
+================================================================================
+  EXAM DASHBOARD — STUDENT'S COMPLETE GUIDE
+  Written from live exploration — every screen clicked as a first-time student
+  System: Laravel 12 + Inertia v3 + React 19  |  Date: 2026-06-09
+================================================================================
+
+This guide was written by actually logging in as a student, clicking every
+button, answering every type of question, and submitting a real exam. It is
+written in plain English — no coding or technology knowledge needed.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+CONTENTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  1.  What Does a Student Do in This System?
+  2.  What You Need Before You Start
+  3.  How to Log In
+  4.  Your Home Screen — Two Choices
+  5.  Viewing Your Scores (before taking any exam)
+  6.  Entering an Exam — The Token Page
+  7.  The Exam Screen — What Everything Means
+  8.  Answering Question Types
+        8a. Single Choice (Multiple Choice)
+        8b. Multi-Select (Tick All That Apply)
+        8c. Short Text (Type a Word or Phrase)
+        8d. Numeric (Type a Number)
+        8e. Essay / Structured (Write a Full Answer)
+  9.  Moving Between Questions
+ 10.  The Timer — How It Works
+ 11.  How Your Answers Are Saved Automatically
+ 12.  Submitting the Exam
+ 13.  The Results Page — Right After Submission
+ 14.  Reviewing Your Answers in Detail
+ 15.  Viewing All Your Past Scores
+ 16.  Signing Out
+ 17.  Important Rules and Tips
+ 18.  Quick Reference — All Buttons
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. WHAT DOES A STUDENT DO IN THIS SYSTEM?
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+As a student, this system lets you:
+
+  • Log in with your personal username and password
+  • Enter an access token (given by your teacher) to start an exam
+  • Answer all the questions and submit your exam
+  • Immediately see your score as soon as you finish
+  • Come back later to review every answer with feedback explanations
+  • See a history of all exams you have ever taken
+
+That is all you can do as a student. You cannot see other students' answers,
+create questions, change your own account details, or access any teacher or
+admin pages.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+2. WHAT YOU NEED BEFORE YOU START
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Before sitting an exam, make sure you have ALL three of these:
+
+  ┌──────────────────────────────────────────────────────────────────────────┐
+  │  1. USERNAME    — given to you by your teacher (e.g. STUDENT1)           │
+  │  2. PASSWORD    — given to you by your teacher (e.g. Student123)         │
+  │  3. ACCESS TOKEN — written on the board or given on exam day              │
+  │                   (e.g. DEMO-2026)                                        │
+  └──────────────────────────────────────────────────────────────────────────┘
+
+If you do not have all three, ask your teacher before the exam starts.
+
+IMPORTANT ABOUT YOUR USERNAME:
+  The system automatically stores usernames in UPPERCASE.
+  Even if your teacher wrote "student1" in lowercase, you can type it either
+  way — the system will match it. If in doubt, type it exactly as it appears
+  on the sheet your teacher gave you.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+3. HOW TO LOG IN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  1. Open a web browser (Chrome, Firefox, Edge, or Safari).
+  2. Type the school's exam website address in the address bar and press Enter.
+  3. You will see a white card in the middle of the screen:
+
+       ╔══════════════════════╗
+       ║  Exam Dashboard      ║
+       ║  Sign in with your   ║
+       ║  account to continue.║
+       ║                      ║
+       ║  Username: [______]  ║
+       ║  Password: [______]  ║
+       ║                      ║
+       ║  [  Sign in  ]       ║
+       ╚══════════════════════╝
+
+  4. Click inside the "Username" box and type your username.
+  5. Click inside the "Password" box and type your password.
+  6. Click the green "Sign in" button.
+  7. If the username and password are correct, you go straight to your
+     Home screen.
+
+WHAT IF IT SAYS "WRONG PASSWORD" OR WON'T LET YOU IN?
+  → Check you have typed the username exactly as given (no extra spaces).
+  → Check the password is typed correctly (passwords are case-sensitive —
+    "Student123" is different from "student123").
+  → If you are still stuck, ask your teacher to reset your password.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+4. YOUR HOME SCREEN — TWO CHOICES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+After you sign in, you land on your Home screen. It is very simple:
+
+  ╔══════════════════════════════════════════════════════════════════╗
+  ║  Welcome, [Your Full Name]                                       ║
+  ║  What would you like to do?                                      ║
+  ║                                                                  ║
+  ║  ┌────────────────────────┐  ┌──────────────────────────────┐   ║
+  ║  │  Take an exam          │  │  View my scores              │   ║
+  ║  │  Enter the access      │  │  See every exam you've       │   ║
+  ║  │  token from your       │  │  already taken, with         │   ║
+  ║  │  teacher and start     │  │  detailed question-by-       │   ║
+  ║  │  the exam.             │  │  question review.            │   ║
+  ║  └────────────────────────┘  └──────────────────────────────┘   ║
+  ║                                                                  ║
+  ║  [Sign out]                                                      ║
+  ╚══════════════════════════════════════════════════════════════════╝
+
+  TAKE AN EXAM → Click this to start a new exam. You will need your token.
+  VIEW MY SCORES → Click this to see results from exams you have already done.
+  SIGN OUT → Click this to safely log out.
+
+This home screen is always accessible during your session. If you get lost
+at any point, look for a "Home" or "Back" link at the top of the page.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+5. VIEWING YOUR SCORES (BEFORE TAKING ANY EXAM)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Click "View my scores" from the Home screen.
+
+Page title: "My scores — Exams you've already taken, newest first."
+
+If you have not taken any exams yet, the page shows:
+  "You haven't submitted any exams yet."
+  [Take an exam] button — click it to go straight to the token entry page.
+
+If you have taken exams, they appear in a table. The table has these columns:
+
+  EXAM       — the exam name and short code (e.g., "Demo Exam" / DEMO)
+  STARTED    — the date and time you began the exam
+  SUBMITTED  — the date and time you clicked "Submit exam"
+  SCORE      — your percentage score and raw points (e.g., 71.43 / 100,
+               Raw 15/21)
+  STATUS     — whether your result is Final (all grading done) or
+               Pending (essay questions not yet graded by teacher)
+  REVIEW     — a "Review" link to see full question-by-question feedback
+
+NAVIGATION on this page:
+  [Back]     — goes back to your Home screen
+  [Sign out] — logs you out
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+6. ENTERING AN EXAM — THE TOKEN PAGE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Click "Take an exam" from the Home screen (or "Take an exam" from the scores
+page). You arrive at the Token Entry page.
+
+WHAT THIS PAGE LOOKS LIKE:
+
+  LEFT SIDE (the form):
+  ╔═══════════════════════════════════╗
+  ║  Exam Dashboard                   ║
+  ║  Welcome, Student One.            ║
+  ║  Enter the exam token provided    ║
+  ║  by your teacher.                 ║
+  ║                                   ║
+  ║  Exam token: [________________]   ║
+  ║                                   ║
+  ║  [  Start exam  ]                 ║
+  ║                                   ║
+  ║  [Sign out]                       ║
+  ╚═══════════════════════════════════╝
+
+  RIGHT SIDE (helpful notes):
+    ❷  Different exam, different token. Make sure the token matches
+       the exam you're about to take.
+
+    15s  Answers are saved automatically on every change and every
+         15 seconds.
+
+    1×   The token binds to your account on validation. Do not
+         share it with other students.
+
+STEPS:
+  1. Look at the board (or your printed sheet) for the access token.
+     Example: DEMO-2026
+  2. Click inside the "Exam token" box.
+  3. Type the token exactly as given. It is usually UPPERCASE with a dash.
+  4. Click the green "Start exam" button.
+  5. The exam loads immediately.
+
+WHAT IF IT SAYS "INVALID TOKEN"?
+  → Check you typed the token correctly (no extra spaces, correct dashes).
+  → The token might have expired — ask your teacher for a new one.
+  → The token might have used up all its allowed uses — ask your teacher.
+  → Make sure you are entering the correct token for today's exam.
+
+WHAT IF IT SAYS "TOKEN ALREADY USED"?
+  → You may have already started this exam.
+  → The system automatically resumes your previous session.
+  → Your answers are safely stored. Continue where you left off.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+7. THE EXAM SCREEN — WHAT EVERYTHING MEANS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Once the exam starts, the screen is divided into three areas:
+
+────────────────────────────────────────────────────────────────────
+TOP BAR (always visible)
+────────────────────────────────────────────────────────────────────
+
+  [Exam name]   [X / Y answered · Saved]   [TIMER]
+
+  Exam name   — the name of your exam (e.g., "Demo Exam")
+  X / Y answered — how many questions you have answered so far out of total
+                   (e.g., "3 / 5 answered")
+  "Saved"     — a green dot and the word "Saved" appears after each answer
+                is safely stored. This confirms your answer is NOT lost.
+  TIMER       — counts down from the total exam time (e.g., "29:48")
+                Watch this — when it reaches 0:00, the exam auto-submits.
+
+────────────────────────────────────────────────────────────────────
+GENERAL INSTRUCTIONS BANNER (yellow strip, top of main area)
+────────────────────────────────────────────────────────────────────
+
+  Shows any instructions your teacher typed, e.g.:
+  "Answer all questions. Good luck!"
+
+  This banner is always visible as you work through the exam.
+
+────────────────────────────────────────────────────────────────────
+MAIN QUESTION AREA (centre of screen)
+────────────────────────────────────────────────────────────────────
+
+  Shows ONE question at a time. The question card contains:
+
+  Question N · [Topic] · [X] pts
+    N      = question number (1, 2, 3 …)
+    Topic  = the subject area of the question (e.g., "Arithmetic")
+    X pts  = how many marks this question is worth
+
+  The question text (what you are being asked)
+
+  The answer input (different for each question type — see Section 8)
+
+  At the bottom of the question card:
+    [← Previous]   — go to the previous question
+    [Next →]        — go to the next question
+
+  NOTE: On the LAST question, the "Next →" button is replaced by
+        "Submit exam". This is your final chance to review before submitting.
+
+────────────────────────────────────────────────────────────────────
+RIGHT SIDEBAR (always visible on the right)
+────────────────────────────────────────────────────────────────────
+
+  "Questions" heading, then numbered buttons: [1] [2] [3] [4] [5]
+
+  → Click any number to jump directly to that question.
+  → Buttons that have been answered may appear differently (highlighted
+    or filled) so you can see at a glance which ones you have done.
+
+  At the bottom of the sidebar:
+    [Submit exam] — click to submit whenever you are ready.
+    You can submit before using up all your time.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+8. ANSWERING QUESTION TYPES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+There are five different question types you may see. Here is how to answer
+each one:
+
+─────────────────────────────────────────────────────────────────────
+8a. SINGLE CHOICE (Multiple Choice — pick exactly one answer)
+─────────────────────────────────────────────────────────────────────
+
+  How it looks:
+    A question followed by 3–6 options. Each option has a round radio
+    button (○) to its left.
+
+  Example:
+    What is 2 + 2?
+    ○  3
+    ○  4    ← click here to select this answer
+    ○  5
+    ○  6
+
+  How to answer:
+    1. Read all the options.
+    2. Click the round button (○) next to the option you think is correct.
+       The button fills in (●) and the row turns blue/highlighted.
+    3. You can change your mind — just click a different option.
+       Only ONE option can be selected at a time; selecting a new one
+       automatically deselects the previous one.
+
+  How it is graded:
+    Automatic — right or wrong, full marks or zero.
+
+─────────────────────────────────────────────────────────────────────
+8b. MULTI-SELECT (Tick all that apply — pick one or more answers)
+─────────────────────────────────────────────────────────────────────
+
+  How it looks:
+    A question followed by options with square checkboxes (☐) to the left.
+
+  Example:
+    Select the even numbers.
+    ☑  2    ← ticked (selected)
+    ☐  3
+    ☑  4    ← ticked (selected)
+    ☐  5
+
+  How to answer:
+    1. Read the question carefully. More than one answer may be correct.
+    2. Click the checkbox (☐) next to EACH option you want to select.
+       A tick (☑) appears and the row turns blue.
+    3. To deselect an option, click its checkbox again — the tick disappears.
+    4. You can tick as many or as few options as you think are correct.
+
+  How it is graded:
+    Partial credit. You earn more points for each correct selection
+    and lose points for each wrong selection. Selecting no answers = 0.
+
+  TIP: Do NOT just tick everything. Wrong ticks reduce your score.
+
+─────────────────────────────────────────────────────────────────────
+8c. SHORT TEXT (Type a word or short phrase)
+─────────────────────────────────────────────────────────────────────
+
+  How it looks:
+    A question followed by a single-line text input box.
+
+  Example:
+    What is the capital of France?
+    [Paris________________________________]
+
+  How to answer:
+    1. Click inside the text box.
+    2. Type your answer.
+    3. The box turns blue/highlighted to show it is active.
+    4. Your answer saves automatically — you do not need to press Enter.
+
+  How it is graded:
+    Automatic. The system checks if your text matches the correct answer
+    (not case-sensitive, so "paris" and "PARIS" are both accepted).
+    Spelling matters. "Pariss" would be marked wrong.
+
+  TIP: Keep it brief — just the word or phrase the question asks for.
+       Do not add extra words like "The answer is …".
+
+─────────────────────────────────────────────────────────────────────
+8d. NUMERIC (Type a number)
+─────────────────────────────────────────────────────────────────────
+
+  How it looks:
+    A question followed by a number input box (with small up/down arrows
+    on the side — called a "spinner").
+
+  Example:
+    What is 6 × 7?
+    [42    ▲]
+            ▼
+
+  How to answer:
+    1. Click inside the number box.
+    2. Type the number. Only type the number itself (no units, no letters).
+       For example: type  42  not  "42 metres".
+    3. You can also click the small ▲ (up) or ▼ (down) arrows to increase
+       or decrease the number one step at a time.
+    4. Your answer saves automatically.
+
+  How it is graded:
+    Automatic, with tolerance bands:
+      → Exact answer = 100% of the marks
+      → Within 1%    = 100% of the marks
+      → Within 5%    = 80% of the marks
+      → Within 10%   = 50% of the marks
+      → Further off  = 0 marks
+    So a very close estimate still earns partial credit.
+
+─────────────────────────────────────────────────────────────────────
+8e. ESSAY / STRUCTURED (Write a full answer in your own words)
+─────────────────────────────────────────────────────────────────────
+
+  How it looks:
+    A question followed by a large text area (a big open box for writing).
+
+  Example:
+    State Newton's first law of motion.
+    ┌────────────────────────────────────────────────────────────┐
+    │ An object at rest stays at rest, and an object in motion   │
+    │ stays in motion at constant velocity, unless acted upon    │
+    │ by an external force.                                      │
+    │                                                            │
+    └────────────────────────────────────────────────────────────┘
+
+  How to answer:
+    1. Click inside the large text area.
+    2. Type your full answer. You can write multiple sentences or paragraphs.
+    3. The box grows taller automatically if you write a lot.
+    4. Your answer saves as you type — no need to click anything.
+
+  How it is graded:
+    NOT automatic. Your teacher reads your answer and gives you a score
+    and sometimes written feedback. This may take days after the exam.
+    Your overall result will show "Pending" until the teacher finishes.
+
+  TIP: Write in full sentences. Give as much detail as the question asks for.
+       A one-word answer for a 6-point essay will score very low.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+9. MOVING BETWEEN QUESTIONS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+You have THREE ways to move between questions:
+
+  1. [← Previous] button (bottom-left of the question card)
+       Goes back one question. Your current answer is saved first.
+       This button is greyed out / inactive on Question 1 (you cannot go
+       back from the first question).
+
+  2. [Next →] button (bottom-right of the question card)
+       Goes forward one question. Your current answer is saved first.
+       On the LAST question, this button says "Submit exam" instead.
+
+  3. SIDEBAR NUMBER BUTTONS [1] [2] [3] [4] [5]
+       Visible on the right side of the screen at all times.
+       Click any number to jump directly to that question.
+       Very useful for reviewing your work before submitting.
+
+IMPORTANT:
+  → Your answers are NOT lost when you navigate. The system saves everything
+    automatically each time you leave a question.
+  → You CAN go back and change answers on previous questions.
+  → There is no penalty for going back to revisit and change answers.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+10. THE TIMER — HOW IT WORKS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+The timer is shown in the top-right corner of the screen at all times:
+
+  29:48  ← minutes:seconds remaining
+
+EXAM MODES — the timer behaves differently depending on your exam type:
+
+  ┌─────────────────────────────────────────────────────────────────────┐
+  │  STRICT MODE (real exam / important test)                           │
+  │    → The timer counts down continuously, even if you:              │
+  │      - close the browser tab                                        │
+  │      - lose your internet connection                                │
+  │      - turn off your computer (then come back)                      │
+  │    → When time runs out, the exam submits AUTOMATICALLY.            │
+  │    → You CANNOT pause or stop the clock.                           │
+  │    → Use your time wisely — it is running from the moment you       │
+  │      enter the token.                                               │
+  └─────────────────────────────────────────────────────────────────────┘
+
+  ┌─────────────────────────────────────────────────────────────────────┐
+  │  TRY OUT MODE (practice exam / homework)                            │
+  │    → The timer PAUSES when you close the browser tab.               │
+  │    → It RESUMES when you come back to the tab.                      │
+  │    → This mode is for self-paced practice — no pressure.            │
+  │    → After submitting, you see full explanations for every answer.  │
+  └─────────────────────────────────────────────────────────────────────┘
+
+Your teacher decides which mode each exam uses. If you are unsure, ask them.
+
+WHAT HAPPENS WHEN TIME RUNS OUT (STRICT MODE):
+  → The exam is automatically submitted with whatever answers you have given.
+  → If you are in the middle of typing when time runs out, that partial
+    answer is still saved.
+  → You cannot add any more answers after auto-submission.
+  → You are taken directly to the Results page.
+
+TIMER TIP: Keep an eye on the timer, especially in the last 5 minutes.
+If you have unanswered questions, use the sidebar number buttons to jump
+directly to them rather than clicking "Next" one at a time.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+11. HOW YOUR ANSWERS ARE SAVED AUTOMATICALLY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+You do NOT need to press a "Save" button. The system saves your work in
+two ways:
+
+  INSTANTLY — every time you select a radio button, tick a checkbox,
+  or type a character, the answer is saved to your browser immediately.
+
+  EVERY 15 SECONDS — every 15 seconds, all your answers are also sent
+  to the school's server and stored safely in the database.
+
+  You know saving has worked when you see:
+    "X / Y answered · Saved"  in the top bar
+    The word "Saved" appears in green/teal colour.
+
+WHAT HAPPENS IF MY INTERNET CUTS OUT?
+  → Your answers stay saved in your browser.
+  → When internet is restored, they automatically sync to the server.
+  → The word "Saved" in the top bar may temporarily change to
+    "Saving…" — wait a moment for it to return to "Saved".
+  → In Strict mode, the timer kept running during your disconnection,
+    so some time may have passed.
+
+WHAT HAPPENS IF MY BROWSER CRASHES OR I CLOSE THE TAB?
+  → Your answers are already safely stored on the server.
+  → When you return to the exam website, log in, and enter your token again,
+    the system will detect that you were in the middle of an exam.
+  → You will see a "Resume" prompt — click it to continue exactly where
+    you left off with all answers intact.
+
+This means your answers will NEVER be lost due to technical problems.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+12. SUBMITTING THE EXAM
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+When you are ready to hand in your exam, click "Submit exam".
+
+There are TWO places to find the "Submit exam" button:
+
+  1. In the RIGHT SIDEBAR — visible on every question throughout the exam.
+  2. At the BOTTOM of the last question — replaces the "Next →" button
+     when you reach question 5 (or the last question).
+
+WHAT HAPPENS WHEN YOU CLICK "SUBMIT EXAM":
+  → The exam is finalised — no more changes can be made.
+  → Your answers are locked in.
+  → The system scores your multiple-choice, short-text, and numeric answers
+    automatically and immediately.
+  → You are taken to the Results page (see Section 13).
+
+NOTE: You can submit BEFORE the timer runs out. If you finish early,
+click "Submit exam" and you are done. You do not have to wait.
+
+SHOULD I SUBMIT IF I HAVEN'T ANSWERED EVERYTHING?
+  → You can submit with unanswered questions — the system accepts it.
+  → Unanswered questions score 0 points.
+  → It is always better to attempt an answer than to leave it blank.
+  → In Strict mode: if time runs out, submission is automatic regardless.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+13. THE RESULTS PAGE — RIGHT AFTER SUBMISSION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Immediately after submitting, you see the Results page. It shows:
+
+─────────────────────────────────────────
+TOP SECTION
+─────────────────────────────────────────
+  Exam name ("Demo Exam") and submission timestamp.
+  [Home] link — takes you back to your Home screen.
+
+─────────────────────────────────────────
+SCORE SUMMARY (left side)
+─────────────────────────────────────────
+  NON-ESSAY QUESTIONS · TOTAL
+    Your percentage and raw score for all automatically-graded questions.
+    Example: "100%  —  15 / 15 pts (auto-graded)"
+    This appears immediately.
+
+  ESSAY QUESTIONS · TOTAL
+    Shows "Pending" if your teacher has not graded the essays yet.
+    Example: "Pending — 0 / 6 pts graded · 1 awaiting grading"
+    This will update once your teacher grades your essay.
+
+  OVERALL SCORE
+    A large percentage showing your current overall score.
+    Example: "71.43%"
+    Below that: "Final score 15. Passing grade 50%."
+
+  PASSED / NOT PASSED badge
+    If your score is at or above the passing grade:  ✓ Passed
+    If your score is below the passing grade:         ✗ Not passed
+    If essay questions are still pending, the final result may still change
+    once the teacher grades your written work.
+
+─────────────────────────────────────────
+TOPIC BREAKDOWN (right side)
+─────────────────────────────────────────
+  Shows how you performed in each subject area:
+
+  Arithmetic   ████████████████████ 100%   2/2 correct
+  Numbers      ████████████████████ 100%   1/1 correct
+  Geography    ████████████████████ 100%   1/1 correct
+  Physics      ░░░░░░░░░░░░░░░░░░░░   0%   0/1 correct  ← essay, pending
+
+  Each topic shows a progress bar, percentage, and score out of maximum.
+
+─────────────────────────────────────────
+REVIEW EXAM BUTTON
+─────────────────────────────────────────
+  At the bottom of the Topic Breakdown section:
+  [Review Exam] — click to see the full question-by-question review with
+                  your answers, correct answers, and explanations.
+                  (See Section 14 for details.)
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+14. REVIEWING YOUR ANSWERS IN DETAIL
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Click "Review Exam" from the Results page, or click "Review" next to an
+exam in your Scores list. This takes you to the detailed answer review page.
+
+Page title: "Review · [Exam Name]"
+
+─────────────────────────────────────────
+TOP — SCORE SUMMARY
+─────────────────────────────────────────
+  [Exam name]                          [All scores] link → back to scores list
+  71.43 %
+  15 / 21 points · pass mark 50%
+  "1 pending grading" — reminder about ungraded essays
+
+─────────────────────────────────────────
+"BY TOPIC" SECTION
+─────────────────────────────────────────
+  A small summary of your points per topic:
+    Arithmetic  8/8
+    Numbers     4/4
+    Geography   3/3
+    Physics     0/6   ← essay not yet graded
+
+─────────────────────────────────────────
+PER-QUESTION DETAIL (one block per question)
+─────────────────────────────────────────
+  Each question is shown in full with:
+
+  [Topic] · [your score] / [max score] pts    [CORRECT / INCORRECT / PENDING]
+  Question text
+  Your answer: [what you typed or selected]
+  Correct answer: [the right answer]   ← only shown if question is graded
+  Explanation: [feedback from teacher] ← only shown if explanation was added
+
+  Example — a correct multiple-choice question:
+    Arithmetic · 4/4 pts                              ✓ CORRECT
+    What is 2 + 2?
+    Your answer:    b
+    Correct answer: b
+    Explanation:    2 + 2 = 4.
+
+  Example — a pending essay question:
+    Physics · 0/6 pts                                 ⏳ PENDING
+    State Newton's first law of motion.
+    Your answer:    An object at rest stays at rest, and an object in
+                    motion stays in motion at constant velocity, unless
+                    acted upon by an external force.
+    [No correct answer shown yet — teacher will grade this]
+
+This review page is available any time after you submit — you can come
+back to it days or weeks later using "View my scores" from the Home screen.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+15. VIEWING ALL YOUR PAST SCORES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+From anywhere in the system, you can get back to your full scores list by:
+  → Clicking "All scores" at the top of any review page
+  → Clicking "Home" then "View my scores"
+  → Clicking "Back" until you reach the Home screen, then "View my scores"
+
+The scores list shows every exam you have ever taken on this system, newest
+at the top. It never disappears — exams you took months ago are still there.
+
+Each row in the table shows:
+
+  EXAM        "Demo Exam" + code "DEMO" beneath it
+  STARTED     exact date and time you began the exam
+  SUBMITTED   exact date and time you submitted
+  SCORE       your percentage (71.43 / 100) and raw points (Raw 15/21)
+  STATUS      one of:
+                Final          — all questions graded, result is final
+                Pending (N essay) — N essay questions still awaiting grading
+  REVIEW      "Review" link — click to see full question-by-question detail
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+16. SIGNING OUT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+You will see a "Sign out" button in three places:
+
+  → On your Home screen (bottom of the page)
+  → On the Token entry page (below the "Start exam" button)
+  → On the Scores page (top-right corner)
+
+Click "Sign out" to safely log out. You are taken back to the login screen.
+
+IMPORTANT: Always sign out when you finish, especially on a shared computer.
+If you close the browser tab without signing out, you may still be logged in
+when someone else opens the website.
+
+If you are taking an exam and accidentally click "Sign out":
+  → Do NOT panic. Your answers are already saved on the server.
+  → Log back in immediately.
+  → Enter the same token again.
+  → The system will detect your previous session and ask if you want to
+    "Resume" — click Resume to continue exactly where you left off.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+17. IMPORTANT RULES AND TIPS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+★ DO NOT SHARE YOUR TOKEN — The token binds to your account the moment you
+  use it. If another student uses the same token on your account, you may
+  be locked out or flagged for cheating. Always keep your token private.
+
+★ DO NOT SHARE YOUR USERNAME AND PASSWORD — These are personal and identify
+  you in the system. All submissions made with your credentials are
+  recorded under your name.
+
+★ IN STRICT MODE, THE CLOCK NEVER STOPS — Even if you close the tab, lose
+  internet, or your battery dies. The exam keeps timing on the server.
+  Come back as fast as possible if something goes wrong.
+
+★ YOUR ANSWERS ARE NEVER LOST — The system saves to your browser
+  instantly and to the server every 15 seconds. There is no way to
+  lose work from a crash or disconnection.
+
+★ ESSAY RESULTS TAKE TIME — If your exam has essay questions, your overall
+  result shows "Pending" until your teacher manually reads and grades your
+  essay. This can take a few days. Check back on "View my scores" to see
+  when it updates to "Final".
+
+★ YOU CAN REVIEW AFTER SUBMITTING — In Try Out (practice) mode, you see
+  full explanations for every answer right after submission. In Strict mode,
+  you only see your score and topic breakdown — not the explanations.
+
+★ LEAVING THE TAB DURING A STRICT EXAM — The system records when you
+  switch away from the exam tab. Your teacher may see this in a security
+  log. This does not immediately lock you out, but it is noted.
+
+★ CHANGE YOUR ANSWERS BEFORE SUBMITTING — You can change any answer up
+  until the moment you click "Submit exam" (or time runs out). Use the
+  sidebar number buttons to jump back to any question and change your answer.
+
+★ PARTIAL CREDIT IS POSSIBLE — For multi-select and numeric questions, you
+  can earn partial marks even if your answer is not completely right. Always
+  attempt these questions — a partial answer is better than a blank.
+
+★ PASSWORDS ARE CASE-SENSITIVE — "Student123" and "student123" are
+  different passwords. If login fails, check your Caps Lock key.
+
+★ USERNAMES ARE NOT CASE-SENSITIVE — The system accepts your username in
+  any combination of upper/lowercase letters.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+18. QUICK REFERENCE — ALL BUTTONS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+PAGE                BUTTON / LINK           WHAT IT DOES
+──────────────────  ──────────────────────  ────────────────────────────────────
+Login page          Sign in                 Logs you in
+──────────────────  ──────────────────────  ────────────────────────────────────
+Home screen         Take an exam            → Token entry page
+                    View my scores          → Your scores list
+                    Sign out                Logs you out
+──────────────────  ──────────────────────  ────────────────────────────────────
+Scores page         Back                    → Home screen
+                    Sign out                Logs you out
+                    Take an exam            → Token entry page (empty state)
+                    Review (per exam row)   → Detailed answer review for that exam
+──────────────────  ──────────────────────  ────────────────────────────────────
+Token entry page    Start exam              Validates token, loads the exam
+                    Sign out                Logs you out
+──────────────────  ──────────────────────  ────────────────────────────────────
+Exam screen         ← Previous             Go to the previous question
+                    Next →                 Go to the next question
+                    [1] [2] [3]…           Jump directly to that question number
+                    Submit exam            Submit and finish the exam
+                    (auto-submit at 0:00)  Auto-submits when timer reaches zero
+──────────────────  ──────────────────────  ────────────────────────────────────
+Results page        Home                    → Home screen
+                    Review Exam             → Detailed answer review
+──────────────────  ──────────────────────  ────────────────────────────────────
+Review page         All scores              → Your full scores list
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+YOUR COMPLETE EXAM DAY CHECKLIST
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  BEFORE THE EXAM:
+    ☐ Write down your username (from teacher's handout)
+    ☐ Write down your password (from teacher's handout)
+    ☐ Wait for teacher to announce the access token
+    ☐ Write down the access token
+    ☐ Make sure your device is charged / plugged in
+
+  STARTING:
+    ☐ Go to the exam website in your browser
+    ☐ Type your username and password → click "Sign in"
+    ☐ Click "Take an exam"
+    ☐ Type the access token → click "Start exam"
+    ☐ Read the general instructions (yellow banner)
+    ☐ Note the timer in the top-right corner
+
+  DURING:
+    ☐ Answer each question one by one
+    ☐ Use "← Previous" / "Next →" or sidebar numbers to move around
+    ☐ Check the "X / Y answered" counter — make sure it reaches the total
+    ☐ Watch the timer — do not run out of time
+    ☐ Check every "Saved" confirmation in the top bar
+
+  FINISHING:
+    ☐ Use the sidebar to jump to any unanswered questions (check numbers)
+    ☐ Review any answers you are unsure about
+    ☐ Click "Submit exam" when ready
+    ☐ Check your Results page — note your score
+    ☐ Click "Review Exam" to see explanations (in Try Out mode)
+    ☐ Click "Sign out" to log out safely
+
+  AFTER:
+    ☐ For any essay questions, check back on "View my scores" in a few days
+    ☐ If your score seems wrong, show your teacher the Review page
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  End of STUDENT_GUIDE.txt
+  System: Exam Dashboard | Version: Laravel 12 + Inertia v3 + React 19
+  Written from live browser exploration — 2026-06-09
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
