@@ -1,0 +1,1140 @@
+================================================================================
+  EXAM DASHBOARD — TEACHER'S COMPLETE GUIDE
+  Written from live exploration by a first-time teacher who clicked every button
+  System: Laravel 12 + Inertia v3 + React 19  |  Date: 2026-06-09
+================================================================================
+
+This guide was created by actually logging in as a teacher, visiting every page,
+and clicking every button available in the system. It is written in plain English
+— no coding knowledge required.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+CONTENTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  1.  What Is the Teacher Role?
+  2.  How to Log In
+  3.  Understanding Your Dashboard Layout
+  4.  OVERVIEW — Your Home Screen
+  5.  STUDENTS — Managing Your Class Roster
+  6.  CURRICULUM — Setting Up Learning Objectives
+  7.  AI GENERATION — Creating Exam Questions with AI
+  8.  QUESTION BANK — Storing and Finding Questions
+  9.  EXAMS — Creating and Managing Exams
+ 10.  EXAM DETAIL — The Full Exam Management Screen
+ 11.  AUTO SCORE — Reviewing Auto-Graded Results
+ 12.  PENDING SCORE — Grading Essays Manually
+ 13.  SCORES — Seeing All Results at a Glance
+ 14.  REPORTS — Exporting Achievement Data
+ 15.  Typical First-Week Workflow (Step-by-Step)
+ 16.  Important Rules and Gotchas
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. WHAT IS THE TEACHER ROLE?
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+As a teacher you are responsible for:
+
+  • Adding and managing your own students
+  • Building a library of questions (the Question Bank)
+  • Creating exams, setting the time limit, passing grade, and access tokens
+  • Distributing those access tokens to students so they can enter the exam
+  • Reviewing results after students finish — auto-graded instantly, essays later
+  • Exporting class progress reports to Excel at the end of term
+
+What a teacher CANNOT do:
+  • See or edit other teachers' exams or questions
+  • Access the Admin panel
+  • Change their own capabilities (only the admin can grant extra powers)
+  • Grant other teachers access
+
+NOTE: Some features you see in the sidebar may be locked with "(locked by admin)"
+labels. This means the admin has not yet enabled that feature for your account.
+Contact your administrator if you need access to something you cannot use.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+2. HOW TO LOG IN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  1. Open your browser and go to the school's exam website address.
+  2. You will see a white card in the centre of the screen:
+       • "Exam Dashboard" logo at the top
+       • A USERNAME field
+       • A PASSWORD field
+       • A green "Sign in" button
+  3. Type your username (given to you by the administrator).
+  4. Type your password.
+  5. Click the green "Sign in" button.
+  6. You land on your Overview page.
+
+If you cannot log in, ask your administrator to reset your password.
+To sign out at any time, look at the bottom-left corner of the screen —
+you will see your name and a "Sign out" button.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+3. UNDERSTANDING YOUR DASHBOARD LAYOUT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+The screen has two parts:
+
+LEFT SIDEBAR (always visible):
+  Shows "Exam Dashboard" at the top, then "Teacher" below it.
+  Below that are four groups of navigation links:
+
+  WORKSPACE
+    └─ Overview         → your home screen with summary numbers
+
+  CLASS
+    └─ Students         → add and manage your students
+
+  CONTENT
+    ├─ Curriculum       → upload learning objectives (LOs)
+    ├─ AI Generation    → use AI to generate question prompts
+    ├─ Question Bank    → browse, create, and manage questions
+    └─ Exams            → create and manage your exams
+
+  RESULTS
+    ├─ Auto Score       → see auto-graded student results
+    ├─ Pending Score    → manually grade essay questions
+    ├─ Scores           → combined scores view
+    └─ Reports          → export class achievement to Excel
+
+  At the very bottom:
+    Your full name, your username, and a "Sign out" button.
+
+MAIN AREA (right side):
+  Changes depending on which link you click in the sidebar.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+4. OVERVIEW — YOUR HOME SCREEN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+When you first log in, you land on the Overview page.
+Heading: "Overview" — "Welcome back, [Your Name]."
+
+WHAT YOU SEE:
+  Five summary boxes at the top showing your current totals:
+    • Exams             — how many exams you have created
+    • Total submissions — how many times students have completed your exams
+    • Passed            — how many submissions scored above the passing grade
+    • Awaiting grading  — how many essay answers still need your manual score
+    • Students          — total students in your roster
+
+Below that:
+  "Recent submissions" panel
+    Shows the last 10 student completions across all your exams.
+    Each row shows the student name, exam, score, and a "View" link
+    that opens that student's full answer sheet.
+    If no one has submitted yet, it shows "No submissions yet."
+
+Nothing on this page is clickable except the "View" links in the submissions
+table. It is a read-only summary.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+5. STUDENTS — MANAGING YOUR CLASS ROSTER
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Click "Students" in the left sidebar.
+
+Page heading: "Students — X students across Y groups"
+Below the heading: "Upload an Excel/CSV file (one sheet per class) to add a
+whole class at once."
+
+BUTTONS AT THE TOP:
+  ┌─────────────────┐  ┌──────────┐  ┌─────────────┐
+  │ Upload Excel    │  │ Bulk add │  │ Add student │
+  └─────────────────┘  └──────────┘  └─────────────┘
+
+─────────────────────────────────────────
+5a. ADD A SINGLE STUDENT
+─────────────────────────────────────────
+  1. Click "Add student".
+  2. An inline form appears directly on the page with three fields:
+       • USERNAME  — 3 to 32 characters. Only letters, digits, dots, dashes,
+                     and underscores. The system automatically makes it
+                     UPPERCASE. Example: ahmad.fauzi becomes AHMAD.FAUZI
+       • FULL NAME — the student's display name
+       • PASSWORD  — the password the student will use to log in
+  3. Fill in all three fields.
+  4. Click the "Add student" button at the bottom of the form.
+  5. A confirmation message appears: "Added [FULL NAME] ([USERNAME])."
+  6. The student appears in the list under a group called "No class"
+     (until you assign them to a class group via Upload Excel).
+
+The "Add student" button in the header changes to "Close" while the form
+is open. Click "Close" to cancel without adding.
+
+─────────────────────────────────────────
+5b. BULK ADD MULTIPLE STUDENTS AT ONCE
+─────────────────────────────────────────
+  1. Click "Bulk add".
+  2. A "Bulk add students" panel appears with:
+       • ROSTER text area — paste student data here, one student per line.
+         Two formats are accepted:
+           Simple:   Full Name
+                     (system generates username and password automatically)
+           Detailed: Full Name, username, password
+                     (or tab-separated: Full Name [TAB] username [TAB] password)
+         Example:
+           Ahmad Fauzi
+           Siti Aisyah, siti.aisyah, rahasia123
+           Budi Santoso
+       • ADD TO CLASS (OPTIONAL) dropdown — choose a class to assign them to.
+         Only shows classes that already exist in the system.
+       • "Create students" button — click to create all students at once.
+  3. The system will create an account for every name you pasted.
+     Usernames and passwords are shown in the confirmation.
+     WRITE THESE DOWN — students will need them to log in.
+
+─────────────────────────────────────────
+5c. UPLOAD A WHOLE CLASS FROM EXCEL
+─────────────────────────────────────────
+  1. Click "Upload Excel".
+  2. A file picker opens. Choose your .xlsx or .csv file.
+  3. Each sheet in the workbook becomes one class group.
+     Each row = one student (columns: full name, username, password).
+  4. The system imports and creates all accounts.
+  Best for: first setup at the start of term.
+
+─────────────────────────────────────────
+5d. VIEWING YOUR STUDENT LIST
+─────────────────────────────────────────
+  After adding students, they appear in expandable class groups.
+
+  "Expand all" link — expands every group so you can see all students.
+  "Collapse all" link — collapses everything back.
+
+  Each group header shows:
+    [Expand/Collapse button]  [Class Name]  [X students]
+    "Select all" checkbox (for bulk actions)
+
+  Each student row shows:
+    • Checkbox (to select for bulk actions)
+    • FULL NAME (bold)
+    • username (in monospace font)
+    • Password (visible in monospace — you can see it for handout)
+    • "Copy password" button (copies to clipboard)
+    • Submission count ("X submissions")
+    • Three action buttons:
+        [Reset password]  [Disable]  [Delete student]
+
+─────────────────────────────────────────
+5e. PER-STUDENT ACTIONS
+─────────────────────────────────────────
+  Reset password:
+    Opens a small form to set a new password for that student.
+    Useful if a student forgets their password.
+
+  Disable:
+    Blocks the student from logging in without deleting their records.
+    Useful if a student leaves mid-term. Their submission history is kept.
+    Click again to re-enable.
+
+  Delete student:
+    Permanently removes the student and all their submission data.
+    Use with caution — this cannot be undone.
+
+─────────────────────────────────────────
+5f. BULK ACTIONS
+─────────────────────────────────────────
+  Tick the "Select all" checkbox at the top of a group, or tick individual
+  students. Once at least one is ticked, a bulk-action toolbar appears at
+  the bottom of the screen offering:
+    • Reset passwords (all selected)
+    • Deactivate (all selected)
+    • Reactivate (all selected)
+    • Delete (all selected)
+    • Export CSV (download credentials for selected students)
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+6. CURRICULUM — SETTING UP LEARNING OBJECTIVES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Click "Curriculum" in the left sidebar.
+
+Page heading: "Curriculum"
+Description: "Upload Excel files of learning objectives per curriculum
+framework. Use the tabs below to switch between curricula — each tab has
+its own upload + catalog. You only see LOs you uploaded yourself."
+
+WHAT ARE LEARNING OBJECTIVES (LOs)?
+  LOs are used to link your exam questions to a specific curriculum standard.
+  For example: "Students can explain Newton's Second Law" is a learning
+  objective for Physics. When you generate questions with AI, you can pick
+  specific LOs so the AI writes questions that target those skills.
+
+FOUR TABS at the top of the page:
+  • Kurikulum Merdeka   (Indonesian national curriculum)
+  • AS / A Level (Cambridge)
+  • International Baccalaureate (IB)
+  • Olympiad
+
+  Each tab shows how many LOs you have in that framework (the number in the
+  tab badge). Click a tab to switch to that framework.
+
+BUTTONS IN THE HEADER:
+  "Upload Excel → [Framework Name]"
+    Click to upload an Excel file of LOs for the currently selected tab.
+    The button label changes to match the active tab, e.g.:
+      "Upload Excel → Merdeka" or "Upload Excel → Cambridge"
+    Excel format: rows with columns for topic, subtopic, learning objective.
+    The label also shows "Goes into [Framework Name] · click another tab
+    below to change".
+
+  "Add LO" (at the bottom of each tab's content)
+    Click to add a single learning objective manually.
+    A small inline form appears with:
+      • TOPIC              — the main topic area (e.g., "Kinematics")
+      • SUBTOPIC (OPTIONAL) — a sub-area (e.g., "Projectile Motion")
+      • LEARNING OBJECTIVE — the exact skill statement
+    Click "Save LO" to save, or "Cancel" to close the form.
+
+AFTER ADDING LOs:
+  They appear as a searchable, filterable catalog in the tab.
+  You can edit or delete any LO you added.
+  These LOs will then be available when you use AI Generation to create
+  exam questions.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+7. AI GENERATION — CREATING EXAM QUESTIONS WITH AI
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Click "AI Generation" in the left sidebar.
+
+Page heading: "Generate exam with AI"
+Description: "Two phases. Phase 1: download the question prompt JSON and run
+it in ChatGPT / Claude / Gemini to get a questions.json. Phase 2: copy the
+image prompt + that questions.json into an AI image generator to produce a
+media/ folder. Zip them together and upload via Question Bank → Upload
+questions."
+
+IMPORTANT: This is a two-step process. The system does NOT call AI directly
+(unless your administrator has set up an API key and granted you server-side
+generation). Instead, you download a ready-made prompt, paste it into an AI
+chatbot yourself, and then upload the AI's response back into the system.
+
+─────────────────────────────────────────
+7a. THE PARAMETERS PANEL (left side)
+─────────────────────────────────────────
+
+SCOPE section:
+  • CURRICULUM dropdown
+      Choose a curriculum framework (Merdeka, Cambridge, IB, Olympiad).
+      If you leave it as "— none —", you write your own topic instead.
+
+  • LANGUAGE
+      Usually "English". May say "locked by admin" — cannot be changed.
+
+  • SUBJECT
+      Your subject as recorded in your account (e.g., "PHYSICS / FISIKA").
+      Usually pre-filled and locked.
+
+  • GRADE / LEVEL (optional)
+      Type the year level or grade, e.g., "Year 11" or "Grade 10".
+
+  • TOPIC
+      The main topic for this exam generation, e.g., "Forces and Motion".
+
+  • SUBTOPIC (optional)
+      A more specific area within the topic.
+
+QUESTION MIX section:
+  • TOTAL QUESTIONS
+      How many questions to generate. Default is 10.
+
+  • DIFFICULTY (%) — Bloom's Taxonomy levels
+      Seven sliders, one for each cognitive level. They must add up to 100%.
+      The levels are: Remember / Understand / Apply / Analyze /
+                      Evaluate / Create / Olympiad
+      If they all show "(locked by admin)", the admin controls the mix
+      and you cannot change it.
+
+      QUICK PRESET BUTTONS (if unlocked):
+        [Intro]    — easier mix, mostly Remember/Understand
+        [Moderate] — balanced mix across levels
+        [Extreme]  — harder mix, mostly Evaluate/Create/Olympiad
+
+  • TYPE COUNTS — per question type
+      Single choice / Multi select / Short text / Numeric / Essay
+      If locked, you cannot change these.
+
+  • MEDIA
+      Images — number of questions to include an image.
+      Tables — number of questions to use a markdown table.
+      If locked, leave at 0.
+
+─────────────────────────────────────────
+7b. PHASE 1 — GENERATE QUESTIONS
+─────────────────────────────────────────
+  The right side of the screen shows a ready-made prompt.
+
+  You have two options:
+
+  Option A — Download the prompt file:
+    Click "Download question prompt (JSON)" to save a .json file.
+    Open ChatGPT, Claude, or Gemini.
+    Upload or paste the contents of the .json file and say:
+      "Please generate exam questions based on this prompt."
+    Save the AI's reply as a file called questions.json.
+
+  Option B — Copy to clipboard:
+    Click "Copy" to copy the prompt text.
+    Paste it into any AI chatbot and ask it to generate questions.
+    Save the response as questions.json.
+
+─────────────────────────────────────────
+7c. PHASE 2 — GENERATE IMAGES (optional)
+─────────────────────────────────────────
+  If your exam includes image questions (MEDIA → Images > 0):
+    The Phase 2 section shows an image-generation prompt.
+    Copy that prompt and the questions.json from Phase 1.
+    Paste both into an AI image generator (like DALL·E or Midjourney).
+    The AI creates images named q1.png, q2.png, etc.
+    Save them into a folder called "media/".
+
+─────────────────────────────────────────
+7d. UPLOADING THE RESULT TO YOUR BANK
+─────────────────────────────────────────
+  Once you have questions.json (and optionally the media/ folder):
+    1. Create a ZIP file containing questions.json and the media/ folder.
+    2. Go to Question Bank → click "Upload questions".
+    3. Upload the ZIP file.
+    4. The system imports all questions into your bank automatically.
+
+  After that, you can add those questions to any exam using
+  "Pick from bank" or "Auto-fill from bank" on the exam detail page.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+8. QUESTION BANK — STORING AND FINDING QUESTIONS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Click "Question Bank" in the left sidebar.
+
+Page heading: "Question Bank — X questions shown"
+Description: "Filter by subject, topic, subtopic, difficulty, or type.
+Read-only shared bank. Questions you upload show here too, and you can
+edit / delete those."
+
+The question bank is SHARED with other teachers (read-only view of theirs)
+but you can only edit and delete the questions you yourself uploaded.
+
+BUTTONS AT THE TOP:
+  ┌──────────────────┐  ┌──────────────────────┐
+  │  New question    │  │  Upload questions    │
+  └──────────────────┘  └──────────────────────┘
+
+SIX FILTER DROPDOWNS below the heading:
+  All languages / All subjects / All topics / All subtopics /
+  All difficulties / All types
+  Plus a search box: "Search prompt / topic…"
+  Use these to narrow down the list when the bank grows large.
+
+EXPANDABLE REFERENCE:
+  "Upload format reference (click to expand)" — click to see the expected
+  Excel/zip format for bulk question uploads.
+
+─────────────────────────────────────────
+8a. CREATE A NEW QUESTION MANUALLY
+─────────────────────────────────────────
+  Click "New question".
+  An inline form appears: "New bank question — Added to the shared admin
+  database; you keep edit / delete rights on it."
+
+  FIELD 1 — TYPE (dropdown):
+    Choose the question format:
+      • Single choice     — one correct answer from a list (classic MCQ)
+      • Multi select      — one or more correct answers (students tick all
+                            that apply; partial credit applies)
+      • Short text        — student types a short word or phrase
+      • Numeric           — student types a number; tolerance bands apply
+      • Structured / Essay — open-ended; graded manually by you
+
+  FIELD 2 — PROMPT:
+    Type the full question text here.
+    You can use $...$ for inline maths and $$...$$ for block maths.
+
+  FOR SINGLE CHOICE AND MULTI-SELECT — OPTIONS section:
+    Four text boxes labelled A, B, C, D appear.
+    Type each answer option in its box.
+    Click "Add option" to add more choices (E, F, …).
+    For SINGLE choice: click the radio button (●) next to the CORRECT answer.
+    For MULTI select: click the radio buttons next to ALL correct answers.
+    The small "×" button on the right of each option removes that option.
+
+  NOTE FOR ESSAY:
+    No options section appears. The note says: "Essay questions are graded
+    manually — no correct-answer key."
+
+  FIELD 3 — EXPLANATION:
+    Optionally type feedback that the student sees after submitting
+    (in Try Out mode) or that you see when grading.
+
+  FIELD 4 — POINTS:
+    How many marks this question is worth. Default is 1.
+
+  FIELD 5 — TOPIC:
+    Tag this question with a topic name (e.g., "Kinematics").
+    Used by the filters and by the AI auto-fill.
+
+  FIELD 6 — SUBTOPIC:
+    Optional more specific topic tag.
+
+  FIELD 7 — DIFFICULTY (dropdown):
+    Choose the Bloom's taxonomy cognitive level:
+      Remember / Understand / Apply / Analyze / Evaluate / Create / Olympiad
+
+  FIELD 8 — LANGUAGE:
+    Default is "English". Change if the question is in another language.
+
+  FIELD 9 — SUBJECT (dropdown):
+    Choose the subject this question belongs to. Pre-filled from your account.
+    Options include: ART, BIOLOGY, CHEMISTRY, CIVICS, EARTH SCIENCE,
+    ECONOMICS, ENGLISH, GEOGRAPHY, HISTORY, INDONESIAN, INFORMATICS,
+    MATH, PE, PHYSICS, RELIGION, SOCIOLOGY, Other…
+
+  BUTTONS at the bottom:
+    [Create question]   — saves the question to the bank
+    [Cancel]            — closes the form without saving
+
+─────────────────────────────────────────
+8b. UPLOAD QUESTIONS IN BULK
+─────────────────────────────────────────
+  Click "Upload questions".
+  A file picker opens.
+  Upload a .xlsx file (Excel format) or a .zip file containing:
+    • questions.json (from the AI Generation workflow)
+    • media/ folder with images (optional)
+  The system imports all questions into your bank.
+
+─────────────────────────────────────────
+8c. EDITING OR DELETING A QUESTION
+─────────────────────────────────────────
+  Each question you own has two icon buttons on its row:
+    Edit (pencil icon)   — opens the question form pre-filled for editing
+    Delete (bin icon)    — removes the question from the bank permanently
+  You cannot edit or delete questions uploaded by other teachers.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+9. EXAMS — CREATING AND MANAGING EXAMS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Click "Exams" in the left sidebar.
+
+Page heading: "Exams"
+Description: "Click an exam to manage questions, tokens, and submissions."
+
+BUTTONS AT THE TOP:
+  ┌─────────────────────┐  ┌──────────────────────┐  ┌─────────────┐
+  │  Import package     │  │  Generate with AI    │  │ Create exam │
+  └─────────────────────┘  └──────────────────────┘  └─────────────┘
+
+EXAM TABLE COLUMNS:
+  EXAM          — exam display name (click to manage)
+  CODE          — the short code students use to identify the exam
+  ACTIVE TOKENS — list of access token codes, each showing "X/Y uses"
+                  plus small [Regenerate] and [Delete] buttons
+  DURATION      — time limit in minutes
+  PASSING       — minimum score to pass (%)
+  SUBMISSIONS   — total number of student submissions
+  AVG %         — average score across all submissions
+  PASSED        — number who scored at or above the passing grade
+  (last column) — [Manage] link and [Delete] button per exam
+
+─────────────────────────────────────────
+9a. CREATE A NEW EXAM (Step 1 of 2)
+─────────────────────────────────────────
+  Click "Create exam".
+
+  You see: "Create exam — Step 1 of 2 — exam metadata. You'll add
+  questions next."
+
+  FIELDS TO FILL IN:
+
+  EXAM CODE (required):
+    A short identifier in UPPERCASE, e.g., PHY-2026.
+    Rules: uppercase letters, digits, dashes only. 3 to 40 characters.
+    Students do NOT need to know this — it is for admin reference.
+
+  DISPLAY NAME (required):
+    The full name students see on their exam screen,
+    e.g., "Physics Year 11 Mid-Term 2026".
+
+  SUBJECT (dropdown):
+    Pick the subject from the list (same 16+ subjects as Question Bank).
+
+  DURATION (MINUTES):
+    How long students have to complete the exam. Default is 30 minutes.
+
+  PASSING GRADE (%):
+    The minimum score needed to pass. Default is 70%.
+
+  OPENS AT (optional):
+    Set a date and time before which students cannot access the exam.
+    Leave blank to allow access immediately.
+
+  CLOSES AT (optional):
+    Set a date and time after which the exam is locked.
+    Leave blank to keep it open indefinitely.
+
+  MEDIA BASE URL (optional):
+    If your questions reference images stored on a web server, put the
+    server's base URL here. Usually leave blank.
+
+  SECURITY section:
+    "Require Safe Exam Browser" checkbox.
+    Tick this if students must use the locked-down SEB browser.
+    You configure the SEB key separately on the exam detail page.
+
+  LANGUAGE & COMPOSITION TARGETS section:
+    LANGUAGE: default "English".
+    TOTAL OF EACH TYPE OF QUESTION (spinners):
+      Set target counts for each type: Single choice, Multi select,
+      Short text, Numeric, Structured/Essay.
+      These are advisory targets — used when auto-filling from the bank.
+
+    COGNITIVE-LEVEL DISTRIBUTION (Bloom's, %):
+      Must sum to 100. Default split is:
+        Remember 15% / Understand 25% / Apply 25% / Analyze 15%
+        (remaining spread across Evaluate, Create, Olympiad)
+      Also advisory — helps the "Auto-fill from bank" choose wisely.
+
+  EXAM MODE (choose one):
+    ● Strict (real exam)
+        Wall-clock timer — keeps counting even if the student closes the tab
+        or loses internet. No review or explanations after submitting.
+        Use this for official, high-stakes assessments.
+
+    ● Try Out (practice)
+        Timer pauses when the student closes the tab and resumes when they
+        return. Shows full answer review with explanations after submitting.
+        Use this for homework, practice tests, or mock exams.
+
+  Click "Create exam" button at the bottom.
+  The exam is created and you go straight to the Exam Detail page (Step 2)
+  where you add questions.
+
+─────────────────────────────────────────
+9b. IMPORT AN EXAM PACKAGE
+─────────────────────────────────────────
+  Click "Import package".
+  A file picker opens.
+  Upload a previously exported exam .zip file.
+  The system recreates the exam with all its questions.
+
+─────────────────────────────────────────
+9c. EXAM LIST ACTIONS
+─────────────────────────────────────────
+  Each exam row has:
+  [Manage] — opens the full Exam Detail page for that exam.
+  [Delete] — permanently deletes the exam and all its submissions.
+             A confirmation prompt appears before deletion.
+
+  Token actions (inline in the ACTIVE TOKENS column):
+  [Regenerate token NAME] — creates a new random token code and retires the
+                            old one. Students with the old code can no longer
+                            use it.
+  [Delete token NAME]     — removes this token entirely. Students cannot
+                            enter the exam until a new token is created.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+10. EXAM DETAIL — THE FULL EXAM MANAGEMENT SCREEN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Click an exam name (link) or the [Manage] button on the Exams page.
+
+Page heading: "[Exam Display Name]" with the exam code shown below it.
+Top-right: "Back to exams" link.
+
+FOUR STAT CARDS at the top:
+  Questions / Duration / Passing / Active tokens
+
+─────────────────────────────────────────
+10a. EXAM DETAILS PANEL
+─────────────────────────────────────────
+  Shows the exam's current settings at a glance:
+    STATUS          — ACTIVE or CLOSED
+    MODE            — Strict or Try Out
+    SHUFFLE         — on or off (whether question order is randomised)
+    SUBMISSIONS     — total submissions received
+    AVERAGE SCORE   — average % across all submissions (shows "—" if none)
+    PASSED          — count of submissions at or above the passing grade
+
+  General instructions text (shown to students before they start the exam).
+
+  Three links:
+    [Edit settings]    — opens the settings editor for this exam
+    [Answer audit]     — shows a detailed log of every answer and any
+                         integrity events (tab switches, paste attempts, etc.)
+    [Live monitor]     — real-time board showing which students are active,
+                         their progress, and time remaining
+
+─────────────────────────────────────────
+10b. EDIT SETTINGS
+─────────────────────────────────────────
+  Click "Edit settings".
+  The same form as "Create exam" opens but pre-filled with current values.
+  You can change any field.
+  Click "Save changes" button to apply.
+  Click "Back to exam" to cancel.
+
+─────────────────────────────────────────
+10c. COMPOSITION TARGETS
+─────────────────────────────────────────
+  A collapsed section. Click "Show composition targets" to expand.
+  Shows the type and difficulty mix you set during exam creation.
+  Used as a checklist when you add questions — you can see if you are
+  hitting your targets.
+
+─────────────────────────────────────────
+10d. QUESTIONS SECTION
+─────────────────────────────────────────
+  Heading: "Questions — X question(s) in this exam."
+  "Students see them in order."
+
+  LEFT PANEL — Topic/subtopic tree:
+    Each topic appears as a button: "[Topic Name] · [Count]"
+    Click a topic to see all questions under it in the right panel.
+    Sub-buttons appear for question types within that topic
+    (e.g., "Single choice · 1", "Numeric · 1").
+
+  RIGHT PANEL — Question list:
+    After clicking a topic, the questions for that topic are listed.
+    Each row shows:
+      [Number]. [Question prompt text]   [Type]   [X pts]
+    Click a question to expand it and see options, explanation, and
+    edit/delete buttons.
+
+  THREE BUTTONS below the question list:
+    [Add question]       — add a brand-new question directly to this exam
+                           (same form as "New question" in the Question Bank)
+    [Pick from bank]     — opens a searchable bank-picker panel;
+                           find existing bank questions and add them here
+    [Auto-fill from bank] — the system automatically picks questions from
+                            the bank to match your composition targets
+                            (type mix + Bloom's difficulty distribution)
+
+─────────────────────────────────────────
+10e. TOKENS SECTION — GIVING STUDENTS ACCESS
+─────────────────────────────────────────
+  Heading: "Tokens for this exam"
+  Description: "Generate or disable access tokens scoped to [Exam Name]."
+
+  HOW TOKENS WORK:
+    A token is a code that students enter on the exam access page to prove
+    they are allowed to take this exam. Without a valid token, no student
+    can start. You can have multiple tokens for one exam (e.g., one per
+    class, one per sitting).
+
+  GENERATE A NEW TOKEN:
+    Two fields:
+      MAX USES         — maximum number of times this token can be used
+                         (default 50). Set to a high number like 1000 if
+                         you want the whole school to use one token.
+      EXPIRES IN (DAYS, 0 = NEVER) — how many days until this token stops
+                         working (default 30). Set to 0 for no expiry.
+    Click "Generate token" — a new random token code is created.
+
+  TOKEN TABLE (shows all existing tokens):
+    Columns: TOKEN | CREATED BY | CREATED | EXPIRES | USES | (actions)
+    USES shows: [used] / [max]
+    Actions per token:
+      [Regenerate] — replaces the token code with a new random code
+      [Delete]     — removes this token; students can no longer use it
+
+  HOW TO TELL STUDENTS THEIR TOKEN:
+    Write the token code on the board, send it via messaging, or print it.
+    Students enter it on the exam access screen when they see:
+    "Enter exam code" and "Enter access token".
+
+─────────────────────────────────────────
+10f. SUBMISSIONS SECTION
+─────────────────────────────────────────
+  Below the tokens section, a table of all student submissions appears.
+  Columns: Student / Submitted / Score / Status / (view link)
+  Click "View" to open that student's full answer sheet.
+  Allows you to see exactly what each student answered and the system's
+  automatic score.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+11. AUTO SCORE — REVIEWING AUTO-GRADED RESULTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Click "Auto Score" in the left sidebar.
+
+Page heading: "Auto Score"
+Description: "Auto-graded portion only (MCQ, multi-select, short-text,
+numeric). Click View to see each student's answer next to the key and
+feedback explanation."
+
+WHAT IS AUTO-SCORED?
+  The system automatically grades these question types the moment a student
+  submits:
+    • Single choice    — exact match
+    • Multi select     — partial credit: (correct selections − wrong selections)
+                         divided by total correct options
+    • Short text       — exact text match (case-insensitive)
+    • Numeric          — within tolerance bands: 1% → full, 5% → 80%,
+                         10% → 50% credit
+
+  Essay / Structured questions are NOT auto-graded. They appear in
+  "Pending Score" instead.
+
+HOW IT IS ORGANISED:
+  Each exam appears as a collapsible button: "[Exam Name] [CODE] · X submissions"
+  Click an exam to expand it and see each student's result.
+  Each student row shows their name, submission time, and auto-graded score.
+  Click "View" to open the detailed answer review screen.
+
+ON THE ANSWER REVIEW SCREEN:
+  Every question is shown with:
+    • The question text
+    • The student's answer (highlighted)
+    • The correct answer
+    • The explanation (if you wrote one)
+    • The points awarded
+  You can override the automatic score by clicking "Edit score" on any question.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+12. PENDING SCORE — GRADING ESSAYS MANUALLY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Click "Pending Score" in the left sidebar.
+
+Page heading: "Pending Score"
+Description: "Essays still waiting for manual grading. Click View to grade
+each essay alongside the mark scheme, or Export to bundle answers for an
+AI assistant."
+
+BUTTON AT TOP:
+  [Import AI scores from clipboard]
+    This is for the AI-assisted grading workflow (see below).
+
+WHAT YOU SEE:
+  A list of essays that students have submitted but you have not yet graded.
+  Each entry shows the student name, exam, and which question is pending.
+
+  If the page shows "Nothing pending — every submitted essay has been
+  graded." — you are all caught up!
+
+─────────────────────────────────────────
+12a. MANUAL GRADING — CLICK VIEW
+─────────────────────────────────────────
+  Click "View" next to a pending submission.
+  The grading screen shows:
+    • The essay question prompt
+    • The model answer / mark scheme (if you wrote one in the question)
+    • The student's written answer
+    • A score input field — type the points you award
+    • A feedback field — optionally type a comment for the student
+    • "Save grade" button
+
+─────────────────────────────────────────
+12b. AI-ASSISTED ESSAY GRADING
+─────────────────────────────────────────
+  For large classes, you can use an AI chatbot to suggest scores:
+
+  1. On the Pending Score page, find an export button next to the exam.
+     Click it to download a bundle of all pending essay answers.
+  2. Open ChatGPT, Claude, or Gemini.
+  3. Upload or paste the bundle and the mark scheme.
+  4. Ask the AI: "Grade these essays and return scores in JSON format."
+  5. Copy the AI's JSON response to your clipboard.
+  6. Return to Pending Score, click "Import AI scores from clipboard".
+  7. Paste the JSON. The system fills in the scores automatically.
+  8. Review and adjust any AI scores you disagree with, then confirm.
+
+  This workflow is optional — you can always grade manually.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+13. SCORES — SEEING ALL RESULTS AT A GLANCE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Click "Scores" in the left sidebar.
+
+Page heading: "Scores"
+Description: "One section per exam, then per class. Auto-graded portion
+is scored on submit; essay answers need a manual grade before the result
+is final."
+
+THREE SUMMARY BOXES AT THE TOP:
+  Total submissions     — every attempt across all your exams
+  Passed                — graded submissions at or above the passing grade
+  Awaiting grading      — essays not yet manually scored
+
+THE SCORES TREE:
+  Below the summary, your exams are listed.
+  Click an exam to expand it → shows each class group.
+  Click a class group to expand it → shows each student's result.
+  Each student row shows: score %, passed/failed status, submission date.
+
+  Click "View" on any student to open their full answer sheet (same as
+  the Auto Score view screen).
+
+NOTE: A student's overall result shows as "Pending" until ALL essay
+questions in their submission have been manually graded.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+14. REPORTS — EXPORTING ACHIEVEMENT DATA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Click "Reports" in the left sidebar.
+
+Page heading: "Reports"
+Description: "Student achievement and progress across your exams, grouped
+by class. Export to Excel for end-of-semester reports."
+"Expand all" button — expands all class groups at once.
+
+FOUR SUMMARY BOXES:
+  Classes / Students / Exams owned / Submissions
+
+EXPORT OPTIONS PANEL:
+  "Pick which columns to include and which classes to export."
+
+  COLUMNS (tick/untick each):
+    ☑ Username
+    ☑ Per-exam scores      (one column per exam showing the student's score %)
+    ☑ Average %            (overall average across all exams)
+    ☑ Passed / Taken       (e.g., "3/5" — passed 3 of 5 exams taken)
+    ☑ Pending count        (number of essays still awaiting grading)
+    ☑ Strongest topic      (topic where the student scores highest)
+    ☑ Weakest topic        (topic where the student scores lowest)
+
+  All columns are ticked by default. Untick any you do not need.
+
+  "Export all classes" button
+    Downloads one Excel file containing every class group and student.
+
+  Per-class in the list:
+    Each class group (e.g., "No class", "Year 11A") shows:
+      [Class name] [X students]
+    "Export this class" button — exports only that one class to Excel.
+
+HOW TO USE THE EXPORT:
+  1. Tick the columns you want.
+  2. Click "Export all classes" or "Export this class".
+  3. An Excel file downloads to your computer.
+  4. Open in Microsoft Excel or Google Sheets.
+  5. Each row is one student. Columns match what you ticked.
+  6. Submit to administration as your end-of-term report.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+15. TYPICAL FIRST-WEEK WORKFLOW (STEP BY STEP)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Below is a recommended end-to-end sequence for a teacher who has just
+received their account and wants to run their first exam.
+
+DAY 1 — SETUP
+
+  Step 1: Log in
+    Open the website and sign in with the credentials given by the admin.
+
+  Step 2: Add your students
+    Go to Students → click "Upload Excel" and upload your class spreadsheet.
+    OR click "Bulk add" and paste a list of names.
+    OR add them one-by-one with "Add student".
+    NOTE DOWN: each student's username and password — they need these.
+
+  Step 3: (Optional) Set up learning objectives
+    Go to Curriculum → pick your framework tab → click "Add LO" or
+    "Upload Excel" to import your topic list.
+    Skip this step for now if you just want a quick first exam.
+
+DAY 2 — BUILD QUESTIONS
+
+  Step 4: Add questions to the bank
+    Option A — Manual: Go to Question Bank → click "New question" → fill in
+    the form for each question → click "Create question".
+    Option B — AI: Go to AI Generation → set parameters → download the
+    prompt JSON → paste into ChatGPT/Claude/Gemini → save the response
+    as questions.json → zip it → upload via Question Bank → Upload questions.
+
+DAY 3 — CREATE THE EXAM
+
+  Step 5: Create the exam
+    Go to Exams → click "Create exam" → fill in:
+      • Exam code (e.g., PHY-T1)
+      • Display name (e.g., "Physics Term 1 Test")
+      • Subject, duration (e.g., 60 minutes), passing grade (e.g., 60%)
+      • Choose mode: Strict for a real test, Try Out for practice
+    Click "Create exam".
+
+  Step 6: Add questions to the exam
+    On the Exam Detail page → click "Pick from bank" → find your questions
+    → click "Add" for each one you want.
+    OR click "Auto-fill from bank" and the system picks questions for you
+    based on your composition targets.
+
+  Step 7: Generate an access token
+    On the Exam Detail page → Tokens section → set Max uses (e.g., 35 for
+    a class of 35) and Expires in (e.g., 7 days) → click "Generate token".
+    Write down the token code (e.g., "PHY-T1-A7K2").
+
+  Step 8: Tell students the token
+    Write the exam code and token code on the board before the exam starts.
+    Students will enter these when they access the exam page.
+
+EXAM DAY
+
+  Step 9: Students take the exam
+    Students open the exam website, enter the exam code and their token,
+    then log in with their username and password.
+    The exam timer starts automatically.
+    If internet is lost, their answers are saved locally and re-synced.
+
+  Step 10: Monitor progress (optional)
+    On the Exam Detail page → click "Live monitor" to see who is active,
+    how far through they are, and how much time they have left.
+    Note: This requires the admin to have set up the live monitor route.
+
+AFTER THE EXAM
+
+  Step 11: Review auto-graded results
+    Go to Auto Score → click your exam → see each student's score.
+    Click "View" on any student for the full answer breakdown.
+
+  Step 12: Grade essays (if any)
+    Go to Pending Score → click "View" for each essay → enter score and
+    optional feedback → click "Save grade".
+
+  Step 13: Export results for your records
+    Go to Reports → tick the columns you want → click "Export all classes".
+    Save the Excel file and submit to administration.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+16. IMPORTANT RULES AND GOTCHAS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+★ TOKENS ARE REQUIRED — No student can access any exam without a valid
+  access token. If a student says they cannot start the exam, check that
+  the token you gave them has not expired, has not been deleted, and has
+  not reached its maximum use count.
+
+★ STRICT MODE = NO PAUSING — In Strict mode, the exam timer runs even if
+  a student closes the browser. If their internet cuts out during a Strict
+  exam, time keeps ticking. Use Try Out mode if you expect unreliable
+  internet.
+
+★ ANSWERS ARE SAVED AUTOMATICALLY — Every keystroke is saved to the
+  student's browser instantly. The system also saves to the server every
+  5 seconds. If a student's browser crashes, their answers are preserved
+  and restored when they return. They will see a "Resume" button.
+
+★ TIMER RUNS OUT → AUTO-SUBMIT — When time expires in Strict mode, the
+  exam auto-submits. If the student's connection is lost at that moment,
+  a server-side job finalises their session within 1 minute. No answers
+  are ever lost because of a timeout.
+
+★ ESSAY SCORES ARE PROVISIONAL — A student's final result is marked
+  "Pending" until you have graded all their essay questions. The auto-
+  graded MCQ portion is scored immediately, but the TOTAL result is not
+  final until essays are done.
+
+★ USERNAMES ARE UPPERCASE — The system forces usernames to uppercase.
+  "ahmad.fauzi" becomes "AHMAD.FAUZI". Tell students to type their
+  username exactly as shown on their credential sheet.
+
+★ PASSWORDS ARE VISIBLE TO TEACHERS — You can see every student's
+  password on the Students page. Use the "Copy password" button to copy
+  it to the clipboard. This is intentional so you can help students who
+  forget their password without resetting it.
+
+★ QUESTION BANK IS SHARED — Other teachers can VIEW your questions but
+  cannot edit or delete them. You also see their questions (read-only).
+  This is to allow school-wide question sharing. Only upload questions
+  you are comfortable sharing.
+
+★ LOCKED FEATURES SAY "(locked by admin)" — If a difficulty slider,
+  question type count, or other parameter shows "(locked by admin)", only
+  the administrator can unlock it for your account. Contact your admin.
+
+★ COMPOSITION TARGETS ARE ADVISORY — Setting composition targets (e.g.,
+  "30 single choice questions") does not prevent you from adding a
+  different mix. They are just a checklist to help "Auto-fill from bank"
+  choose the right questions.
+
+★ DELETING AN EXAM IS PERMANENT — Deleting an exam also deletes all
+  student submissions for that exam. This cannot be undone. Archive or
+  export results first.
+
+★ CHANGING THE EXAM CODE IS NOT POSSIBLE — Once created, the short exam
+  code (e.g., PHY-T1) cannot be changed. Choose it carefully.
+
+★ MULTIPLE TOKENS ARE FINE — You can create more than one token for an
+  exam (e.g., one token per class sitting). Each token tracks its own
+  usage count.
+
+★ EXAM PASSWORDS vs TOKENS — Students need BOTH their personal username/
+  password (to log into the system) AND an access token (to enter a
+  specific exam). These are two separate things.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+QUICK REFERENCE — BUTTONS BY PAGE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+PAGE            BUTTONS / ACTIONS AVAILABLE
+──────────────  ────────────────────────────────────────────────────────────────
+Overview        (read-only — View links in submissions table)
+
+Students        Upload Excel | Bulk add | Add student
+                Per student: Reset password | Disable | Delete
+                Bulk: Reset passwords | Deactivate | Reactivate | Delete |
+                      Export CSV
+
+Curriculum      Upload Excel → [Framework] | Add LO
+                Per LO (yours only): Edit | Delete
+
+AI Generation   Intro preset | Moderate preset | Extreme preset
+                Download question prompt (JSON) | Copy
+                (Phase 2 image textarea with copy button)
+
+Question Bank   New question | Upload questions
+                Per question (yours only): Edit | Delete
+
+Exams           Import package | Generate with AI | Create exam
+                Per exam: Manage (link) | Delete
+                Per token: Regenerate | Delete
+
+Exam Detail     Edit settings (link) | Answer audit (link) |
+                Live monitor (link)
+                Add question | Pick from bank | Auto-fill from bank
+                Generate token | Per token: Regenerate | Delete
+
+Auto Score      Per submission: View
+
+Pending Score   Import AI scores from clipboard
+                Per pending essay: View (→ grade)
+                Per exam: Export bundle (for AI grading)
+
+Scores          Expand/collapse tree | Per student: View
+
+Reports         Expand all | Export all classes
+                Per class: Export this class
+                Column toggles: Username | Per-exam scores | Average % |
+                                Passed/Taken | Pending count |
+                                Strongest topic | Weakest topic
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  End of TEACHER_GUIDE.txt
+  System: Exam Dashboard | Version: Laravel 12 + Inertia v3 + React 19
+  Written from live browser exploration — 2026-06-09
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
