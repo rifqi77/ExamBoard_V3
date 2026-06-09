@@ -12,6 +12,25 @@ A full-featured exam administration platform built on **Laravel 12 + Inertia v3 
 
 ## Deployment
 
+### One-shot server bootstrap (recommended)
+
+The repo includes `scripts/bootstrap-server.sh` — run it ONCE on a fresh server right after `git clone`. It will:
+
+1. Verify PHP 8.2+, Composer, Node 20+, and the MySQL client are installed (fails with copy-pasteable install hints if missing)
+2. Create the MySQL database + a least-privilege app user (prompts once for the MySQL root password — leaves blank if using Debian's socket auth)
+3. Write a production-ready `.env` (with freshly generated `APP_KEY` and 32-byte `SESSION_SECRET`)
+4. Install Composer + npm deps, build the front-end, run the initial migration
+5. Print the remaining manual steps (web server config, cron, sudoers)
+
+```bash
+git clone https://github.com/rifqi77/ExamBoard_V3.git /var/www/exam-board
+cd /var/www/exam-board
+chmod +x scripts/bootstrap-server.sh
+./scripts/bootstrap-server.sh
+```
+
+The script is **idempotent** — safe to re-run. If `.env` already exists it won't overwrite your live secrets; if the database already exists it skips the `CREATE`. The remaining steps below are what to do manually if you want full control (or if the bootstrap can't run on your distro).
+
 ### 1. Server prerequisites
 
 - PHP 8.2 with extensions: `pdo_mysql`, `mbstring`, `openssl`, `tokenizer`, `xml`, `ctype`, `json`, `bcmath`, `fileinfo`, `zip`, `gd`
