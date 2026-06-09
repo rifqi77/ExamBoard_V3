@@ -62,29 +62,85 @@ echo "  App URL:     ${APP_URL:-(will prompt later)}"
 echo
 
 # ============================================================================
-# 1. Prerequisite check
+# 1. Prerequisite install (OS-level packages)
 # ============================================================================
-info "1. Checking prerequisites…"
+info "1. Installing OS prerequisites…"
 
-missing=()
-need() {
-    local cmd="$1"; local hint="$2"
-    if ! command -v "$cmd" >/dev/null 2>&1; then
-        missing+=("$cmd")
-        echo "   ✗ $cmd not found — install with:  $hint"
-    else
-        echo "   ✓ $cmd: $($cmd --version 2>&1 | head -1)"
-    fi
+# Detect distro family. Supported: Debian / Ubuntu (apt). Other distros: print
+# what's needed and let the operator install by hand.
+OS_FAMILY=""
+if command -v apt-get >/dev/null 2>&1; then
+    OS_FAMILY="debian"
+elif command -v dnf >/dev/null 2>&1; then
+    OS_FAMILY="redhat"
+elif command -v pacman >/dev/null 2>&1; then
+    OS_FAMILY="arch"
+fi
+
+is_missing() {
+    ! command -v "$1" >/dev/null 2>&1
 }
-need php       "sudo apt-get install -y php8.2-cli php8.2-fpm php8.2-mysql php8.2-mbstring php8.2-xml php8.2-zip php8.2-gd php8.2-bcmath php8.2-curl"
-need composer  "curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer"
-need node      "curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash - && sudo apt-get install -y nodejs"
-need npm       "(comes with nodejs)"
-need mysql     "sudo apt-get install -y mysql-server mysql-client"
-need openssl   "(usually already installed)"
 
-if [ ${#missing[@]} -gt 0 ]; then
-    fatal "Install the tools above, then re-run this script."
+NEEDED=()
+is_missing php      && NEEDED+=(php)
+is_missing composer && NEEDED+=(composer)
+is_missing node     && NEEDED+=(node)
+is_missing mysql    && NEEDED+=(mysql)
+is_missing nginx    && NEEDED+=(nginx)
+is_missing certbot  && NEEDED+=(certbot)
+is_missing rsync    && NEEDED+=(rsync)
+is_missing openssl  && NEEDED+=(openssl)
+is_missing curl     && NEEDED+=(curl)
+
+if [ ${#NEEDED[@]} -eq 0 ]; then
+    info "   ✓ All OS prerequisites already installed."
+else
+    echo "   Missing: ${NEEDED[*]}"
+    if [ "$OS_FAMILY" = "debian" ]; then
+        warn "   I'll install them with apt-get — you'll be prompted for sudo password."
+        sudo apt-get update -qq
+        # PHP from the deadsnakes PPA on Ubuntu, or from ondrej/php repo; on
+        # Debian 12+ default php is 8.2 so we just use the distro packages.
+        if is_missing php; then
+            sudo apt-get install -y \
+                php8.2-cli php8.2-fpm php8.2-mysql php8.2-mbstring php8.2-xml \
+                php8.2-zip php8.2-gd php8.2-bcmath php8.2-curl php8.2-tokenizer \
+                php8.2-fileinfo php8.2-ctype \
+                || sudo apt-get install -y \
+                php-cli php-fpm php-mysql php-mbstring php-xml \
+                php-zip php-gd php-bcmath php-curl
+        fi
+        if is_missing composer; then
+            curl -sS https://getcomposer.org/installer | sudo php -- \
+                --install-dir=/usr/local/bin --filename=composer >/dev/null
+        fi
+        if is_missing node; then
+            curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash - >/dev/null
+            sudo apt-get install -y nodejs
+        fi
+        if is_missing mysql; then
+            sudo apt-get install -y mysql-server mysql-client \
+                || sudo apt-get install -y mariadb-server mariadb-client
+            sudo systemctl enable --now mysql 2>/dev/null \
+                || sudo systemctl enable --now mariadb 2>/dev/null || true
+        fi
+        is_missing nginx   && sudo apt-get install -y nginx
+        is_missing certbot && sudo apt-get install -y certbot python3-certbot-nginx
+        is_missing rsync   && sudo apt-get install -y rsync
+        is_missing openssl && sudo apt-get install -y openssl
+        is_missing curl    && sudo apt-get install -y curl
+    else
+        echo
+        echo "   ✗ Your OS isn't apt-based. Install these packages manually, then re-run:"
+        echo "     php 8.2+ (with extensions: pdo_mysql mbstring openssl tokenizer xml ctype json bcmath fileinfo zip gd)"
+        echo "     composer 2"
+        echo "     node 20+ (and npm)"
+        echo "     mysql-server (or mariadb-server)"
+        echo "     nginx"
+        echo "     certbot + python3-certbot-nginx (for HTTPS)"
+        echo "     rsync, openssl, curl"
+        fatal "Auto-install not supported on this distro."
+    fi
 fi
 
 # Check PHP version is >= 8.2
@@ -249,46 +305,162 @@ if [[ "$SEED_REPLY" =~ ^[Yy]$ ]]; then
 fi
 
 # ============================================================================
-# 6. Next steps banner
+# 6. File permissions for the web server
 # ============================================================================
+info "9. Setting filesystem permissions…"
 APP_USER="$(stat -c '%U' "$APP_PATH" 2>/dev/null || stat -f '%Su' "$APP_PATH")"
+if id www-data >/dev/null 2>&1; then
+    sudo chown -R "$APP_USER:www-data" "$APP_PATH/storage" "$APP_PATH/bootstrap/cache" 2>/dev/null || true
+    sudo chmod -R 775 "$APP_PATH/storage" "$APP_PATH/bootstrap/cache" 2>/dev/null || true
+    info "   ✓ storage/ + bootstrap/cache writable by www-data"
+fi
+
+# ============================================================================
+# 7. Nginx site config
+# ============================================================================
+info "10. Configuring nginx…"
+NGINX_HOST="$(echo "$APP_URL" | sed -E 's|https?://||' | cut -d/ -f1)"
+NGINX_CONF="/etc/nginx/sites-available/exam-board"
+
+if [ -z "$NGINX_HOST" ] || [ "$NGINX_HOST" = "localhost" ]; then
+    NGINX_HOST="_"  # nginx default-server catch-all
+    warn "   APP_URL had no real hostname — nginx will be configured as the default server (IP-only access)."
+fi
+
+# Pick the right PHP-FPM socket path (8.2 on Ubuntu 22.04+, 8.x on Debian, fallback).
+FPM_SOCK=""
+for cand in /run/php/php8.2-fpm.sock /run/php/php8.1-fpm.sock /run/php/php-fpm.sock /var/run/php-fpm/www.sock; do
+    [ -S "$cand" ] && FPM_SOCK="$cand" && break
+done
+[ -z "$FPM_SOCK" ] && FPM_SOCK="/run/php/php8.2-fpm.sock"
+
+sudo tee "$NGINX_CONF" >/dev/null <<NGINX
+# Generated by bootstrap-server.sh — Exam Dashboard
+server {
+    listen 80;
+    listen [::]:80;
+    server_name $NGINX_HOST;
+    root $APP_PATH/public;
+    index index.php;
+
+    # Lets Encrypt ACME challenge — keep above the catch-all location.
+    location ^~ /.well-known/acme-challenge/ { allow all; root /var/www/html; }
+
+    location / {
+        try_files \$uri \$uri/ /index.php?\$query_string;
+    }
+
+    location ~ \.php\$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:$FPM_SOCK;
+        fastcgi_param SCRIPT_FILENAME \$realpath_root\$fastcgi_script_name;
+        fastcgi_buffers 16 16k;
+        fastcgi_buffer_size 32k;
+        fastcgi_read_timeout 90s;
+    }
+
+    # Long-cache static assets built by vite (hashed filenames).
+    location ~* ^/build/.*\.(js|css|woff2?|ttf|svg|png|jpg|gif|ico)\$ {
+        expires 1y;
+        access_log off;
+        add_header Cache-Control "public, immutable";
+    }
+
+    location ~ /\.(?!well-known) { deny all; }
+    client_max_body_size 16M;
+}
+NGINX
+
+# Activate the site
+sudo ln -sf "$NGINX_CONF" "/etc/nginx/sites-enabled/exam-board"
+sudo rm -f "/etc/nginx/sites-enabled/default" 2>/dev/null || true
+if sudo nginx -t 2>/dev/null; then
+    sudo systemctl reload nginx
+    info "   ✓ nginx configured + reloaded → http://$NGINX_HOST"
+else
+    warn "   nginx -t failed. Config is at $NGINX_CONF; fix it and reload manually."
+fi
+
+# ============================================================================
+# 8. Cron — Laravel scheduler (REQUIRED for auto-finalize)
+# ============================================================================
+info "11. Installing Laravel scheduler cron…"
+CRON_LINE="* * * * * cd $APP_PATH && php artisan schedule:run >> /dev/null 2>&1"
+if sudo crontab -u "$APP_USER" -l 2>/dev/null | grep -qF "$APP_PATH"; then
+    info "   ✓ Scheduler cron already present"
+else
+    (sudo crontab -u "$APP_USER" -l 2>/dev/null; echo "$CRON_LINE") | sudo crontab -u "$APP_USER" -
+    info "   ✓ Cron installed (runs exams:finalize-expired every minute)"
+fi
+
+# ============================================================================
+# 9. Backup directory + cron (optional but recommended)
+# ============================================================================
+info "12. Preparing backup directory…"
+sudo mkdir -p /var/backups/exam-board
+sudo chown "$APP_USER" /var/backups/exam-board
+sudo chmod 700 /var/backups/exam-board
+chmod +x "$APP_PATH/scripts/db-backup.sh" 2>/dev/null || true
+info "   ✓ /var/backups/exam-board ready (run scripts/db-backup.sh nightly via cron — see README)"
+
+# ============================================================================
+# 10. SSH deploy key for GitHub Actions push-to-deploy
+# ============================================================================
+info "13. Generating GitHub Actions deploy SSH key…"
+SSH_DIR="$HOME/.ssh"
+mkdir -p "$SSH_DIR" && chmod 700 "$SSH_DIR"
+DEPLOY_KEY="$SSH_DIR/exam_board_deploy"
+if [ -f "$DEPLOY_KEY" ]; then
+    info "   ✓ Deploy key already exists at $DEPLOY_KEY"
+else
+    ssh-keygen -t ed25519 -N "" -C "exam-board-deploy-$(date -u +%Y%m%d)" -f "$DEPLOY_KEY" >/dev/null
+    cat "${DEPLOY_KEY}.pub" >> "$SSH_DIR/authorized_keys"
+    chmod 600 "$SSH_DIR/authorized_keys"
+    info "   ✓ Generated + authorized: $DEPLOY_KEY"
+fi
+
+# ============================================================================
+# 11. Sudoers for FPM reload (optional)
+# ============================================================================
+FPM_SERVICE="$(systemctl list-units --type=service --plain --no-legend 2>/dev/null | grep -oE 'php[0-9.]+-fpm\.service' | head -1 | sed 's/\.service//' || echo 'php8.2-fpm')"
+SUDOERS_FILE="/etc/sudoers.d/exam-board-deploy"
+if [ ! -f "$SUDOERS_FILE" ]; then
+    info "14. Granting NOPASSWD reload of $FPM_SERVICE to $APP_USER…"
+    echo "$APP_USER ALL=(root) NOPASSWD: /bin/systemctl reload $FPM_SERVICE" | sudo tee "$SUDOERS_FILE" >/dev/null
+    sudo chmod 0440 "$SUDOERS_FILE"
+    info "   ✓ Sudoers rule installed"
+fi
+
+# ============================================================================
+# 12. Done — print the GitHub secrets the operator needs to copy in
+# ============================================================================
+SERVER_IP="$(curl -s -m 3 https://api.ipify.org 2>/dev/null || hostname -I 2>/dev/null | awk '{print $1}' || echo 'YOUR.SERVER.IP')"
 cat <<EOF
 
 ${BOLD}========================================================${RESET}
-${BOLD}${GREEN}  Bootstrap complete!${RESET}
+${BOLD}${GREEN}  Bootstrap complete — server is live at http://$NGINX_HOST${RESET}
 ${BOLD}========================================================${RESET}
 
-The application is installed at:  $APP_PATH
-.env credentials are:             chmod 600, owner $APP_USER
+${BOLD}Now paste these 6 values into the GitHub repo's secrets${RESET}
+(${BOLD}Settings → Secrets and variables → Actions → New repository secret${RESET}):
 
-${BOLD}Remaining manual steps${RESET} (one-time, ~5 min total):
+  ${BOLD}DEPLOY_HOST${RESET}        $SERVER_IP
+  ${BOLD}DEPLOY_USER${RESET}        $APP_USER
+  ${BOLD}DEPLOY_PATH${RESET}        $APP_PATH
+  ${BOLD}DEPLOY_PORT${RESET}        22                      (or your custom port)
+  ${BOLD}DEPLOY_FPM_SERVICE${RESET} $FPM_SERVICE
 
-${BOLD}1. Web server.${RESET} Point your nginx/Caddy virtual host at:
-       $APP_PATH/public
-   (See README → Deployment step 6 for nginx + Caddy snippets.)
+  ${BOLD}DEPLOY_SSH_KEY${RESET}     (paste the lines below, INCLUDING headers/footers)
+  ┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
+$(cat "$DEPLOY_KEY")
+  ┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
 
-${BOLD}2. Permissions.${RESET} Let www-data write to storage + cache:
-       sudo chown -R www-data:www-data storage bootstrap/cache
-       sudo chmod -R 775 storage bootstrap/cache
+${BOLD}After that, every \`git push origin main\` from the developer's machine${RESET}
+${BOLD}will automatically deploy to this server. Nothing else to configure.${RESET}
 
-${BOLD}3. Scheduler cron${RESET} (REQUIRED — auto-finalizes abandoned exams):
-       (sudo crontab -l 2>/dev/null; echo "* * * * * cd $APP_PATH && php artisan schedule:run >> /dev/null 2>&1") | sudo crontab -
-
-${BOLD}4. Nightly DB backup${RESET} (recommended):
-       chmod +x $APP_PATH/scripts/db-backup.sh
-       sudo mkdir -p /var/backups/exam-board && sudo chown $APP_USER /var/backups/exam-board
-       (Then add the cron snippet from README → "Nightly off-host backup".)
-
-${BOLD}5. GitHub Actions deploy key${RESET} (for push-to-deploy):
-       ssh-keygen -t ed25519 -f ~/.ssh/exam_board_deploy -C "exam-board-deploy" -N ""
-       cat ~/.ssh/exam_board_deploy.pub >> ~/.ssh/authorized_keys
-       cat ~/.ssh/exam_board_deploy            # paste the PRIVATE key into the
-                                               # DEPLOY_SSH_KEY GitHub secret
-
-${BOLD}6. Sudoers for FPM reload${RESET} (optional, lets CI deploy reload PHP-FPM):
-       echo '$APP_USER ALL=(root) NOPASSWD: /bin/systemctl reload php8.2-fpm' | sudo tee /etc/sudoers.d/exam-board-deploy
-
-After steps 1–3 you're live.  After step 5 your friend's CI deploys land
-automatically on every push.
+${BOLD}Optional next steps:${RESET}
+  • HTTPS:  sudo certbot --nginx -d $NGINX_HOST   (free Let's Encrypt cert)
+  • Off-host nightly backup: edit /etc/cron.d/exam-board-backup
+    (see README → "Nightly off-host backup")
 
 EOF
