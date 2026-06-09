@@ -1,0 +1,5042 @@
+:root {
+  --bg: #f6f8fb;
+  --surface: #ffffff;
+  --surface-strong: #f9fbfd;
+  --text: #18202f;
+  --muted: #647084;
+  --line: #dbe2ec;
+  --line-strong: #c5cedb;
+  --accent: #0d9488;
+  --accent-strong: #0f766e;
+  --blue: #2563eb;
+  --amber: #b7791f;
+  --amber-bg: #fff8e6;
+  --green: #15803d;
+  --green-bg: #ecfdf3;
+  --red: #b42318;
+  --red-bg: #fff1f0;
+  --shadow: 0 16px 40px rgba(25, 35, 55, 0.09);
+  --radius: 8px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--bg);
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  color: var(--text);
+  background:
+    linear-gradient(180deg, rgba(13, 148, 136, 0.08), transparent 320px),
+    var(--bg);
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  letter-spacing: 0;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img,
+video {
+  max-width: 100%;
+  display: block;
+}
+
+progress {
+  width: 100%;
+  height: 8px;
+  overflow: hidden;
+  border: 0;
+  border-radius: 999px;
+  background: #e6ebf2;
+}
+
+progress::-webkit-progress-bar {
+  background: #e6ebf2;
+  border-radius: 999px;
+}
+
+progress::-webkit-progress-value {
+  background: linear-gradient(90deg, var(--accent), var(--blue));
+  border-radius: 999px;
+}
+
+progress::-moz-progress-bar {
+  background: linear-gradient(90deg, var(--accent), var(--blue));
+  border-radius: 999px;
+}
+
+.auth-shell,
+.exam-list-shell,
+.results-shell,
+.admin-shell {
+  width: min(1280px, calc(100% - 32px));
+  margin: 0 auto;
+}
+
+.auth-shell {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: minmax(320px, 480px) 1fr;
+  align-items: center;
+  gap: 40px;
+  padding: 40px 0;
+}
+
+/* Single-column variant for the rebranded login page — no side-panel. */
+.auth-shell--centered {
+  grid-template-columns: minmax(320px, 480px);
+  justify-content: center;
+}
+
+.auth-demo-hint {
+  margin: 18px 0 0;
+  padding: 10px 12px;
+  background: var(--surface-strong, #f6f8fb);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--muted);
+  font-size: 0.82rem;
+  line-height: 1.55;
+}
+
+.auth-demo-hint code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.85em;
+  color: var(--text);
+}
+
+.auth-panel,
+.auth-context,
+.exam-list-panel,
+.token-entry-panel,
+.admin-panel,
+.metric-card,
+.score-panel,
+.breakdown-panel,
+.review-section,
+.question-panel {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.auth-panel {
+  padding: 34px;
+}
+
+.brand-lockup {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.brand-lockup.compact {
+  gap: 12px;
+}
+
+.brand-mark {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+  place-items: center;
+  color: #fff;
+  background: linear-gradient(135deg, var(--accent), var(--blue));
+  border-radius: var(--radius);
+}
+
+.brand-lockup.compact .brand-mark {
+  width: 38px;
+  height: 38px;
+  flex-basis: 38px;
+}
+
+.brand-lockup h1 {
+  margin: 0;
+  font-size: 1.45rem;
+  line-height: 1.15;
+}
+
+.brand-lockup.compact h1 {
+  font-size: 1.05rem;
+}
+
+.brand-lockup p,
+.section-title-row p,
+.exam-tile p,
+.score-panel p,
+.breakdown-row p,
+.review-section p,
+.center-state p,
+.muted {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.login-form {
+  display: grid;
+  gap: 18px;
+  margin-top: 30px;
+}
+
+.login-form label {
+  display: grid;
+  gap: 7px;
+  color: #344054;
+  font-size: 0.91rem;
+  font-weight: 700;
+}
+
+.login-form input,
+.number-answer,
+.text-answer {
+  width: 100%;
+  color: var(--text);
+  background: #fff;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  outline: none;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.login-form input {
+  min-height: 46px;
+  padding: 0 12px;
+}
+
+.login-form input:focus,
+.number-answer:focus,
+.text-answer:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.12);
+}
+
+.form-error {
+  margin: 0;
+  color: var(--red);
+  background: var(--red-bg);
+  border: 1px solid #ffc9c4;
+  border-radius: var(--radius);
+  padding: 10px 12px;
+  font-size: 0.92rem;
+}
+
+.form-success {
+  margin: 14px 0 0;
+  color: var(--green);
+  background: var(--green-bg);
+  border: 1px solid #b9e8ca;
+  border-radius: var(--radius);
+  padding: 10px 12px;
+  font-size: 0.92rem;
+}
+
+.primary-button,
+.secondary-button,
+.ghost-button,
+.submit-button {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: var(--radius);
+  border: 1px solid transparent;
+  cursor: pointer;
+  font-size: 0.92rem;
+  font-weight: 800;
+  transition:
+    transform 140ms ease,
+    border-color 140ms ease,
+    background 140ms ease,
+    color 140ms ease;
+}
+
+.primary-button,
+.submit-button {
+  color: #fff;
+  background: var(--accent-strong);
+}
+
+.primary-button {
+  width: 100%;
+  padding: 0 16px;
+}
+
+.submit-button {
+  padding: 0 15px;
+  white-space: nowrap;
+}
+
+.secondary-button,
+.ghost-button {
+  color: var(--text);
+  background: #fff;
+  border-color: var(--line);
+  padding: 0 14px;
+}
+
+.ghost-button {
+  min-width: 104px;
+  white-space: nowrap;
+}
+
+/* Destructive ghost button (e.g. bulk delete) — red text + tint so it
+   reads as dangerous without shouting like a filled primary. */
+.ghost-button.danger {
+  color: var(--red);
+  border-color: var(--red);
+}
+.ghost-button.danger:hover {
+  background: var(--red-bg);
+}
+
+.primary-button:hover,
+.secondary-button:hover,
+.ghost-button:hover,
+.submit-button:hover {
+  transform: translateY(-1px);
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+  transform: none;
+}
+
+.auth-context {
+  display: grid;
+  gap: 14px;
+  padding: 22px;
+}
+
+.auth-context > div {
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  align-items: center;
+  gap: 18px;
+  padding: 18px;
+  background: var(--surface-strong);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.context-number {
+  display: grid;
+  min-height: 48px;
+  place-items: center;
+  color: var(--accent-strong);
+  background: #dff8f4;
+  border-radius: var(--radius);
+  font-weight: 900;
+}
+
+.exam-list-shell,
+.results-shell,
+.admin-shell {
+  padding: 28px 0 48px;
+}
+
+.list-header,
+.results-header,
+.admin-header,
+.exam-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.exam-list-panel {
+  margin-top: 26px;
+  padding: 26px;
+}
+
+.section-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 20px;
+}
+
+.section-title-row h2 {
+  margin: 0 0 4px;
+  font-size: 1.2rem;
+}
+
+.exam-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 14px;
+}
+
+.exam-tile {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 14px;
+  min-height: 156px;
+  padding: 18px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.exam-tile h3 {
+  margin: 0 0 4px;
+  font-size: 1rem;
+}
+
+.tile-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  grid-column: 1 / -1;
+  align-self: end;
+}
+
+.tile-meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #334155;
+  background: #eef6ff;
+  border: 1px solid #d8e9ff;
+  border-radius: 999px;
+  padding: 6px 9px;
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.student-token-shell {
+  min-height: 100vh;
+  display: grid;
+  align-content: start;
+}
+
+.token-entry-panel {
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) minmax(280px, 420px);
+  gap: 24px;
+  margin-top: 26px;
+  padding: 28px;
+}
+
+.token-entry-copy h2 {
+  margin: 0 0 10px;
+  font-size: clamp(1.7rem, 4vw, 3rem);
+  line-height: 1.05;
+}
+
+.token-entry-copy p {
+  max-width: 560px;
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.token-form,
+.admin-form {
+  display: grid;
+  gap: 14px;
+}
+
+.token-form label,
+.admin-form label {
+  display: grid;
+  gap: 7px;
+  color: #344054;
+  font-size: 0.88rem;
+  font-weight: 800;
+}
+
+.token-form input,
+.admin-form input {
+  min-height: 44px;
+  width: 100%;
+  padding: 0 12px;
+  color: var(--text);
+  background: #fff;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  outline: none;
+}
+
+.center-state {
+  min-height: 100vh;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 10px;
+  padding: 24px;
+  text-align: center;
+}
+
+.center-state h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.exam-shell {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  grid-template-rows: auto 1fr;
+  gap: 18px;
+  width: min(1180px, calc(100% - 24px));
+  margin: 0 auto;
+  padding: 18px 0;
+}
+
+.exam-topbar {
+  grid-column: 1 / -1;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 13px 14px;
+  backdrop-filter: blur(12px);
+}
+
+.status-strip {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.status-item {
+  display: inline-flex;
+  min-height: 38px;
+  align-items: center;
+  gap: 7px;
+  color: #344054;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 0 10px;
+  font-size: 0.86rem;
+  font-weight: 800;
+}
+
+.status-item.warning {
+  color: var(--amber);
+  background: var(--amber-bg);
+  border-color: #f6da92;
+}
+
+.status-item.danger {
+  color: var(--red);
+  background: var(--red-bg);
+  border-color: #ffc9c4;
+}
+
+.question-nav {
+  align-self: start;
+  position: sticky;
+  top: 18px;
+}
+
+.question-nav {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 14px;
+}
+
+.nav-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 0.84rem;
+  font-weight: 800;
+}
+
+.nav-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  margin-top: 14px;
+}
+
+/* Timer pulled out of the topbar and into the right-side panel-map
+   column. Width is whatever the column gives it; the inner contents
+   are centred. The warning tone (last 5 minutes) reuses the same
+   amber palette the old StatusItem used. */
+.nav-timer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 44px;
+  margin-bottom: 12px;
+  padding: 0 12px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #344054;
+  font-variant-numeric: tabular-nums;
+}
+.nav-timer.warning {
+  color: var(--amber);
+  background: var(--amber-bg);
+  border-color: #f6da92;
+}
+
+/* Submit button when it lives at the bottom of the panel-map column.
+   Override .submit-button's default justify-self/width so it spans
+   the full panel width and matches the timer above. */
+.nav-submit {
+  width: 100%;
+  margin-top: 12px;
+  justify-content: center;
+}
+
+.nav-dot {
+  aspect-ratio: 1;
+  color: #475467;
+  background: #f4f7fb;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 900;
+}
+
+.nav-dot.answered {
+  color: var(--accent-strong);
+  background: #e8fbf8;
+  border-color: #a5e7dd;
+}
+
+.nav-dot.active {
+  color: #fff;
+  background: var(--blue);
+  border-color: var(--blue);
+}
+
+.question-stage {
+  min-width: 0;
+}
+
+.instruction-band {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  margin-bottom: 14px;
+  color: #3f4c5f;
+  background: #fefdf8;
+  border: 1px solid #ece2bd;
+  border-radius: var(--radius);
+  padding: 12px 14px;
+}
+
+.instruction-band p {
+  margin: 0;
+  line-height: 1.48;
+}
+
+.question-panel {
+  padding: 26px;
+}
+
+.question-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.question-meta span {
+  color: #334155;
+  background: #eef6ff;
+  border: 1px solid #d8e9ff;
+  border-radius: 999px;
+  padding: 6px 9px;
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+.question-panel h2 {
+  margin: 0;
+  font-size: clamp(1.25rem, 2vw, 1.65rem);
+  line-height: 1.32;
+}
+
+.media-stack {
+  display: grid;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.media-stack figure {
+  margin: 0;
+}
+
+/* Question media — preserve aspect ratio, never crop. The previous
+   rule used object-fit: cover which clipped tall diagrams (e.g.
+   velocity-time graphs) at the top/bottom. Switched to natural-size
+   scaling with sensible caps: max-width 100% of container, max-height
+   70 % of viewport. Wide images shrink to fit; tall images shrink
+   down to viewport-height. No cropping in either case. */
+.media-stack img,
+.media-stack video {
+  max-width: 100%;
+  max-height: 70vh;
+  width: auto;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.media-stack figcaption {
+  margin-top: 7px;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.option-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.option-row {
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  align-items: center;
+  gap: 12px;
+  min-height: 56px;
+  padding: 10px 13px;
+  text-align: left;
+  color: var(--text);
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.option-row.selected {
+  border-color: var(--accent);
+  background: #f0fdfa;
+  box-shadow: inset 0 0 0 1px var(--accent);
+}
+
+.option-key {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  color: var(--blue);
+  background: #eaf1ff;
+  border-radius: 7px;
+  font-weight: 900;
+}
+
+.text-answer {
+  min-height: 170px;
+  margin-top: 22px;
+  padding: 13px;
+  resize: vertical;
+}
+
+.number-answer {
+  min-height: 48px;
+  margin-top: 22px;
+  padding: 0 13px;
+}
+
+.question-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.progress-panel {
+  padding: 18px;
+}
+
+.progress-panel h2 {
+  margin: 0 0 15px;
+  font-size: 1rem;
+}
+
+.progress-ring {
+  display: grid;
+  width: 148px;
+  aspect-ratio: 1;
+  place-items: center;
+  margin: 0 auto 20px;
+  background:
+    radial-gradient(circle at center, #fff 58%, transparent 60%),
+    conic-gradient(var(--accent) var(--value), #e7edf5 0deg);
+  border-radius: 50%;
+}
+
+.progress-ring span {
+  font-size: 1.55rem;
+  font-weight: 900;
+}
+
+.topic-stack {
+  display: grid;
+  gap: 14px;
+}
+
+.topic-row > div,
+.breakdown-row > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 7px;
+  font-size: 0.88rem;
+}
+
+.topic-row span,
+.breakdown-row span {
+  color: #344054;
+  font-weight: 800;
+}
+
+.topic-row strong,
+.breakdown-row strong {
+  color: var(--text);
+}
+
+.integrity-note {
+  display: flex;
+  gap: 10px;
+  margin-top: 22px;
+  color: var(--green);
+  background: var(--green-bg);
+  border: 1px solid #b9e8ca;
+  border-radius: var(--radius);
+  padding: 12px;
+}
+
+.integrity-note p {
+  margin: 0;
+  color: #25623a;
+  font-size: 0.87rem;
+  line-height: 1.42;
+}
+
+.result-dashboard {
+  display: grid;
+  grid-template-columns: minmax(260px, 360px) 1fr;
+  gap: 18px;
+  margin-top: 24px;
+}
+
+.score-panel {
+  display: grid;
+  align-content: center;
+  min-height: 300px;
+  padding: 28px;
+}
+
+.score-panel span {
+  width: max-content;
+  color: var(--green);
+  background: var(--green-bg);
+  border: 1px solid #b9e8ca;
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 0.82rem;
+  font-weight: 900;
+}
+
+.score-panel.failed span {
+  color: var(--red);
+  background: var(--red-bg);
+  border-color: #ffc9c4;
+}
+
+.score-panel strong {
+  margin: 20px 0 8px;
+  font-size: clamp(3.2rem, 9vw, 5.8rem);
+  line-height: 0.95;
+}
+
+.breakdown-panel {
+  padding: 24px;
+}
+
+.breakdown-list {
+  display: grid;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.breakdown-row p {
+  margin-top: 6px;
+  font-size: 0.84rem;
+}
+
+.review-section {
+  margin-top: 16px;
+  padding: 16px;
+}
+
+.review-list {
+  display: grid;
+  gap: 10px;
+}
+
+.review-item {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 12px;
+  background: #fff;
+}
+
+.review-item.is-correct {
+  border-color: var(--green, #16a34a);
+  background: color-mix(in srgb, var(--green, #16a34a) 6%, var(--surface));
+}
+
+.review-item.is-correct .review-status {
+  color: var(--green, #16a34a);
+}
+
+.review-item.is-correct .review-status svg {
+  color: var(--green, #16a34a);
+}
+
+.review-item.is-incorrect {
+  border-color: var(--red, #dc2626);
+  background: color-mix(in srgb, var(--red, #dc2626) 6%, var(--surface));
+}
+
+.review-item.is-incorrect .review-status {
+  color: var(--red, #dc2626);
+}
+
+.review-item.is-incorrect .review-status svg {
+  color: var(--red, #dc2626);
+}
+
+.review-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 0.86rem;
+  font-weight: 900;
+}
+
+.review-status svg {
+  color: var(--accent-strong);
+}
+
+.review-item h3 {
+  margin: 8px 0 10px;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.review-item .question-media {
+  display: grid;
+  gap: 8px;
+  margin: 8px 0 10px;
+}
+
+.review-item .question-media figure {
+  margin: 0;
+}
+
+.review-item .question-media img,
+.review-item .question-media video {
+  display: block;
+  max-width: 100%;
+  width: auto;
+  height: auto;
+  max-height: 70vh;
+  margin: 0 auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #fff;
+}
+
+.review-item .question-media figcaption {
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.answer-compare {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.answer-compare > div {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+  padding: 10px;
+  background: var(--surface-strong);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.answer-compare span {
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 900;
+}
+
+.answer-compare strong {
+  overflow-wrap: anywhere;
+}
+
+.explanation {
+  margin: 10px 0 0;
+  color: #3f4c5f;
+  line-height: 1.55;
+}
+
+.review-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.review-nav .secondary-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  min-height: 34px;
+}
+
+.review-count {
+  color: var(--muted);
+  font-size: 0.86rem;
+  font-weight: 900;
+}
+
+.review-palette {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.review-dot {
+  display: inline-grid;
+  place-items: center;
+  min-width: 30px;
+  height: 30px;
+  padding: 0 6px;
+  border-radius: 7px;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: #475467;
+  font-size: 0.78rem;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.review-dot.is-correct {
+  color: var(--green, #16a34a);
+  border-color: color-mix(in srgb, var(--green, #16a34a) 40%, var(--line));
+  background: color-mix(in srgb, var(--green, #16a34a) 10%, #fff);
+}
+
+.review-dot.is-incorrect {
+  color: var(--red, #dc2626);
+  border-color: color-mix(in srgb, var(--red, #dc2626) 40%, var(--line));
+  background: color-mix(in srgb, var(--red, #dc2626) 10%, #fff);
+}
+
+.review-dot.active {
+  outline: 2px solid var(--blue);
+  outline-offset: 1px;
+}
+
+.admin-header {
+  margin-bottom: 22px;
+}
+
+.admin-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin: 22px 0;
+}
+
+.admin-metrics--3col {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 0;
+}
+
+/* 5-column variant — used by the teacher Overview which has Exams,
+   Total submissions, Passed, Awaiting grading, and Demo students. The
+   default 4-column grid would push the 5th card to a second row. */
+.admin-metrics--5col {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.metric-group {
+  margin: 18px 0 8px;
+}
+
+.metric-group-label {
+  margin: 0 0 8px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  opacity: 0.8;
+}
+
+.metric-card-sub {
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.3;
+  margin-top: 2px;
+}
+
+.dashboard-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+  font-size: 0.92rem;
+}
+
+/* Wide tables get a horizontal scroll instead of being clipped by the
+   containing panel. :has() is supported by every browser this app targets. */
+.admin-panel:has(> .dashboard-table) {
+  overflow-x: auto;
+}
+
+.dashboard-table th {
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
+  font-weight: 700;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.dashboard-table td {
+  padding: 12px;
+  border-bottom: 1px solid var(--line);
+  /* Middle alignment so cells with buttons (taller than text) line up
+     on the same horizontal centreline as cells with plain text — keeps
+     "Manage" / "Delete" buttons on the same baseline as the exam name. */
+  vertical-align: middle;
+}
+
+/* Credentials panel — class is shown once as a section header row
+   above each group of students instead of repeating on every row.
+   The header row uses a subtle accent tint + bold class name + count
+   badge so the visual hierarchy is clear: class → its students. */
+.credentials-class-header > th {
+  background: color-mix(in srgb, var(--accent, #16a34a) 8%, var(--surface-strong));
+  padding: 8px 12px;
+  font-size: 0.85rem;
+  font-weight: 800;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--text);
+  border-bottom: 1px solid var(--line);
+  border-top: 2px solid color-mix(in srgb, var(--accent, #16a34a) 35%, transparent);
+}
+.credentials-class-count {
+  margin-left: 8px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 0.74rem;
+  font-weight: 600;
+}
+/* Tighter row spacing inside the credentials table — denser display
+   when many students get imported at once. */
+.credentials-table td {
+  padding: 7px 12px;
+}
+
+.dashboard-table tr:last-child td {
+  border-bottom: none;
+}
+
+.dashboard-table tr:hover td {
+  background: var(--surface-strong);
+}
+
+/* Compact-density variant — used on admin Teachers list.
+   Tighter row padding + middle-aligned cells so the eye scans many
+   rows quickly. Combined Activity column + icon-only actions do most
+   of the horizontal-space savings; this CSS just trims the vertical. */
+.dashboard-table--compact th {
+  padding: 6px 10px;
+}
+.dashboard-table--compact td {
+  padding: 7px 10px;
+  vertical-align: middle;
+}
+
+/* Icon-only ghost button — used for row actions. Square 28px hit
+   target with just the icon centered; native title attribute is the
+   tooltip. */
+.ghost-button.icon-only {
+  width: 28px;
+  height: 28px;
+  min-height: 28px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.row-actions {
+  flex-wrap: nowrap;
+}
+
+.token-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 4px 4px 10px;
+  border-radius: 999px;
+  background: var(--amber-bg);
+  color: var(--amber);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.82rem;
+  font-weight: 700;
+  white-space: nowrap;
+  line-height: 1;
+}
+/* Per-token inline action buttons (regenerate + delete inside the
+   pill). Sized to sit on the same baseline as the key icon + code so
+   the pill stays a single horizontal row. Compact 18×18 hit target —
+   the confirm dialog guards both actions. The .danger modifier on the
+   delete button shifts hover state to red; the default (regenerate)
+   stays in the pill's own amber accent. */
+.token-pill-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  border-radius: 999px;
+  background: transparent;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: background 120ms ease, opacity 120ms ease;
+}
+.token-pill-action:first-of-type {
+  margin-left: 2px;
+}
+.token-pill-action:hover:not(:disabled) {
+  background: rgba(245, 158, 11, 0.22);
+  opacity: 1;
+}
+.token-pill-action.danger:hover:not(:disabled) {
+  background: rgba(239, 68, 68, 0.18);
+  color: var(--red, #ef4444);
+}
+.token-pill-action:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+/* The <code> inside a token-pill inherits the pill's mono font/colour
+   but shouldn't have its own background or padding (which would
+   double the pill chrome). */
+.token-pill > code {
+  background: none;
+  padding: 0;
+  color: inherit;
+  font-size: inherit;
+}
+/* Zero-state — same shape but greyed out so the empty row reads as
+   "no active tokens" rather than competing visually with real tokens. */
+.token-pill.is-empty {
+  background: var(--surface-strong);
+  color: var(--muted);
+}
+/* Stacked tokens for exams with multiple active tokens. Vertical
+   stack keeps the table column narrow; each pill stays on its own
+   line for easy scanning + copy. */
+.token-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-start;
+}
+
+.token-form {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr auto;
+  gap: 14px;
+  align-items: end;
+  margin: 16px 0 8px;
+  padding: 16px;
+  background: var(--surface-strong);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.token-form label {
+  display: grid;
+  gap: 6px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.token-form input,
+.token-form select {
+  padding: 10px 12px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.token-form button {
+  height: 44px;
+}
+
+.form-success {
+  margin: 8px 0;
+  padding: 10px 14px;
+  background: var(--green-bg);
+  color: var(--green);
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.exam-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.exam-detail-grid > div {
+  display: grid;
+  gap: 4px;
+  padding: 12px 14px;
+  background: var(--surface-strong);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.exam-detail-grid span {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.exam-detail-grid strong {
+  font-size: 0.95rem;
+}
+
+.teacher-shell {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  min-height: 100vh;
+  background: var(--bg);
+}
+
+.teacher-sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  background: var(--surface);
+  border-right: 1px solid var(--line);
+  padding: 22px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.teacher-sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.teacher-sidebar-brand strong {
+  display: block;
+  font-size: 0.98rem;
+}
+
+.teacher-sidebar-brand p {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.teacher-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+.nav-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.nav-group-label {
+  display: block;
+  padding: 0 14px 4px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  opacity: 0.7;
+}
+
+.teacher-nav a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 7px 14px;
+  border-radius: 8px;
+  color: var(--muted);
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: background 0.15s, color 0.15s;
+}
+
+.teacher-nav a:hover {
+  background: var(--bg);
+  color: var(--text);
+}
+
+.teacher-nav a.active {
+  background: var(--accent);
+  color: white;
+}
+
+.teacher-sidebar-footer {
+  display: grid;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.teacher-user-card strong {
+  display: block;
+  font-size: 0.92rem;
+}
+
+.teacher-user-card span {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.teacher-sidebar-footer .ghost-button {
+  justify-content: center;
+}
+
+.impersonation-banner {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 18px;
+  background: #fef3c7;
+  color: #92400e;
+  border-bottom: 1px solid #fcd34d;
+  font-size: 0.85rem;
+}
+
+.impersonation-banner strong {
+  color: #92400e;
+}
+
+.impersonation-banner code {
+  background: rgba(146, 64, 14, 0.08);
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 0.78rem;
+}
+
+.impersonation-banner .ghost-button {
+  background: white;
+}
+
+.teacher-subject-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 6px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--green-bg);
+  color: var(--green);
+  font-weight: 700;
+  font-size: 0.7rem !important;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  width: fit-content;
+}
+
+.teacher-subject-pill.admin {
+  background: rgba(99, 102, 241, 0.14);
+  color: #4338ca;
+}
+
+.grading-list {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0 0;
+  display: grid;
+  gap: 16px;
+}
+
+.grading-item {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px 18px;
+  background: var(--surface);
+  display: grid;
+  gap: 12px;
+}
+
+.grading-item-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.grading-item-prompt {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.grading-item-media {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.grading-item-media img,
+.grading-item-media video {
+  max-width: 240px;
+  max-height: 180px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+}
+
+.grading-item-answer-block {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+@media (max-width: 720px) {
+  .grading-item-answer-block {
+    grid-template-columns: 1fr;
+  }
+}
+
+.grading-label {
+  display: block;
+  font-size: 0.72rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 4px;
+}
+
+.grading-answer {
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: var(--surface-strong);
+  border: 1px solid var(--line);
+  font-size: 0.95rem;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.grading-answer.correct {
+  background: var(--green-bg);
+  border-color: rgba(16, 185, 129, 0.32);
+}
+
+.grading-essay-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-end;
+}
+
+.grading-essay-row label {
+  display: grid;
+  gap: 4px;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.grading-essay-row input {
+  width: 120px;
+}
+
+/* Mark scheme block in the grading panel — distinct background so the
+   teacher's eye never confuses it with the student's answer above. */
+.grading-mark-scheme {
+  margin: 12px 0;
+  padding: 10px 14px;
+  background: rgba(15, 91, 84, 0.05);
+  border-left: 3px solid var(--accent-strong, #0f5b54);
+  border-radius: 4px;
+}
+.grading-mark-scheme > .grading-label {
+  margin-bottom: 6px;
+}
+.grading-mark-scheme-md {
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.teacher-main {
+  padding: 28px 36px 48px;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.teacher-page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+  gap: 12px 16px;
+}
+
+.teacher-page-header > div:first-child {
+  min-width: 0;
+  flex: 1 1 220px;
+}
+
+.teacher-page-header > div:last-child {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.teacher-page-header h1 {
+  margin: 0 0 4px;
+  font-size: 1.4rem;
+}
+
+.teacher-page-header p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+/* Stop the header buttons from line-wrapping their own text now that they
+   have enough room to stretch. */
+.teacher-page-header > div:last-child .ghost-button,
+.teacher-page-header > div:last-child .primary-button {
+  white-space: nowrap;
+}
+
+.inline-reset-form {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.inline-reset-form input {
+  padding: 6px 10px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  font-size: 0.88rem;
+}
+
+.import-preview-list {
+  display: grid;
+  gap: 8px;
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.import-preview-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px;
+  background: var(--surface-strong);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  font-size: 0.92rem;
+}
+
+.import-preview-list strong {
+  font-weight: 700;
+}
+
+.import-preview-list span {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.class-panel {
+  margin-bottom: 16px;
+}
+
+/* Make the class panel header a clickable toggle. The chevron flips
+   between right (collapsed) and down (expanded). */
+.class-panel-header {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+}
+.class-panel-header:hover h2 {
+  color: var(--accent, #16a34a);
+}
+.class-panel-chevron {
+  flex-shrink: 0;
+  color: var(--muted);
+  transition: transform 0.15s ease;
+}
+
+/* Inner text container — put the exam name (h2) and meta line (p) on
+   ONE row instead of stacking. Flex with baseline alignment so the
+   smaller meta text sits visually attached to the name. */
+.class-panel-header > div {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 2px 10px;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.class-panel-header h2 {
+  margin: 0;
+  font-size: 1.12rem;
+  white-space: nowrap;
+}
+
+.class-panel-header p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+/* Disabled student row dims to indicate inactivity. */
+.student-row.is-inactive {
+  opacity: 0.55;
+}
+.student-row.is-inactive strong::after {
+  content: " (disabled)";
+  color: var(--muted);
+  font-weight: 500;
+  font-size: 0.85em;
+}
+
+/* Plain-button link used inside paragraph copy (e.g. Expand/Collapse all
+   on the Students page header). No padding, looks like a link. */
+.inline-link-button {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: var(--accent, #16a34a);
+  text-decoration: underline;
+  cursor: pointer;
+}
+.inline-link-button:hover {
+  opacity: 0.85;
+}
+
+.student-list {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.student-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  padding: 8px 12px;
+  background: var(--surface-strong);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.student-row-main {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  flex: 1 1 220px;
+}
+
+/* Inner text grid — each piece of student info has its own column
+   so the same data type ALWAYS lines up at the same horizontal
+   position across every row. Tightened min widths so the row stays
+   readable inside a narrow class panel (the previous 560 px minimum
+   was clipping the password text and leaving only its trailing copy
+   button visible). Each column may overflow horizontally with an
+   ellipsis instead of getting silently truncated. */
+.student-row-text {
+  display: grid;
+  grid-template-columns:
+    minmax(110px, 1.4fr) /* full name (flex column) */
+    minmax(90px, 1fr) /* username                 */
+    minmax(120px, 1.2fr) /* password + copy          */
+    minmax(80px, auto); /* "N submissions"          */
+  gap: 4px 12px;
+  align-items: center;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.student-row-name {
+  font-size: 0.92rem;
+  line-height: 1.25;
+  font-weight: 700;
+  min-width: 0;
+  /* Truncate very long names instead of pushing later columns. */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.student-row-username,
+.student-row-password,
+.student-row-submissions {
+  color: var(--muted);
+  font-size: 0.78rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+  overflow: hidden;
+}
+
+/* Code elements (username + password mono text) must be allowed to
+   shrink-and-ellipsis inside their flex cell — otherwise they push
+   their parent grid track wider than its minmax floor and the layout
+   spills off the panel. */
+.student-row-username > code,
+.student-row-password > code {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1 1 auto;
+}
+
+/* Hide the column dividers (`·` characters) — alignment is provided
+   by the grid itself, no need for separator glyphs anymore. */
+.student-row-text > * {
+  white-space: nowrap;
+}
+
+/* Stack to a single column on narrow viewports so nothing overflows. */
+@media (max-width: 720px) {
+  .student-row-text {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+}
+
+.student-row-actions {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* Compact buttons inside a student row — half the padding of normal
+   buttons so a Reset + Delete pair fits beside the student name even
+   when the panel is narrow. */
+.student-row-actions .ghost-button {
+  padding: 4px 8px;
+  font-size: 0.82rem;
+  gap: 4px;
+}
+
+.student-row-actions .ghost-button svg {
+  width: 13px;
+  height: 13px;
+}
+
+.package-format-help {
+  background: var(--surface-strong);
+}
+
+.package-format-help code {
+  padding: 2px 6px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  font-size: 0.85rem;
+}
+
+.exam-form {
+  display: grid;
+  gap: 12px;
+  /* No max-width — fill the panel. The exam-form-row already uses
+     auto-fit so wider screens get more inline columns (Type counts go
+     from 3 → 5 wide, Difficulty mix from 3 → 5 wide), eliminating the
+     dead right-side whitespace at 720px. */
+  width: 100%;
+}
+
+/* Two-panel variant — metadata on the left, composition on the right.
+   Used by Create Exam to use horizontal space at wide widths. Falls
+   back to a single column under ~960px so the form stays usable on
+   tablets / narrow windows.
+   align-items: stretch (the grid default) → both panels share the
+   row height, so the left and right panels end at the same baseline. */
+.exam-form--two-col {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: stretch;
+  gap: 16px;
+}
+/* Flex column so the trailing General Instructions label can flex-
+   grow and absorb the leftover height when the right panel is
+   taller. Previous grid attempt failed because grid-auto-rows kept
+   every row at content height, so the textarea had nothing to
+   stretch into. */
+.exam-form-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+.exam-form-meta > label:last-of-type {
+  flex: 1 1 auto;
+  /* label is already display:grid (gap:4px) via .exam-form label —
+     we want the textarea (row 2) to absorb the flex height. */
+  grid-template-rows: auto 1fr;
+}
+.exam-form-meta > label:last-of-type textarea {
+  height: 100%;
+  min-height: 96px;
+  resize: vertical;
+}
+.exam-form--two-col > button[type="submit"] {
+  grid-column: 1 / -1; /* span both columns */
+}
+@media (max-width: 960px) {
+  .exam-form--two-col {
+    grid-template-columns: 1fr;
+  }
+}
+
+.exam-form label,
+.question-form label {
+  display: grid;
+  gap: 4px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.exam-form input,
+.exam-form textarea,
+.exam-form select,
+.question-form input,
+.question-form textarea,
+.question-form select {
+  padding: 7px 10px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  font-weight: 500;
+  font-size: 0.95rem;
+  font-family: inherit;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.exam-form textarea,
+.question-form textarea {
+  resize: vertical;
+}
+
+.exam-form small {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.exam-form-row,
+.question-form-row {
+  display: grid;
+  /* auto-fit so a row with one field doesn't leave 2/3 width empty.
+     minmax(200px, 1fr) means: as many ~200px columns as fit, then
+     stretch them to share the width. */
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px;
+}
+
+/* Sectioned bordered cards for the AI Generation params. The top
+   row is a 2-col grid (Scope | Question mix); a third full-width
+   card below holds Olympiad + extras. Each card uses the same
+   fieldset visual language as .exam-form-section so the AI panel
+   feels consistent with Create Exam. Collapses to a single column
+   under 960 px. */
+.ai-param-cards {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 10px;
+  align-items: stretch;
+  margin-top: 8px;
+}
+/* Flex column so designated `.ai-card-grow` elements can absorb the
+   leftover height when cards are stretched to equal heights. */
+.ai-param-card {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin: 0;
+  padding: 9px 11px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface-strong);
+  min-width: 0;
+}
+.ai-param-card > legend {
+  padding: 0 6px;
+  font-size: 0.74rem;
+  font-weight: 800;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.ai-param-card--full {
+  margin-top: 8px;
+}
+@media (max-width: 960px) {
+  .ai-param-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 3-equal-column page layout. All three panels share width AND
+   height (align-items: stretch). Each panel renders as the same
+   .ai-param-card style as before so visual language stays
+   consistent. Collapses to 1-col under 1100 px (3-col layout
+   gets cramped quickly with these wide fieldsets). */
+.ai-three-col {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+  gap: 10px;
+  align-items: stretch;
+  margin-top: 8px;
+}
+@media (max-width: 1100px) {
+  .ai-three-col {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Panel 3 inner layout — prompt header + textarea + steps. */
+.ai-prompt-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 2px;
+}
+.ai-prompt-tagline {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--muted);
+  line-height: 1.4;
+  flex: 1;
+}
+.ai-three-col .ai-prompt-output {
+  margin-top: 6px;
+  min-height: 200px;
+  font-size: 0.76rem;
+  padding: 9px 10px;
+}
+
+/* Phase sub-blocks inside Panel 3 — one for Phase 1 (JSON download)
+   and one for Phase 2 (image prompt + copy textarea). Sits inside the
+   Generated prompts card; visually mirrors the .ai-param-card style at
+   one nesting level deeper. */
+.ai-phase-block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 12px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface-strong);
+}
+.ai-phase-block:first-child {
+  margin-top: 0;
+}
+.ai-phase-block h3 {
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.ai-phase-block p {
+  margin: 0;
+  font-size: 0.84rem;
+  line-height: 1.4;
+  color: var(--muted);
+}
+
+/* Growable element — when a card stretches to equal height, any
+   element marked with .ai-card-grow absorbs the leftover space so
+   the card doesn't show empty space at the bottom. */
+.ai-card-grow {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+.ai-card-grow > textarea,
+textarea.ai-card-grow {
+  height: 100%;
+  min-height: 80px;
+  resize: none;
+}
+
+/* LO selector wrapper — when used as the growable in Panel 1, switch
+   to flex column so the inner .lo-picker tree can fill the remaining
+   height (instead of being capped at its default 320 px max-height).
+   flex: 1 1 0 on the tree (basis 0, not auto) decouples the tree's
+   content height from the flex sizing — so a 60-item LO list doesn't
+   push Panel 1 to be huge. The tree takes whatever space is leftover
+   in the panel and scrolls when content overflows. This makes Panel 2
+   (which has a stable natural height) the row-height anchor; Panel 1
+   and Panel 3 stretch to match Panel 2 instead of vice versa. */
+.ai-lo-wrapper {
+  display: flex !important;
+  flex-direction: column;
+  min-height: 0;
+  /* Same flex: 1 1 0 trick on the wrapper so its content (the tree)
+     doesn't bubble up to push the panel either. */
+  flex: 1 1 0 !important;
+}
+.ai-lo-wrapper > .lo-picker {
+  flex: 1 1 0;
+  max-height: none;
+  min-height: 120px;
+  overflow-y: auto;
+}
+
+/* Bottom row — 2 equal panels (Notes & sources | What to do next)
+   sitting below the main 3-panel layout. Same .ai-param-card
+   visuals as the top row so it feels like a continuation. */
+.ai-bottom-row-section {
+  margin-top: 12px;
+}
+.ai-two-col-bottom {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 10px;
+  align-items: stretch;
+  margin-top: 8px;
+}
+.ai-two-col-bottom .ai-steps {
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+  display: grid;
+  gap: 6px;
+  font-size: 0.82rem;
+  line-height: 1.4;
+}
+@media (max-width: 960px) {
+  .ai-two-col-bottom {
+    grid-template-columns: 1fr;
+  }
+}
+.ai-steps-block {
+  margin-top: 6px;
+  display: grid;
+  gap: 4px;
+}
+.ai-steps-title {
+  margin: 0;
+  font-size: 0.74rem;
+  font-weight: 800;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.ai-three-col .ai-steps {
+  margin: 4px 0 0;
+  padding-left: 0;
+  list-style: none;
+  display: grid;
+  gap: 6px;
+  font-size: 0.78rem;
+  line-height: 1.4;
+}
+
+/* Within the 3-col layout, the type/difficulty/media rows that were
+   originally 5-column auto-fit grids would be too cramped at ~33%
+   viewport width. Let them reflow to multiple rows with a smaller
+   minmax. */
+.ai-three-col .ai-param-grid {
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  gap: 6px 8px;
+}
+
+/* AI Generate parameter fields — stacked label-over-input pattern with
+   a small uppercase label and a tidy hint slot for "(optional)" or
+   "(locked by admin)". Compact spacing throughout — labels are tiny
+   on top, inputs sit immediately below, fields pack tightly in the
+   auto-fit grid. */
+.ai-param-grid {
+  display: grid;
+  /* auto-fit so the grid reflows when Topic/Subtopic are hidden in
+     curriculum mode — Total Questions stretches to a full column
+     instead of looking marooned with two empty cells next to it. */
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 6px 10px;
+}
+.ai-param-field {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+.ai-param-field > .ai-param-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  line-height: 1.15;
+}
+.ai-param-field .ai-param-hint {
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  opacity: 0.85;
+  font-size: 0.68rem;
+  font-style: italic;
+}
+.ai-param-field > input,
+.ai-param-field > textarea {
+  width: 100%;
+  font-size: 0.88rem;
+  padding: 5px 9px;
+  font-family: inherit;
+}
+.ai-param-field > textarea {
+  resize: vertical;
+  min-height: 52px;
+  line-height: 1.35;
+}
+.ai-param-field > input:read-only,
+.ai-param-field > input:disabled,
+.ai-param-field > textarea:read-only,
+.ai-param-field > textarea:disabled {
+  background: var(--surface, #f3f5f8);
+  cursor: not-allowed;
+  color: var(--muted);
+}
+.ai-param-field > small {
+  color: var(--muted);
+  font-size: 0.74rem;
+  margin-top: 1px;
+  line-height: 1.4;
+}
+/* On narrow screens collapse to a single column so labels stay readable. */
+@media (max-width: 700px) {
+  .ai-param-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Curriculum tabs — top of /teacher/learning-objectives. 4 pills,
+   horizontally scrollable on narrow screens. Each pill carries a count
+   badge so you can see at a glance which curricula have content. */
+.curriculum-tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+  padding: 4px;
+  background: var(--surface-strong);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+.curriculum-tab {
+  flex: 1 1 auto;
+  min-width: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 14px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  font-size: 0.86rem;
+  font-weight: 500;
+  color: var(--text, #1f2937);
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.curriculum-tab:hover {
+  background: rgba(0, 0, 0, 0.03);
+}
+.curriculum-tab.active {
+  background: var(--accent-strong, #0f5b54);
+  color: #fff;
+  border-color: var(--accent-strong, #0f5b54);
+}
+.curriculum-tab-count {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.08);
+  color: inherit;
+  opacity: 0.9;
+}
+.curriculum-tab.active .curriculum-tab-count {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+/* Learning-objective catalog list — used on /teacher/learning-objectives */
+.lo-catalog {
+  display: grid;
+  gap: 18px;
+  margin-top: 6px;
+  width: 100%;
+  min-width: 0;
+  overflow-x: hidden;
+}
+.lo-topic {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface-strong);
+  padding: 12px 14px;
+}
+.lo-topic-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin: 0 0 8px;
+  color: var(--accent-strong, #0f5b54);
+}
+.lo-subtopic {
+  margin-top: 10px;
+  padding-left: 4px;
+  border-left: 2px solid var(--line);
+  padding-left: 10px;
+}
+.lo-subtopic-title {
+  font-size: 0.82rem;
+  font-weight: 600;
+  margin: 0 0 6px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  color: var(--text, #1f2937);
+}
+.lo-subtopic-count {
+  font-size: 0.7rem;
+  color: var(--muted);
+  font-weight: 400;
+}
+.lo-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 4px;
+}
+.lo-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 6px 8px;
+  background: var(--surface, #fff);
+  border-radius: 6px;
+  border: 1px solid transparent;
+}
+.lo-row:hover {
+  border-color: var(--line);
+}
+.lo-row-text {
+  flex: 1;
+  font-size: 0.86rem;
+  line-height: 1.4;
+  min-width: 0;
+}
+.lo-row-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.lo-row-source {
+  font-size: 0.7rem;
+  color: var(--muted);
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* LO management page — bulk-action toolbar above the catalog */
+.lo-mgr-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 12px;
+  margin: 0 0 10px;
+  background: var(--surface-strong);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  font-size: 0.82rem;
+}
+.lo-mgr-toolbar-actions {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.ghost-button.danger {
+  color: #b42318;
+  border-color: rgba(180, 35, 24, 0.25);
+}
+.ghost-button.danger:hover:not(:disabled) {
+  background: rgba(180, 35, 24, 0.06);
+  border-color: rgba(180, 35, 24, 0.45);
+}
+.ghost-button.danger:disabled {
+  color: var(--muted);
+  border-color: var(--line);
+}
+
+/* Group toggle on the LO management page (topic + subtopic headers).
+   Indent uses padding-left (NOT margin-left) so deeper rows never
+   overflow the container width. */
+.lo-mgr-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 8px;
+  margin: 0;
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 4px;
+  cursor: pointer;
+  user-select: none;
+}
+.lo-mgr-group:hover {
+  background: rgba(15, 91, 84, 0.04);
+}
+.lo-mgr-group--topic {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--accent-strong, #0f5b54);
+  background: var(--surface-strong);
+}
+.lo-mgr-group--subtopic {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text, #1f2937);
+  padding-left: 22px;
+}
+
+/* Curriculum tree — chevron + GroupSelectToggle sit on the same row.
+   The chevron is its own button so clicking it expands/collapses the
+   branch without flipping the selection checkbox (and vice versa).
+   Use full width + box-sizing so the row never exceeds its parent. */
+.lo-row-head {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+  box-sizing: border-box;
+}
+.lo-row-head > .lo-mgr-group {
+  flex: 1;
+  margin: 0;
+  min-width: 0;
+}
+.lo-chev {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+.lo-chev:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--text, #1f2937);
+}
+.lo-mgr-group-label {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+.lo-mgr-group-count {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #b42318;
+  background: rgba(180, 35, 24, 0.08);
+  padding: 1px 7px;
+  border-radius: 999px;
+  flex-shrink: 0;
+}
+
+/* Per-LO selection checkbox sits at the start of the row */
+.lo-row-check {
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+
+/* Scores tree — 3-level (Exam → Class → Students). The Exam header
+   reuses .class-panel + .class-panel-header from the Students page; the
+   per-class branch below it gets its own indent + chevron treatment. */
+.scores-class-list {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+}
+.scores-class-group {
+  border-left: 2px solid var(--line);
+  margin-left: 12px;
+  padding-left: 12px;
+  margin-top: 10px;
+}
+.scores-class-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
+  margin: 0 -8px;
+  border-radius: var(--radius);
+}
+.scores-class-header:hover {
+  background: var(--surface-strong);
+}
+.scores-class-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+  padding: 0 4px;
+  cursor: pointer;
+  user-select: none;
+}
+.scores-class-toggle-label {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+}
+.scores-class-toggle-label h3 {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+.scores-class-meta {
+  font-size: 0.78rem;
+  color: var(--muted);
+  font-weight: 500;
+}
+.scores-class-toggle-count {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #b42318;
+  background: rgba(180, 35, 24, 0.08);
+  padding: 1px 7px;
+  border-radius: 999px;
+  flex-shrink: 0;
+}
+.scores-class-table {
+  margin-top: 8px;
+}
+.scores-class-table input[type="checkbox"] {
+  cursor: pointer;
+}
+/* One-row student layout — tighten table cell padding so every row
+   reads as a single line (name + username + score + percent + status
+   + submitted + View) without wrapping into two visual lines. The
+   student-name cell (col 2) keeps wrapping enabled so long names
+   don't blow out the column. */
+.scores-class-table th,
+.scores-class-table td {
+  padding: 8px 10px;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+.scores-class-table td:nth-child(2) {
+  white-space: normal;
+}
+
+/* Sticky bulk-action bar that appears at the top of the Scores page
+   when one or more submissions are ticked. Tinted with the page's accent
+   so it reads as a temporary action context, not a permanent toolbar. */
+.scores-bulk-bar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  margin-bottom: 12px;
+  background: color-mix(in srgb, var(--accent, #16a34a) 8%, var(--surface));
+  border: 1px solid
+    color-mix(in srgb, var(--accent, #16a34a) 30%, transparent);
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+}
+.scores-bulk-bar-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* LO picker — used inside AI Generate to let the teacher toggle which
+   learning objectives drive the prompt. Compact, scrollable list with
+   topic / subtopic headings. */
+.lo-picker {
+  max-height: 320px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface-strong);
+  padding: 10px 12px;
+}
+.lo-picker-topic + .lo-picker-topic {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+}
+.lo-picker-topic-title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--accent-strong, #0f5b54);
+  margin-bottom: 4px;
+}
+.lo-picker-subtopic + .lo-picker-subtopic {
+  margin-top: 6px;
+}
+.lo-picker-subtopic-title {
+  font-size: 0.74rem;
+  color: var(--muted);
+  font-weight: 600;
+  margin: 4px 0 2px;
+  padding-left: 4px;
+}
+/* Collapsible row head — wraps [chevron button][group toggle] so they
+   sit on the same line. The chevron is its own button so clicking it
+   doesn't toggle the group's checkbox (and vice versa). */
+.lo-picker-row-head {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.lo-picker-chev {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+.lo-picker-chev:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--text, #1f2937);
+}
+.lo-picker-row-head > .lo-picker-group {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+/* Group toggle row — used at the top of each topic + subtopic in the
+   LO picker so the teacher can tick all LOs in a group with one click. */
+.lo-picker-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 6px;
+  margin-bottom: 4px;
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 4px;
+  cursor: pointer;
+  user-select: none;
+}
+.lo-picker-group:hover {
+  background: rgba(15, 91, 84, 0.04);
+}
+.lo-picker-group--topic {
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--accent-strong, #0f5b54);
+}
+.lo-picker-group--subtopic {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text, #1f2937);
+  padding-left: 24px;
+}
+.lo-picker-group-label {
+  flex: 1;
+  min-width: 0;
+}
+.lo-picker-group-count {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--muted);
+  background: rgba(0, 0, 0, 0.06);
+  padding: 1px 7px;
+  border-radius: 999px;
+}
+.lo-picker-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.lo-picker-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 4px 6px;
+  border-radius: 4px;
+  font-size: 0.83rem;
+  line-height: 1.4;
+  cursor: pointer;
+}
+.lo-picker-row:hover {
+  background: rgba(0, 0, 0, 0.03);
+}
+.lo-picker-row input[type="checkbox"] {
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+.lo-picker-row span {
+  flex: 1;
+  min-width: 0;
+}
+
+.exam-form button[type="submit"],
+.question-form button[type="submit"] {
+  justify-self: start;
+}
+
+/* Mode picker — two side-by-side radio cards. Click anywhere on a
+   card to select it; selected card gets the accent-green border +
+   tint. Cards collapse to a single column on narrow widths.
+   grid-template-rows: auto 1fr → label sits at the top, card-grid
+   stretches to fill the rest of the group's height. Combined with
+   the .exam-mode-row stretch below, this makes all 4 cards across
+   both groups share the same height. */
+.exam-mode-group {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 6px;
+}
+.mode-card-grid,
+.toggle-card-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-auto-rows: 1fr; /* cards stretch to the row height */
+  gap: 10px;
+}
+@media (max-width: 600px) {
+  .mode-card-grid,
+  .toggle-card-grid {
+    grid-template-columns: 1fr;
+  }
+}
+/* Full-width strip — spans both columns of .exam-form--two-col, sits
+   between the right-panel fieldset and the submit button. Two group
+   labels (Exam mode | Shuffling) above 4 cards forming a single
+   horizontal row across the full form width. Inner card-grids keep
+   their natural 1fr 1fr — each card now gets ~25 % of full form
+   width which is plenty for the descriptive text. */
+.exam-mode-row {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 4px;
+}
+@media (max-width: 720px) {
+  .exam-mode-row {
+    grid-template-columns: 1fr;
+  }
+}
+.mode-card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto;
+  column-gap: 12px;
+  row-gap: 4px;
+  padding: 12px 14px;
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius);
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
+  color: var(--text);
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.mode-card > svg {
+  grid-row: 1 / 3;
+  align-self: start;
+  margin-top: 2px;
+  color: var(--muted);
+  transition: color 0.15s ease;
+}
+.mode-card > strong {
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+.mode-card > span {
+  font-size: 0.82rem;
+  color: var(--muted);
+  font-weight: 400;
+  line-height: 1.45;
+}
+.mode-card:hover {
+  border-color: var(--accent-strong, #0f5b54);
+}
+.mode-card.selected {
+  border-color: var(--accent-strong, #0f5b54);
+  background: rgba(15, 91, 84, 0.05);
+}
+.mode-card.selected > svg {
+  color: var(--accent-strong, #0f5b54);
+}
+
+/* Toggle cards — used for the two Shuffle options. Same visual
+   language as mode-card but the checkbox stays visible as the
+   affordance, and the card border lights up when on. */
+.toggle-card {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  align-items: center;
+  column-gap: 12px;
+  padding: 12px 14px;
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius);
+  cursor: pointer;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text);
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.toggle-card:hover {
+  border-color: var(--accent-strong, #0f5b54);
+}
+.toggle-card.on {
+  border-color: var(--accent-strong, #0f5b54);
+  background: rgba(15, 91, 84, 0.05);
+}
+.toggle-card > svg {
+  color: var(--muted);
+  transition: color 0.15s ease;
+}
+.toggle-card.on > svg {
+  color: var(--accent-strong, #0f5b54);
+}
+.toggle-card > input[type="checkbox"] {
+  margin: 0;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+.toggle-card > span {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+.toggle-card > span > strong {
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: var(--text);
+}
+.toggle-card > span > small {
+  font-size: 0.78rem;
+  color: var(--muted);
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.exam-form-checkbox {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center;
+  gap: 10px;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+  font-weight: 500 !important;
+  color: var(--text) !important;
+  font-size: 0.92rem;
+}
+
+.exam-form-checkbox input {
+  margin: 0;
+  width: 16px;
+  height: 16px;
+}
+
+.bank-picker-list {
+  display: grid;
+  gap: 8px;
+  margin: 12px 0;
+  padding: 0;
+  list-style: none;
+  /* No max-height — let the picker grow with its content so admin / teacher
+     see each candidate question's full prompt + media + options. Page
+     scroll already takes over. */
+}
+
+.bank-picker-list li {
+  padding: 10px 12px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.bank-picker-list li.in-exam {
+  background: var(--surface-strong);
+  border-color: var(--line-strong);
+}
+
+.bank-picker-list li.in-exam label {
+  cursor: not-allowed;
+}
+
+.bank-picker-list li.in-exam p,
+.bank-picker-list li.in-exam .bank-picker-meta > *:not(.in-exam-badge) {
+  opacity: 0.6;
+}
+
+.in-exam-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--green-bg);
+  color: var(--green);
+  font-weight: 700;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.bank-picker-list label {
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  gap: 12px;
+  align-items: start;
+  cursor: pointer;
+}
+
+.bank-picker-list input {
+  margin: 4px 0 0;
+}
+
+.bank-picker-prompt {
+  margin-top: 4px;
+  font-size: 0.92rem;
+}
+
+.bank-picker-meta {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-size: 0.82rem;
+  flex-wrap: wrap;
+}
+
+.bank-filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0 16px;
+}
+
+.bank-filter-row select {
+  padding: 8px 12px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.88rem;
+  min-width: 140px;
+}
+
+.difficulty-pill {
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.difficulty-pill.easy {
+  background: var(--green-bg);
+  color: var(--green);
+}
+
+.difficulty-pill.medium {
+  background: var(--amber-bg);
+  color: var(--amber);
+}
+
+.difficulty-pill.hard {
+  background: var(--red-bg);
+  color: var(--red);
+}
+
+.difficulty-pill.hots {
+  background: #f3e8ff;
+  color: #6d28d9;
+}
+
+.difficulty-pill.olympiad {
+  background: #e0e7ff;
+  color: #3730a3;
+}
+
+.exam-form-row.five {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.language-pill {
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: #ecfeff;
+  color: #0e7490;
+}
+
+.bank-media-thumb {
+  /* Show media at its natural size — admin / teacher want to see the
+     real diagram, not a thumbnail. Only cap at 100% of the row so an
+     extremely wide image doesn't blow out the layout. height: auto
+     preserves aspect ratio.  */
+  display: block;
+  margin-top: 8px;
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+}
+
+.bank-media-audio,
+.bank-media-video {
+  margin-top: 8px;
+  display: block;
+  max-width: 100%;
+}
+
+.bank-media-video {
+  width: auto;
+  height: auto;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+}
+
+.exam-form-section {
+  display: grid;
+  gap: 10px;
+  margin-top: 4px;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface-strong);
+}
+
+.exam-form-section legend {
+  padding: 0 8px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.exam-form-section-title {
+  margin: 4px 0 0;
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.composition-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.composition-block {
+  display: grid;
+  gap: 6px;
+  padding: 12px 14px;
+  background: var(--surface-strong);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.composition-block > span {
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.85;
+}
+
+.composition-block > strong {
+  font-size: 0.95rem;
+}
+
+.composition-block ul {
+  display: grid;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.86rem;
+}
+
+.composition-block li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  padding: 2px 0;
+}
+
+.composition-block li label {
+  display: flex !important;
+  align-items: center;
+  gap: 8px;
+  justify-content: space-between;
+  width: 100%;
+  margin: 0;
+}
+
+.composition-block li label > span {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  flex: 1;
+  min-width: 0;
+}
+
+.composition-block li input[type="number"] {
+  width: 64px !important;
+  padding: 4px 6px;
+  font-size: 0.85rem;
+}
+
+.composition-block li input[type="number"]:disabled {
+  background: var(--surface, #f3f5f8);
+  color: var(--muted);
+  cursor: not-allowed;
+}
+
+.question-form {
+  display: grid;
+  gap: 14px;
+  margin-top: 12px;
+  padding: 18px;
+  background: var(--surface-strong);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.question-form-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.options-block {
+  display: grid;
+  gap: 8px;
+  padding: 12px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.options-block-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+}
+
+.option-row-edit {
+  display: grid;
+  grid-template-columns: 32px 1fr auto auto;
+  gap: 10px;
+  align-items: center;
+}
+
+.option-id-chip {
+  display: inline-grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  font-weight: 700;
+  font-size: 0.82rem;
+}
+
+.option-correct-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--text);
+}
+
+.option-correct-toggle input {
+  margin: 0;
+}
+
+.question-list {
+  display: grid;
+  gap: 14px;
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Collapsible Topic → Subtopic → Question tree for the Exams /
+   Manage view. Mirrors the bank tree visually (chevron-led rows on
+   a flat surface, no card chrome at the branch level — cards only
+   appear at the question leaf via .question-list-item). */
+.exam-question-tree {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 14px;
+}
+.exam-tree-topic,
+.exam-tree-subtopic {
+  display: flex;
+  flex-direction: column;
+}
+.exam-tree-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 10px;
+  background: transparent;
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  color: var(--text);
+}
+.exam-tree-row:hover {
+  background: var(--surface-strong);
+}
+.exam-tree-topic-row {
+  font-size: 0.95rem;
+}
+.exam-tree-subtopic-row {
+  font-size: 0.88rem;
+  padding-left: 26px;
+}
+.exam-tree-topic-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-left: 8px;
+  border-left: 1px solid var(--line);
+  margin-left: 12px;
+}
+.exam-tree-question-list {
+  margin: 6px 0 10px 26px;
+}
+
+/* Media review under each question in the tree. Images get a max
+   height so a big diagram doesn't push the rest of the tree out of
+   view; video/audio use the browser-default control chrome. */
+.exam-tree-question-media {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 8px 0;
+}
+.exam-tree-media-figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-width: 360px;
+}
+.exam-tree-media-figure img,
+.exam-tree-media-figure video {
+  max-width: 100%;
+  max-height: 240px;
+  width: auto;
+  height: auto;
+  border-radius: 6px;
+  border: 1px solid var(--line);
+  object-fit: contain;
+}
+.exam-tree-media-figure audio {
+  width: 100%;
+}
+.exam-tree-media-figure figcaption {
+  color: var(--muted);
+  font-size: 0.8rem;
+  line-height: 1.3;
+}
+
+.question-list-item {
+  display: grid;
+  gap: 8px;
+  padding: 14px 16px;
+  background: var(--surface-strong);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.question-list-meta {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  font-size: 0.82rem;
+}
+
+.question-type-pill {
+  padding: 2px 10px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.78rem;
+}
+
+.question-list-prompt {
+  margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.5;
+  /* No line-clamp — admin / teacher want the full prompt visible so they
+     can decide whether to reuse a question. Long prompts just push the
+     card taller; the page already scrolls. */
+}
+
+/* Markdown rendering for prompt + explanation text. AI-generated content
+   often contains pipe-tables, lists, inline code, and the occasional
+   bold/italic for emphasis — render them properly. */
+.markdown-content {
+  font-size: inherit;
+  line-height: 1.55;
+}
+.markdown-content > *:first-child { margin-top: 0; }
+.markdown-content > *:last-child { margin-bottom: 0; }
+.markdown-content p { margin: 0.5em 0; }
+.markdown-content ul,
+.markdown-content ol { margin: 0.5em 0; padding-left: 1.4em; }
+.markdown-content li { margin: 0.15em 0; }
+.markdown-content code {
+  background: var(--surface-strong);
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-size: 0.92em;
+}
+.markdown-content pre {
+  background: var(--surface-strong);
+  padding: 10px 12px;
+  border-radius: var(--radius);
+  overflow-x: auto;
+  font-size: 0.88em;
+}
+.markdown-content pre code { background: transparent; padding: 0; }
+.markdown-content table {
+  border-collapse: collapse;
+  margin: 0.6em 0;
+  font-size: 0.92em;
+  /* Tables can be wide — let them scroll horizontally rather than
+     squish the columns. */
+  display: block;
+  overflow-x: auto;
+  max-width: 100%;
+}
+.markdown-content thead { background: var(--surface-strong); }
+.markdown-content th,
+.markdown-content td {
+  border: 1px solid var(--line);
+  padding: 6px 10px;
+  text-align: left;
+  vertical-align: top;
+  white-space: nowrap;
+}
+.markdown-content blockquote {
+  margin: 0.6em 0;
+  padding-left: 12px;
+  border-left: 3px solid var(--accent);
+  color: var(--muted);
+}
+.markdown-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+}
+
+.question-list-options {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.question-list-options li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 10px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  font-size: 0.92rem;
+}
+
+.question-list-options li.is-correct {
+  border-color: var(--green);
+  background: var(--green-bg);
+}
+
+.correct-flag {
+  margin-left: auto;
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--green);
+}
+
+.question-list-answer {
+  margin: 0;
+  font-size: 0.92rem;
+}
+
+.question-list-explanation {
+  margin: 0;
+  font-size: 0.88rem;
+  color: var(--muted);
+  font-style: italic;
+}
+
+/* Bank 5-level collapsible tree
+   Topic → Subtopic → Difficulty → Media group → Question teaser
+   Each row is a button; chevron + label + count badge sit inline.
+   Indent is done with padding-left (not margin-left) so a row's
+   total width stays exactly its container's width — no horizontal
+   overflow / scrollbar even at the deepest levels. */
+.bank-tree {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 4px;
+  width: 100%;
+  max-width: 100%;
+}
+.bank-tree-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 7px 10px;
+  box-sizing: border-box;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  color: var(--text, #1f2937);
+  transition: background 0.12s ease, border-color 0.12s ease;
+}
+.bank-tree-row:hover {
+  background: rgba(15, 91, 84, 0.04);
+}
+.bank-tree-row--subject {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #fff;
+  background: var(--accent-strong, #0f5b54);
+  border-color: var(--accent-strong, #0f5b54);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+.bank-tree-row--subject:hover {
+  background: var(--accent-strong, #0f5b54);
+  filter: brightness(1.08);
+}
+.bank-tree-row--subject .bank-tree-count {
+  background: rgba(255, 255, 255, 0.22);
+  color: #fff;
+}
+.bank-tree-row--subject .bank-tree-index {
+  color: rgba(255, 255, 255, 0.8);
+}
+.bank-tree-row--topic {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--accent-strong, #0f5b54);
+  background: var(--surface-strong);
+  padding-left: 18px;
+}
+.bank-tree-row--subtopic {
+  font-size: 0.86rem;
+  font-weight: 600;
+  padding-left: 36px;
+}
+.bank-tree-row--difficulty {
+  font-size: 0.82rem;
+  font-weight: 500;
+  padding-left: 54px;
+}
+.bank-tree-row--media {
+  font-size: 0.8rem;
+  padding-left: 72px;
+  color: var(--muted);
+}
+.bank-tree-row--question {
+  font-size: 0.85rem;
+  padding-left: 90px;
+  background: var(--surface);
+  border-color: var(--line);
+}
+.bank-tree-row--question.bank-tree-row--open {
+  padding-left: 6px;
+  background: transparent;
+  border-color: transparent;
+  padding: 4px 6px;
+}
+.bank-tree-index {
+  font-weight: 700;
+  color: var(--muted);
+  min-width: 1.5em;
+}
+.bank-tree-label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.bank-tree-count {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.08);
+  color: var(--muted);
+  flex-shrink: 0;
+}
+.bank-tree-row--topic .bank-tree-count {
+  background: var(--accent-strong, #0f5b54);
+  color: #fff;
+}
+.bank-tree-teaser {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--muted);
+}
+.bank-tree-subtopic,
+.bank-tree-difficulty,
+.bank-tree-media {
+  display: grid;
+  gap: 4px;
+  margin-top: 4px;
+}
+.bank-tree-questions {
+  list-style: none;
+  margin: 4px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 4px;
+}
+.bank-tree-question {
+  margin: 0;
+}
+
+.metric-card {
+  display: grid;
+  gap: 8px;
+  padding: 18px;
+}
+
+.metric-card svg {
+  color: var(--accent-strong);
+}
+
+.metric-card span {
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 900;
+}
+
+.metric-card strong {
+  font-size: 1.8rem;
+  line-height: 1;
+}
+
+.admin-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.admin-panel {
+  padding: 22px;
+}
+
+.admin-panel.wide {
+  grid-column: 1 / -1;
+}
+
+/* Sparkle-blue accent for AI-related capability sections so admin can tell
+   them apart at a glance from the visually similar Exam parameters section.
+   The sparkle icon in the heading shares the accent color. */
+.admin-panel--ai {
+  border-color: #c7d2fe;
+  background:
+    linear-gradient(180deg, rgba(99, 102, 241, 0.04), rgba(99, 102, 241, 0) 80px),
+    #fff;
+}
+.admin-panel--ai h2 {
+  color: #4338ca;
+}
+
+.upload-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.upload-card {
+  display: grid;
+  gap: 12px;
+  align-content: start;
+  min-height: 260px;
+  padding: 16px;
+  background: var(--surface-strong);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.upload-icon {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  color: var(--accent-strong);
+  background: #e8fbf8;
+  border-radius: var(--radius);
+}
+
+.upload-card h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.upload-card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.file-picker {
+  display: grid;
+  margin-top: auto;
+}
+
+.file-picker input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.file-picker span {
+  display: block;
+  min-height: 42px;
+  overflow: hidden;
+  padding: 11px 12px;
+  color: #344054;
+  background: #fff;
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--radius);
+  font-size: 0.86rem;
+  font-weight: 800;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.form-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.admin-list,
+.upload-history {
+  display: grid;
+  gap: 10px;
+}
+
+.token-row,
+.class-row,
+.upload-row {
+  display: grid;
+  gap: 4px;
+  padding: 12px;
+  background: var(--surface-strong);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.token-row span,
+.class-row span,
+.upload-row span,
+.upload-row em {
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-style: normal;
+  font-weight: 800;
+}
+
+.upload-row {
+  grid-template-columns: 150px 1fr 90px;
+  align-items: center;
+}
+
+.admin-workbench {
+  display: grid;
+  grid-template-columns: 286px minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+  margin-top: 22px;
+}
+
+.classification-sidebar {
+  position: sticky;
+  top: 18px;
+  display: grid;
+  gap: 8px;
+  padding: 14px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.sidebar-title {
+  padding: 4px 6px 8px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.classification-item {
+  display: grid;
+  grid-template-columns: 28px 34px 1fr;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 12px;
+  color: var(--text);
+  text-align: left;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+.classification-item.active {
+  background: #eef6ff;
+  border-color: #c9defe;
+}
+
+.classification-number,
+.classification-icon {
+  display: grid;
+  place-items: center;
+  border-radius: 7px;
+}
+
+.classification-number {
+  width: 28px;
+  height: 28px;
+  color: var(--accent-strong);
+  background: #e8fbf8;
+  font-size: 0.8rem;
+  font-weight: 900;
+}
+
+.classification-icon {
+  width: 34px;
+  height: 34px;
+  color: var(--blue);
+  background: #eaf1ff;
+}
+
+.classification-item strong,
+.classification-item em {
+  display: block;
+}
+
+.classification-item strong {
+  font-size: 0.9rem;
+}
+
+.classification-item em {
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-style: normal;
+  line-height: 1.35;
+}
+
+.classification-content,
+.classification-stack {
+  min-width: 0;
+}
+
+.classification-stack {
+  display: grid;
+  gap: 16px;
+}
+
+.content-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 6px 2px 0;
+}
+
+.content-heading h2 {
+  margin: 0 0 4px;
+  font-size: 1.55rem;
+  line-height: 1.15;
+}
+
+.content-heading p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.content-grid {
+  display: grid;
+  gap: 14px;
+}
+
+.content-grid.two {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.content-grid.class-layout {
+  grid-template-columns: minmax(230px, 320px) minmax(0, 1fr);
+}
+
+.admin-panel.flat {
+  box-shadow: none;
+}
+
+.token-generator-form {
+  grid-template-columns: repeat(4, minmax(0, 1fr)) auto;
+  align-items: end;
+}
+
+.prompt-workspace {
+  display: grid;
+  grid-template-columns: minmax(190px, 270px) minmax(0, 1fr);
+  gap: 12px;
+  min-width: 0;
+}
+
+.class-selector-list,
+.student-table,
+.monitor-list,
+.progress-list,
+.analysis-class-stack,
+.analysis-students,
+.achievement-chart,
+.prompt-list {
+  display: grid;
+  gap: 10px;
+}
+
+.class-selector,
+.prompt-selector,
+.student-row,
+.monitor-row,
+.progress-row,
+.analysis-class,
+.analysis-student,
+.student-exam-analysis {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface-strong);
+}
+
+.class-selector {
+  display: grid;
+  gap: 4px;
+  width: 100%;
+  padding: 12px;
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+}
+
+.class-selector.active {
+  border-color: var(--accent);
+  background: #f0fdfa;
+}
+
+.prompt-selector {
+  display: grid;
+  gap: 4px;
+  width: 100%;
+  padding: 12px;
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+}
+
+.prompt-selector.active {
+  border-color: var(--blue);
+  background: #eef6ff;
+}
+
+.class-selector span,
+.prompt-selector span,
+.student-row span,
+.student-row em,
+.monitor-row span,
+.monitor-row em,
+.progress-row span,
+.analysis-class summary span,
+.analysis-student summary span,
+.student-exam-analysis span {
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-style: normal;
+  font-weight: 800;
+}
+
+.prompt-preview {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+}
+
+.prompt-preview > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.prompt-preview textarea {
+  width: 100%;
+  min-height: 430px;
+  padding: 12px;
+  color: #1f2937;
+  background: #fbfcfe;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  font-family: "Cascadia Mono", "SFMono-Regular", Consolas, monospace;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  outline: none;
+  resize: vertical;
+}
+
+.prompt-preview textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.12);
+}
+
+/* .student-row was removed from this 3-col grid rule because the
+   current JSX renders only two children (text-block + actions). The
+   empty 3rd column produced the wide blank space on the right. The
+   canonical .student-row layout earlier in this file is a flex row
+   with justify-content: space-between, which is what we want. */
+.monitor-row {
+  display: grid;
+  grid-template-columns: 1.2fr 0.7fr 1fr;
+  gap: 10px;
+  align-items: center;
+  padding: 12px;
+}
+
+.progress-row {
+  display: grid;
+  gap: 8px;
+  padding: 12px;
+}
+
+.progress-row > div,
+.student-exam-analysis > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.analysis-class,
+.analysis-student {
+  padding: 0;
+  overflow: hidden;
+}
+
+.analysis-class summary,
+.analysis-student summary {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 13px 14px;
+  cursor: pointer;
+}
+
+.analysis-students {
+  padding: 0 14px 14px;
+}
+
+.analysis-student {
+  background: #fff;
+}
+
+.analysis-student .muted {
+  padding: 0 14px 14px;
+}
+
+.student-exam-analysis {
+  display: grid;
+  gap: 10px;
+  margin: 0 14px 14px;
+  padding: 12px;
+  background: var(--surface-strong);
+}
+
+.admin-metrics.compact {
+  margin: 0;
+}
+
+@media (max-width: 1120px) {
+  .exam-shell {
+    grid-template-columns: minmax(0, 1fr) 240px;
+  }
+}
+
+@media (max-width: 820px) {
+  .auth-shell,
+  .result-dashboard,
+  .token-entry-panel,
+  .admin-grid,
+  .upload-grid,
+  .admin-workbench,
+  .content-grid.two,
+  .content-grid.class-layout,
+  .token-generator-form,
+  .prompt-workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .auth-context {
+    order: -1;
+  }
+
+  .exam-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .question-nav {
+    position: static;
+  }
+
+  .nav-grid {
+    grid-template-columns: repeat(8, minmax(34px, 1fr));
+  }
+
+  .exam-topbar,
+  .list-header,
+  .results-header,
+  .admin-header,
+  .status-strip {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .submit-button,
+  .ghost-button {
+    width: 100%;
+  }
+
+  .admin-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .classification-sidebar {
+    position: static;
+  }
+
+  .upload-row {
+    grid-template-columns: 1fr;
+  }
+
+  .student-row,
+  .monitor-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .auth-shell,
+  .exam-list-shell,
+  .results-shell,
+  .admin-shell {
+    width: min(100% - 20px, 1180px);
+  }
+
+  .auth-panel,
+  .auth-context,
+  .exam-list-panel,
+  .token-entry-panel,
+  .admin-panel,
+  .question-panel,
+  .breakdown-panel,
+  .review-section,
+  .score-panel {
+    padding: 18px;
+  }
+
+  .auth-context > div,
+  .answer-compare,
+  .form-pair,
+  .admin-metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .nav-grid {
+    grid-template-columns: repeat(5, minmax(34px, 1fr));
+  }
+
+  .question-actions {
+    flex-direction: column;
+  }
+
+  .secondary-button {
+    width: 100%;
+  }
+}
+
+.essay-answer {
+  display: grid;
+  gap: 8px;
+}
+
+.essay-answer--multipart {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.essay-subpart {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.essay-subpart-label {
+  margin: 0;
+  padding: 6px 10px;
+  background: color-mix(in srgb, var(--accent, #16a34a) 8%, var(--surface-strong));
+  border-left: 3px solid var(--accent, #16a34a);
+  border-radius: var(--radius);
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+.essay-subpart-prompt {
+  font-weight: 500;
+  color: var(--text);
+  margin-left: 6px;
+}
+
+math-field.math-field-editor {
+  display: block;
+  min-height: 140px;
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+math-field.math-field-editor:focus,
+math-field.math-field-editor:focus-within {
+  outline: 2px solid var(--accent, #0ea5e9);
+  outline-offset: 2px;
+}
+
+.essay-hint {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.essay-hint kbd {
+  display: inline-block;
+  padding: 0 5px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--surface-strong);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.78rem;
+}
+
+.math-latex-view {
+  display: inline-block;
+  font-size: 1.05rem;
+}
+
+/* Stack COLUMNS and CLASSES vertically (was a 50/50 grid). Each
+   section gets the full panel width so all its toggle pills can
+   sit on a single row instead of wrapping. */
+.report-export-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 12px;
+}
+
+/* Single-line toggle row. If the total width exceeds the panel,
+   horizontal scroll kicks in instead of wrapping — keeps the row
+   visually compact at the cost of needing to scroll for very long
+   lists. nowrap on each toggle so individual labels never wrap mid-
+   word. */
+.report-toggle-list {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 8px 16px;
+  margin-top: 6px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+}
+
+.report-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.88rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.credentials-panel {
+  border-left: 3px solid var(--green, #047857);
+}
+
+.credentials-panel code {
+  background: var(--surface-strong);
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+}
+
+.ai-prompt-output {
+  width: 100%;
+  margin-top: 12px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface-strong);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  resize: vertical;
+  min-height: 320px;
+}
+
+
+.ai-steps {
+  margin: 8px 0 0;
+  padding-left: 0;
+  list-style: none;
+  display: grid;
+  gap: 10px;
+}
+
+.ai-steps li {
+  padding: 10px 14px;
+  border-left: 3px solid var(--accent, #0ea5e9);
+  background: var(--surface);
+  border-radius: 0 8px 8px 0;
+  line-height: 1.55;
+}
+
+.ai-steps code {
+  background: var(--surface-strong);
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+}
+
+.analyze-bar-track {
+  position: relative;
+  height: 10px;
+  background: var(--surface-strong);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.analyze-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #0ea5e9, #06b6d4);
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+.analyze-bar-fill.strong {
+  background: linear-gradient(90deg, #10b981, #22c55e);
+}
+
+.analyze-bar-fill.weak {
+  background: linear-gradient(90deg, #f97316, #ef4444);
+}
+
+.analyze-histogram {
+  display: grid;
+  gap: 8px;
+}
+
+.analyze-day-bars {
+  display: grid;
+  grid-template-columns: repeat(30, 1fr);
+  gap: 3px;
+  align-items: end;
+  height: 140px;
+  padding: 8px 6px 4px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+}
+
+.analyze-day-bars.analyze-score-buckets {
+  grid-template-columns: repeat(10, 1fr);
+}
+
+.analyze-day-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  height: 100%;
+  gap: 4px;
+}
+
+.analyze-day-bar {
+  width: 100%;
+  background: linear-gradient(180deg, #0ea5e9, #0284c7);
+  border-radius: 4px 4px 0 0;
+  min-height: 2px;
+}
+
+.analyze-day-bar.score {
+  background: linear-gradient(180deg, #6366f1, #4338ca);
+}
+
+.analyze-day-col span {
+  font-size: 0.62rem;
+  color: var(--muted);
+  white-space: nowrap;
+  transform: rotate(-45deg);
+  transform-origin: top right;
+  margin-top: 4px;
+  height: 14px;
+}
+
+.analyze-bank-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.analyze-bank-card {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 12px 14px;
+  background: var(--surface);
+}
+
+.analyze-bank-list {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+}
+
+.analyze-bank-list li {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 8px;
+  align-items: center;
+  font-size: 0.85rem;
+}
+
+.analyze-bank-list li strong {
+  text-align: right;
+}
+
+/* Per-teacher capabilities editor (admin) */
+.capabilities-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 10px 14px;
+  margin-top: 8px;
+}
+
+.capabilities-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--border, #e6e8ee);
+  border-radius: 8px;
+  background: var(--surface-2, #fafbfc);
+  cursor: pointer;
+  transition: background-color 80ms ease, border-color 80ms ease;
+}
+
+.capabilities-row:hover {
+  background: var(--surface-3, #f3f5f8);
+  border-color: var(--border-strong, #c9ced6);
+}
+
+.capabilities-row input[type="checkbox"] {
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+
+.capabilities-row-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.capabilities-row-text strong {
+  font-weight: 600;
+}
+
+.capabilities-row-text code {
+  font-size: 0.75rem;
+  color: var(--muted, #6b7280);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.capabilities-row-text small {
+  font-size: 0.78rem;
+  color: var(--muted, #6b7280);
+  line-height: 1.35;
+}
+
+/* Compact variant — used inside sub-grouped capability sections so the
+   already-grouped rows don't waste vertical space. */
+.capabilities-grid--compact {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 6px 10px;
+}
+
+.capabilities-row--compact {
+  padding: 6px 10px;
+  align-items: center;
+  gap: 8px;
+}
+
+.capabilities-row--compact .capabilities-row-text {
+  gap: 0;
+}
+
+.capabilities-row--compact .capabilities-row-text strong {
+  font-weight: 500;
+}
+
+.capabilities-row--compact input[type="number"] {
+  flex-shrink: 0;
+  padding: 4px 6px;
+  font-size: 0.85rem;
+}
+
+/* ===== Exam review mode ===== */
+
+/* Wrapper around the question article. The disabled fieldset locks every
+   form control inside without breaking layout. We strip default browser
+   chrome (border/margin/padding) so it inherits the article look. */
+.question-fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+.question-fieldset[disabled] {
+  /* No global opacity change — color-coded option rows + the explanation
+     panel below the nav grid carry the visual feedback. */
+  cursor: default;
+}
+
+/* Non-option answer controls get a compare strip beneath them showing
+   the user's answer vs the correct answer. */
+.text-answer-wrap,
+.number-answer-wrap {
+  display: grid;
+  gap: 8px;
+}
+
+/* Color-coded option rows in review mode.
+   - .option-correct  → the right answer (always green, regardless of pick)
+   - .option-wrong-pick → student picked this but it's wrong */
+.option-list .option-row.option-correct {
+  border-color: var(--green);
+  background: color-mix(in srgb, var(--green) 8%, var(--surface));
+  box-shadow: inset 0 0 0 1px var(--green);
+  color: var(--text);
+}
+.option-list .option-row.option-wrong-pick {
+  border-color: var(--red);
+  background: color-mix(in srgb, var(--red) 8%, var(--surface));
+  box-shadow: inset 0 0 0 1px var(--red);
+  color: var(--text);
+}
+.option-list .option-row[disabled] {
+  cursor: default;
+}
+
+/* Color-coded nav-dots in review mode. */
+.nav-dot.correct {
+  color: var(--green);
+  background: color-mix(in srgb, var(--green) 12%, var(--surface));
+  border-color: var(--green);
+}
+.nav-dot.incorrect {
+  color: var(--red);
+  background: color-mix(in srgb, var(--red) 12%, var(--surface));
+  border-color: var(--red);
+}
+.nav-dot.correct.active,
+.nav-dot.incorrect.active {
+  color: #fff;
+  background: var(--blue);
+  border-color: var(--blue);
+}
+
+/* Explanation panel that sits below the nav grid in review mode. */
+.review-explanation {
+  margin-top: 14px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface-strong);
+}
+.review-explanation h3 {
+  margin: 0 0 6px;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.review-explanation .review-score {
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+.review-explanation.is-correct {
+  border-color: var(--green);
+  background: color-mix(in srgb, var(--green) 6%, var(--surface));
+}
+.review-explanation.is-correct h3 {
+  color: var(--green);
+}
+.review-explanation.is-incorrect {
+  border-color: var(--red);
+  background: color-mix(in srgb, var(--red) 6%, var(--surface));
+}
+.review-explanation.is-incorrect h3 {
+  color: var(--red);
+}
+.review-explanation p {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.45;
+}
+.review-explanation p.muted {
+  color: var(--muted);
+  font-style: italic;
+}
+
+.essay-block-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 10px;
+  background: var(--surface);
+}
+
+/* MathLive renders its right-click context menu (Insert Matrix /
+   Mode / Font Style / Color / Background / Cut / Copy / Paste /
+   Select All) into a top-level container on the body. We disable
+   it via the API + event-blockers in EssayBlockEditor, but as a
+   final belt-and-braces guard, hide any DOM node MathLive uses
+   for the popover. */
+.ML__menu,
+[data-ml-menu],
+ml-menu,
+.ML__contextmenu,
+.ML__keystroke-caption,
+math-field::part(menu),
+math-field::part(menu-toggle) {
+  display: none !important;
+}
+
+.essay-block-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--line);
+}
+.essay-block-toolbar button {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  font-size: 0.82rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--surface-strong);
+  color: var(--text);
+  cursor: pointer;
+}
+.essay-block-toolbar button:hover {
+  background: color-mix(in srgb, var(--accent, #16a34a) 8%, var(--surface-strong));
+  border-color: var(--accent, #16a34a);
+}
+.essay-block-toolbar .toolbar-primary {
+  background: var(--accent, #16a34a);
+  color: white;
+  border-color: var(--accent, #16a34a);
+}
+.essay-block-toolbar .toolbar-primary:hover {
+  background: var(--accent-strong, #15803d);
+  border-color: var(--accent-strong, #15803d);
+}
+.essay-block-toolbar .toolbar-divider {
+  width: 1px;
+  background: var(--line);
+  margin: 0 4px;
+}
+
+.essay-block-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.essay-block-text {
+  width: 100%;
+  resize: none;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 6px 8px;
+  font-family: inherit;
+  font-size: 0.92rem;
+  line-height: 1.4;
+  background: var(--surface-strong);
+  min-height: 38px;
+  color: var(--text);
+}
+.essay-block-text:focus {
+  outline: none;
+  border-color: var(--accent, #16a34a);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent, #16a34a) 20%, transparent);
+}
+.essay-block-math {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: color-mix(in srgb, var(--accent, #16a34a) 5%, var(--surface-strong));
+  border: 1px solid color-mix(in srgb, var(--accent, #16a34a) 25%, var(--line));
+  border-radius: var(--radius);
+  padding: 6px 8px;
+}
+.essay-block-math math-field {
+  flex: 1;
+  min-height: 36px;
+}
+.essay-block-math .remove-block,
+.essay-block-row .remove-block {
+  background: none;
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.essay-block-math .remove-block:hover,
+.essay-block-row .remove-block:hover {
+  color: var(--red, #dc2626);
+  background: color-mix(in srgb, var(--red, #dc2626) 10%, transparent);
+}
+.essay-block-row {
+  display: flex;
+  align-items: stretch;
+  gap: 6px;
+}
+.essay-block-row > :first-child {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Academic-year filter pill — sits above the class list on Students /
+   Scores / Reports. Compact inline-flex chip so it doesn't take a full
+   row, but still reads as a distinct control. */
+.year-filter {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface-strong);
+  font-size: 0.85rem;
+  margin-bottom: 12px;
+}
+.year-filter label {
+  color: var(--muted);
+  font-weight: 600;
+}
+.year-filter select {
+  padding: 2px 6px;
+  font-size: 0.85rem;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--surface);
+}
+
+/* ---------- Student post-login hub + score pages ----------
+   Two-card chooser shown right after a student logs in (Exam vs
+   Score), plus the styling used by /student/scores (table list)
+   and /student/scores/[id] (read-only mirror of teacher Grade
+   submission page). Kept here at the bottom so the new student
+   tree composes with everything else without reordering. */
+
+.student-hub-panel {
+  padding: 34px;
+}
+
+.student-hub-grid {
+  display: grid;
+  gap: 14px;
+  margin: 26px 0 18px;
+  /* Two cards side by side on wide screens, stacked on narrow. */
+  grid-template-columns: 1fr 1fr;
+}
+@media (max-width: 640px) {
+  .student-hub-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.student-hub-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 18px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  color: var(--text);
+  text-decoration: none;
+  transition:
+    transform 120ms ease,
+    border-color 120ms ease,
+    box-shadow 120ms ease;
+}
+.student-hub-card:hover {
+  transform: translateY(-1px);
+  border-color: var(--accent, #6366f1);
+  box-shadow: var(--shadow);
+}
+.student-hub-card h2 {
+  margin: 0 0 4px;
+  font-size: 1.05rem;
+}
+.student-hub-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.86rem;
+  line-height: 1.45;
+}
+
+.student-hub-card-icon {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+  place-items: center;
+  color: #fff;
+  background: linear-gradient(135deg, var(--accent), var(--blue));
+  border-radius: var(--radius);
+}
+
+.student-hub-logout {
+  margin-top: 6px;
+  justify-self: start;
+}
+
+/* The /student/scores list + /student/scores/[id] review pages
+   reuse the dashboard-table look already used by teacher views,
+   but live outside the TeacherShell — so they need their own
+   page-container width + header layout. */
+.student-scores-shell {
+  width: min(1280px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 28px 0 60px;
+  display: grid;
+  gap: 18px;
+}
+
+.student-scores-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.student-scores-header h1 {
+  margin: 0 0 4px;
+  font-size: 1.4rem;
+}
+.student-scores-header p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+.student-scores-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* ---------- Multi-select clarity ----------
+   Added in response to widespread "I selected options but it shows
+   as unanswered" complaints. Two visual fixes work together:
+     1. A banner above the option list explicitly stating "Select all
+        that apply" — disambiguates from single-choice questions
+        which use the same option layout.
+     2. A checkbox-style marker on each multi-select option so the
+        selected state is unmistakable. The old subtle background
+        tint was easy to miss and students didn't realise their
+        second click had toggled the option back off. */
+
+.multi-select-hint {
+  margin-top: 10px;
+  margin-bottom: 12px;
+  padding: 10px 14px;
+  background: linear-gradient(135deg, #fef3c7, #fde68a);
+  border-left: 4px solid #d97706;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  color: #78350f;
+  line-height: 1.45;
+}
+.multi-select-hint strong {
+  font-weight: 800;
+  color: #78350f;
+}
+.multi-select-hint span {
+  color: #92400e;
+}
+
+/* Reserve a column for the checkbox marker on multi-select options.
+   `.option-row` is a CSS grid with `34px 1fr`; multi-select needs
+   an extra leading column for the checkbox. */
+.option-row.option-row--multi {
+  grid-template-columns: 24px 34px 1fr;
+}
+
+.option-checkbox {
+  display: grid;
+  width: 22px;
+  height: 22px;
+  place-items: center;
+  border: 2px solid var(--line);
+  border-radius: 5px;
+  background: #fff;
+  color: transparent;
+  font-weight: 900;
+  font-size: 0.95rem;
+  line-height: 1;
+  transition:
+    background 100ms ease,
+    border-color 100ms ease,
+    color 100ms ease;
+}
+.option-checkbox.checked {
+  background: var(--accent, #6366f1);
+  border-color: var(--accent, #6366f1);
+  color: #fff;
+}
+.option-row.option-row--multi.selected .option-checkbox {
+  /* Reinforce the checked look when the row carries .selected too. */
+  background: var(--accent, #6366f1);
+  border-color: var(--accent, #6366f1);
+  color: #fff;
+}

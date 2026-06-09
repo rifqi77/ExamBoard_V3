@@ -1,0 +1,12 @@
+{
+    "studentCount": 2000,
+    "teacherCount": 20,
+    "concurrency": 100,
+    "baseHost": "127.0.0.1",
+    "ports": [8091, 8092, 8093, 8094, 8095, 8096, 8097, 8098, 8099, 8100],
+    "token": "LOADTEST-2026",
+    "examCode": "LOADTEST",
+    "password": "LoadTestPass",
+    "teacherIterations": 30,
+    "teacherIntervalMs": 1500
+}
