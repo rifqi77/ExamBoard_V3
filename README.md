@@ -156,9 +156,69 @@ A workflow at `.github/workflows/deploy.yml` builds Composer + Vite assets in th
 1. Checkout, install Composer (production) and npm dependencies (cached)
 2. Run `npm run build` to produce `public/build/`
 3. rsync the tree to the server, **excluding** `.env`, `.git`, runtime cache/sessions/logs, and tests
-4. SSH in and: `migrate --force` → `config:cache` → `route:cache` → `view:cache` → optional FPM reload → `php artisan up`
+4. **Pre-migrate snapshot**: `mysqldump | gzip` of the live DB into `backups/pre-deploy-<timestamp>.sql.gz` on the server (kept 14 days, retention pruned automatically). If the dump fails, the deploy is aborted before any migration runs — no migration without a fallback.
+5. `php artisan down` → `migrate --force` → `config:cache` → `route:cache` → `view:cache` → optional FPM reload → `php artisan up`
 
-The deploy is wrapped in `php artisan down` / `php artisan up` so requests get a 503 maintenance page during the swap (~5 seconds for migrations + caches on a typical server).
+The deploy is wrapped in `php artisan down` / `php artisan up` so requests get a 503 maintenance page during the swap (~5 seconds for migrations + caches on a typical server). If migrations fail mid-deploy, the site **stays in maintenance mode** so it doesn't half-serve — you investigate, restore from the snapshot, then `php artisan up` manually.
+
+### Restoring from a pre-deploy snapshot
+
+If a migration goes wrong, recover in seconds:
+
+```bash
+cd /var/www/exam-board
+ls -lht backups/pre-deploy-*.sql.gz | head -5   # find the most recent
+# Restore (DESTRUCTIVE — overwrites the live DB):
+zcat backups/pre-deploy-<timestamp>.sql.gz | mysql -u <db_user> -p <db_name>
+# Roll the schema back to that point:
+php artisan migrate:rollback --force      # repeat if multiple migrations were applied
+php artisan up
+```
+
+### Nightly off-host backup (recommended for production)
+
+`scripts/db-backup.sh` is a standalone backup script (no dependencies, reads creds from `.env`) that takes a daily snapshot and optionally ships it to a second machine via rsync or to an S3 bucket. Pre-deploy snapshots live on the same disk; off-host nightly backups protect against server loss.
+
+**Install on the server:**
+
+```bash
+cd /var/www/exam-board
+chmod +x scripts/db-backup.sh
+sudo mkdir -p /var/backups/exam-board
+sudo chown deploy:deploy /var/backups/exam-board
+
+# Pick an off-host target — set ONE of these in /etc/cron.d/exam-board-backup:
+#   REMOTE_RSYNC_TARGET="backup@nas.lan:/srv/backups/exam-board/"
+#   REMOTE_S3_BUCKET="s3://my-exam-backups/exam-board/"
+
+# Cron entry — runs every night at 03:15 local:
+sudo tee /etc/cron.d/exam-board-backup > /dev/null <<'CRON'
+SHELL=/bin/bash
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+# Set ONE off-host target:
+# REMOTE_RSYNC_TARGET=backup@nas.lan:/srv/backups/exam-board/
+# REMOTE_S3_BUCKET=s3://my-exam-backups/exam-board/
+
+15 3 * * * deploy /var/www/exam-board/scripts/db-backup.sh >> /var/log/exam-board-backup.log 2>&1
+CRON
+```
+
+The script:
+
+- Streams `mysqldump | gzip` (no plaintext dump on disk)
+- Verifies the output is non-empty AND has the expected SQL header before declaring success
+- Logs to syslog as `tag=exam-db-backup`, so you can `journalctl --grep=exam-db-backup`
+- Prunes local copies older than 14 days
+- Off-host copy happens **after** the local dump is verified — a half-broken backup never reaches your second site
+- Idempotent — safe to re-run, safe to skip days, safe to run from cron AND manually
+
+**To smoke-test it**, run once manually as the deploy user:
+
+```bash
+/var/www/exam-board/scripts/db-backup.sh
+# Should print: "Backup complete: /var/backups/exam-board/<host>-<db>-<date>.sql.gz"
+ls -lh /var/backups/exam-board/
+```
 
 ### Manual deploy from the Actions tab
 

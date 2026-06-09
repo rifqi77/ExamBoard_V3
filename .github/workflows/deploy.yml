@@ -135,10 +135,59 @@ jobs:
             --exclude='README.md' \
             ./ "${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH}/"
 
+      # ---- Pre-migrate safety net: timestamped mysqldump on the server ---
+      # Runs BEFORE `migrate --force` so any bad migration is recoverable in
+      # seconds via:  zcat backups/<timestamp>.sql.gz | mysql -u root -p <db>
+      #
+      # Credentials are read from the server's .env (the workflow never
+      # learns the DB password). Old backups are pruned by mtime (14d
+      # retention). If the dump fails, the deploy is ABORTED — we'd rather
+      # bounce a deploy than migrate without a fallback.
+      - name: Pre-migrate database snapshot
+        env:
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+          DEPLOY_PORT: ${{ secrets.DEPLOY_PORT }}
+        run: |
+          set -euo pipefail
+          PORT="${DEPLOY_PORT:-22}"
+          ssh -p "$PORT" -o StrictHostKeyChecking=yes "${DEPLOY_USER}@${DEPLOY_HOST}" \
+            "cd ${DEPLOY_PATH} && \
+             mkdir -p backups && chmod 700 backups && \
+             DB_CONN=\$(grep -E '^DB_CONNECTION=' .env | cut -d= -f2- | tr -d '\"' | xargs) && \
+             DB_HOST=\$(grep -E '^DB_HOST=' .env | cut -d= -f2- | tr -d '\"' | xargs) && \
+             DB_PORT=\$(grep -E '^DB_PORT=' .env | cut -d= -f2- | tr -d '\"' | xargs) && \
+             DB_NAME=\$(grep -E '^DB_DATABASE=' .env | cut -d= -f2- | tr -d '\"' | xargs) && \
+             DB_USER=\$(grep -E '^DB_USERNAME=' .env | cut -d= -f2- | tr -d '\"' | xargs) && \
+             DB_PASS=\$(grep -E '^DB_PASSWORD=' .env | cut -d= -f2- | tr -d '\"' | xargs) && \
+             if [ \"\$DB_CONN\" != \"mysql\" ] && [ \"\$DB_CONN\" != \"mariadb\" ]; then \
+                 echo 'Pre-migrate snapshot skipped — DB_CONNECTION is not mysql/mariadb.'; \
+                 exit 0; \
+             fi && \
+             TS=\$(date -u +'%Y%m%dT%H%M%SZ') && \
+             OUT=\"backups/pre-deploy-\${TS}.sql.gz\" && \
+             echo \"Snapshotting \$DB_NAME → \$OUT (commit ${{ github.sha }})\" && \
+             MYSQL_PWD=\"\$DB_PASS\" mysqldump \
+                 --host=\"\$DB_HOST\" --port=\"\${DB_PORT:-3306}\" --user=\"\$DB_USER\" \
+                 --single-transaction --quick --routines --triggers --events \
+                 --no-tablespaces --skip-lock-tables \
+                 --default-character-set=utf8mb4 \
+                 \"\$DB_NAME\" | gzip -9 > \"\$OUT\" && \
+             test -s \"\$OUT\" || (echo '::error::mysqldump produced empty file — aborting deploy' && rm -f \"\$OUT\" && exit 1) && \
+             SIZE=\$(stat -c%s \"\$OUT\" 2>/dev/null || stat -f%z \"\$OUT\") && \
+             echo \"Snapshot OK: \$(numfmt --to=iec --suffix=B \$SIZE 2>/dev/null || echo \${SIZE}B)\" && \
+             find backups -name 'pre-deploy-*.sql.gz' -type f -mtime +14 -delete 2>/dev/null || true && \
+             ls -lh backups/pre-deploy-*.sql.gz 2>/dev/null | tail -5"
+
       # ---- Post-deploy: run migrations + rebuild caches + reload FPM ------
       # The .env on the server is preserved by the rsync exclude above.
       # `migrate --force` is required because Laravel refuses to run
       # destructive migrations in production without it.
+      #
+      # Order matters: down → migrate → caches → FPM → up. If migration fails
+      # we deliberately stay in maintenance mode (no `php artisan up`) so the
+      # site doesn't half-serve while you investigate.
       - name: Run post-deploy commands on server
         env:
           DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
