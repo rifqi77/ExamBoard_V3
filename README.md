@@ -115,6 +115,55 @@ php artisan view:cache
 
 Re-run after every deploy / `.env` change.
 
+## Continuous deployment (GitHub Actions)
+
+A workflow at `.github/workflows/deploy.yml` builds Composer + Vite assets in the GitHub runner and rsyncs the artefact to your friend's server on every push to `main` (and on-demand from the Actions tab). After the upload it SSHes in to run migrations, rebuild Laravel caches, and reload PHP-FPM.
+
+### One-time setup
+
+1. **On the server**, create a deploy user and add a fresh SSH public key to its `~/.ssh/authorized_keys`. Generate the key pair on your local machine:
+   ```bash
+   ssh-keygen -t ed25519 -f ~/.ssh/exam_board_deploy -C "exam-board-deploy"
+   ssh-copy-id -i ~/.ssh/exam_board_deploy.pub deploy@your-server.example.com
+   ```
+
+2. **In the GitHub repo**, go to **Settings → Secrets and variables → Actions → New repository secret** and add:
+
+   | Secret | Value | Required? |
+   |---|---|---|
+   | `DEPLOY_HOST` | Server hostname or IP (e.g. `exam.friend.dev`) | ✅ |
+   | `DEPLOY_USER` | SSH user (e.g. `deploy`) | ✅ |
+   | `DEPLOY_PATH` | Absolute path to the app on the server (e.g. `/var/www/exam-board`) | ✅ |
+   | `DEPLOY_SSH_KEY` | Contents of `~/.ssh/exam_board_deploy` (the **private** key, including header/footer) | ✅ |
+   | `DEPLOY_PORT` | SSH port if not 22 | optional |
+   | `DEPLOY_FPM_SERVICE` | PHP-FPM systemd unit name (default `php8.2-fpm`). Leave empty to skip the reload | optional |
+
+3. **On the server**, make sure the deploy user can reload PHP-FPM without a password prompt — add a sudoers drop-in (`/etc/sudoers.d/deploy`):
+   ```
+   deploy ALL=(root) NOPASSWD: /bin/systemctl reload php8.2-fpm
+   ```
+   (Adjust the service name if your server runs a different PHP version.) If you don't want to give the deploy user any sudo rights, leave `DEPLOY_FPM_SERVICE` blank — the workflow will skip the reload step and the next request will still pick up the new code (opcache invalidation happens on file mtime change).
+
+4. **Server prerequisites** (one-time, before the first deploy):
+   - `.env` exists in the deploy path with the production values filled in (the workflow does **not** push `.env` — your server's secrets stay on the server)
+   - The deploy user owns the deploy path
+   - `storage/` and `bootstrap/cache/` are writable by both the deploy user and `www-data` (use `setfacl` or a shared group)
+   - The cron entry for `php artisan schedule:run` is installed (see step 7 above)
+   - Initial migration has been run manually (`php artisan migrate --force` as the deploy user) so the workflow's incremental migration runs cleanly
+
+### What every push does
+
+1. Checkout, install Composer (production) and npm dependencies (cached)
+2. Run `npm run build` to produce `public/build/`
+3. rsync the tree to the server, **excluding** `.env`, `.git`, runtime cache/sessions/logs, and tests
+4. SSH in and: `migrate --force` → `config:cache` → `route:cache` → `view:cache` → optional FPM reload → `php artisan up`
+
+The deploy is wrapped in `php artisan down` / `php artisan up` so requests get a 503 maintenance page during the swap (~5 seconds for migrations + caches on a typical server).
+
+### Manual deploy from the Actions tab
+
+The workflow has `workflow_dispatch:` so you can hit **Run workflow** from the Actions UI at any time without pushing a new commit — useful for rolling forward after a hotfix on the server, or after you've added/rotated secrets.
+
 ## Local development
 
 ```bash

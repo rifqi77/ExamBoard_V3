@@ -1,0 +1,169 @@
+name: Build & Deploy
+
+# =============================================================================
+# Auto-deploys on push to `main` (and on-demand via the Actions tab).
+#
+# Builds Composer + Vite assets inside the runner so the server doesn't need
+# PHP-CLI for composer install or Node for vite build. rsyncs the built
+# artefact to the friend's server, then SSHes in to run the migrate +
+# cache-rebuild + PHP-FPM reload.
+#
+# REQUIRED REPO SECRETS (Settings → Secrets and variables → Actions → New):
+#   DEPLOY_HOST       — your friend's server hostname or IP (e.g. exam.friend.dev)
+#   DEPLOY_USER       — SSH user (e.g. deploy)
+#   DEPLOY_PATH       — absolute path on the server (e.g. /var/www/exam-board)
+#   DEPLOY_SSH_KEY    — PRIVATE SSH key (paste the contents of an id_ed25519
+#                       generated specifically for this deploy. Add the matching
+#                       public key to the server's ~/.ssh/authorized_keys)
+#
+# OPTIONAL REPO SECRETS:
+#   DEPLOY_PORT       — SSH port (default 22)
+#   DEPLOY_FPM_SERVICE — name of the PHP-FPM systemd unit to reload after
+#                       deploy. Defaults to `php8.2-fpm`. If your friend uses
+#                       php-fpm via a different service name (e.g. `php-fpm`,
+#                       `php8.3-fpm`), set this. If they don't have sudo
+#                       NOPASSWD for systemctl, leave it blank to skip the
+#                       reload — opcache reset alone is usually enough since
+#                       Laravel's caches are cleared in the script anyway.
+# =============================================================================
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:  # allow manual deploy from the GitHub Actions UI
+
+# Prevent overlapping deploys (e.g. two pushes in quick succession). The newer
+# push wins; the older one is cancelled before it ships a half-written tree.
+concurrency:
+  group: deploy-main
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Build & deploy to server
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Set up PHP 8.2
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, openssl, pdo_mysql, tokenizer, xml, ctype, json, bcmath, fileinfo, zip, gd
+          coverage: none
+          tools: composer:v2
+
+      - name: Cache Composer dependencies
+        uses: actions/cache@v4
+        with:
+          path: vendor
+          key: composer-${{ runner.os }}-${{ hashFiles('composer.lock') }}
+          restore-keys: composer-${{ runner.os }}-
+
+      - name: Install Composer dependencies (production)
+        run: composer install --no-dev --prefer-dist --optimize-autoloader --no-interaction --no-progress
+
+      - name: Set up Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: Build front-end assets (vite)
+        run: npm run build
+
+      - name: Verify build artefacts exist
+        run: |
+          test -d public/build || (echo "::error::public/build was not produced" && exit 1)
+          test -d vendor       || (echo "::error::vendor was not installed"     && exit 1)
+
+      # ---- SSH key setup --------------------------------------------------
+      - name: Configure SSH agent (private key from repo secret)
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.DEPLOY_SSH_KEY }}
+
+      - name: Trust the deploy host's SSH key
+        env:
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+          DEPLOY_PORT: ${{ secrets.DEPLOY_PORT }}
+        run: |
+          mkdir -p ~/.ssh
+          PORT="${DEPLOY_PORT:-22}"
+          ssh-keyscan -p "$PORT" -H "$DEPLOY_HOST" >> ~/.ssh/known_hosts 2>/dev/null
+          chmod 600 ~/.ssh/known_hosts
+
+      # ---- rsync ----------------------------------------------------------
+      # `--delete-after` is intentionally chosen over `--delete` so a failed
+      # sync doesn't leave a half-deleted tree if the upload aborts midway.
+      # Excludes match `.gitignore` so the server's runtime data + secrets
+      # stay put across deploys.
+      - name: Rsync to server
+        env:
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+          DEPLOY_PORT: ${{ secrets.DEPLOY_PORT }}
+        run: |
+          set -euo pipefail
+          PORT="${DEPLOY_PORT:-22}"
+          rsync -avz --delete-after \
+            -e "ssh -p $PORT -o StrictHostKeyChecking=yes" \
+            --exclude='.git/' \
+            --exclude='.github/' \
+            --exclude='.env' \
+            --exclude='.env.*' \
+            --exclude='node_modules/' \
+            --exclude='tests/' \
+            --exclude='phpunit.xml' \
+            --exclude='loadtest/' \
+            --exclude='storage/logs/*.log' \
+            --exclude='storage/framework/cache/data/' \
+            --exclude='storage/framework/sessions/*' \
+            --exclude='storage/framework/views/*' \
+            --exclude='storage/framework/testing/*' \
+            --exclude='bootstrap/cache/*.php' \
+            --exclude='.editorconfig' \
+            --exclude='.gitattributes' \
+            --exclude='.gitignore' \
+            --exclude='README.md' \
+            ./ "${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH}/"
+
+      # ---- Post-deploy: run migrations + rebuild caches + reload FPM ------
+      # The .env on the server is preserved by the rsync exclude above.
+      # `migrate --force` is required because Laravel refuses to run
+      # destructive migrations in production without it.
+      - name: Run post-deploy commands on server
+        env:
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+          DEPLOY_PORT: ${{ secrets.DEPLOY_PORT }}
+          DEPLOY_FPM_SERVICE: ${{ secrets.DEPLOY_FPM_SERVICE }}
+        run: |
+          set -euo pipefail
+          PORT="${DEPLOY_PORT:-22}"
+          FPM="${DEPLOY_FPM_SERVICE:-php8.2-fpm}"
+          ssh -p "$PORT" -o StrictHostKeyChecking=yes "${DEPLOY_USER}@${DEPLOY_HOST}" \
+            "cd ${DEPLOY_PATH} && \
+             php artisan down --render='errors::503' --retry=15 || true; \
+             php artisan migrate --force --no-interaction; \
+             php artisan config:cache; \
+             php artisan route:cache; \
+             php artisan view:cache; \
+             php artisan event:cache 2>/dev/null || true; \
+             php artisan storage:link 2>/dev/null || true; \
+             ([ -n \"${FPM}\" ] && sudo -n systemctl reload \"${FPM}\" 2>/dev/null) || echo 'FPM reload skipped (no sudo or no service set)'; \
+             php artisan up; \
+             echo 'Deploy complete.'"
+
+      - name: Summary
+        if: success()
+        run: |
+          echo "::notice title=Deployed::Tag: ${{ github.sha }} → ${{ secrets.DEPLOY_HOST }}:${{ secrets.DEPLOY_PATH }}"
