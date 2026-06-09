@@ -1,0 +1,479 @@
+================================================================================
+EXAM DASHBOARD — THE ADMIN'S HANDS-ON GUIDE
+A plain-English walkthrough of the admin console, written from clicking
+through every screen as a first-time administrator.
+================================================================================
+
+Who this is for : The person who runs the school's exam system. No technical
+                  or coding knowledge needed. If you can use a website with
+                  buttons and forms, you can run this.
+How it was made : Every screen and button described below was actually opened
+                  and clicked in the live system, and the result written down.
+What you'll learn: How to log in, set up teachers and students, build exams,
+                  run an exam day, and read the results — start to finish.
+
+--------------------------------------------------------------------------------
+THE 30-SECOND SUMMARY
+--------------------------------------------------------------------------------
+You (the admin) sit above everything. You create TEACHER accounts and decide
+what each teacher is allowed to do (their "capabilities"). Teachers build
+exams; you can see and do everything they can, for every teacher, plus a few
+admin-only powers. STUDENTS log in, type a code to open an exam, answer, and
+submit. The system grades everything automatically except essays, which a
+teacher (or you) marks by hand. Then you read reports and analytics.
+
+The golden path is:
+   Create teachers → give them permissions → (teachers or you) build exams →
+   hand out access codes to students → watch the exam live → grade essays →
+   export reports.
+
+
+================================================================================
+1. GETTING IN
+================================================================================
+1. Open the website address your server gives you (during testing it was
+   http://127.0.0.1:8090).
+2. You'll see a simple "Exam Dashboard — Sign in" box with Username and
+   Password.
+3. Type your admin username and password, click "Sign in".
+4. You land on the admin home, called "Overview".
+
+Note on safety: if you ever click "Sign out" (top-left, under your name), or an
+account is disabled, that person is logged out everywhere immediately. Your
+login lasts about 5 days before it asks you to sign in again.
+
+
+================================================================================
+2. THE LAYOUT — READING THE SCREEN
+================================================================================
+Every admin screen has the same shape:
+
+  LEFT SIDEBAR (your menu)            MAIN AREA (the current screen)
+  ---------------------------         --------------------------------
+  Exam Dashboard / "Super admin"      The page you picked from the menu.
+  WORKSPACE
+    • Overview                        Your name, username, and the word
+  PEOPLE                              "ADMIN" sit at the bottom-left, with
+    • Teachers                        a "Sign out" button.
+    • Students
+  CONTENT
+    • Curriculum
+    • AI Generation
+    • Question Bank
+    • Exams
+  RESULTS
+    • All Exams
+    • Auto Score
+    • Pending Score
+    • Scores
+    • Reports
+    • Analyze
+  SYSTEM
+    • AI settings
+
+That's the whole console. The sections group naturally: PEOPLE (accounts),
+CONTENT (the raw material of exams), RESULTS (everything after students
+submit), SYSTEM (the AI configuration).
+
+
+================================================================================
+3. OVERVIEW (the home screen)
+================================================================================
+This is your dashboard. It shows totals for the WHOLE school:
+
+  PEOPLE   : Teachers, Active teachers, Students
+  CONTENT  : Exams, Submissions, Bank questions
+
+Below that are three "latest activity" panels:
+  • Recent submissions  — the last 10 completed exam attempts, any teacher.
+  • Recent access tokens — the last 10 exam codes handed out, with how many
+    times each has been used and whether it's still active.
+  • Recent classes      — the last 10 class lists created.
+
+If the school is brand new, these show zeros and "No submissions yet" — that's
+normal. As soon as teachers build exams and students sit them, the numbers and
+panels fill in.
+
+
+================================================================================
+4. SETTING UP PEOPLE
+================================================================================
+
+4.1  CREATING A TEACHER
+--------------------------------------------------------------------------------
+Menu: PEOPLE → Teachers.
+
+You see a table of all teachers, sorted alphabetically (disabled ones sink to
+the bottom). Each row shows the teacher's name, subject, a small activity
+summary (how many exams, students, bank questions and submissions they have),
+and their status (Active / Disabled).
+
+To add one:
+  1. Click "Add teacher" (top-right).
+  2. A small form appears:
+       • Full name        (e.g. SARI WIJAYA)
+       • Username         (e.g. TEACHER3 — what they type to log in)
+       • Subject          (optional — pick from a dropdown like
+                           PHYSICS / FISIKA, CHEMISTRY / KIMIA, etc.)
+       • Starting password (6–64 characters)
+  3. Click "Create teacher".
+  4. A green message confirms: Teacher "..." created. The new teacher appears
+     in the table.
+
+Tip: a brand-new teacher can do ALMOST NOTHING until you give them
+permissions (next section). That's by design — it's safe-by-default.
+
+Other buttons on each teacher row (small icons):
+  • View as this teacher — "become" that teacher temporarily, to see their
+    screen and help them or build content for them. A way back to your admin
+    account is always offered.
+  • Reset password       — give them a fresh password; the new password is
+    shown to you once, on screen, so you can pass it on.
+  • Edit capabilities    — open the permissions editor (section 4.2).
+  • Disable / Enable     — block or restore sign-in WITHOUT deleting anything.
+  • Delete teacher       — remove the account. Their exams, students and
+    questions stay behind (they become "unowned"); only delete when you're
+    sure the account is unused.
+
+Filters at the top: jump to a starting letter (A–Z) or filter by subject.
+
+4.2  GIVING A TEACHER PERMISSIONS ("Capabilities") — THE KEY ADMIN JOB
+--------------------------------------------------------------------------------
+Click "Edit capabilities" on a teacher. A panel opens titled
+"Capabilities — <TEACHER NAME>" with a set of on/off switches (39 of them),
+neatly grouped. Each switch has a plain-English label and a one-line
+explanation. The groups are:
+
+  AI FEATURES (2 switches)
+    • Generate exams with AI — lets them use the AI question generator.
+    • Curriculum (LO catalog) — lets them upload and manage learning
+      objectives.
+
+  AI GENERATION PARAMETERS (16 switches) — what they may adjust when using AI:
+    • Scope: Language, Subject
+    • Difficulty (the 7 thinking levels): Remember, Understand, Apply,
+      Analyze, Evaluate, Create, Olympiad
+    • Question type: Single choice, Multi select, Short text, Numeric, Essay
+    • Media: Images, Tables
+
+  EXAM CONFIGURATION (7 switches) — which exam settings they may change:
+    • Duration, Passing grade, Exam mode, Shuffle questions, Shuffle options,
+      Language, Require Safe Exam Browser
+
+  EXAM PARAMETERS (14 switches) — which building blocks they may use when
+  composing an exam by hand: the same 5 question types, 7 difficulty levels,
+  and 2 media options.
+
+How to use it:
+  • Flip individual switches on/off, OR use "Enable all" / "Disable all" at the
+    top of each group to do a whole group at once.
+  • A small counter on each group shows progress (e.g. "Difficulty 3/7").
+  • There's a "Show technical IDs" switch at the very top — leave it off; it
+    just reveals the internal code names and isn't a permission.
+  • IMPORTANT: click "Save capabilities" when you're done — changes are NOT
+    saved until you do. Then "Close".
+
+What this means in practice: a teacher only sees the buttons and options you
+switched on. Turn off "Generate exams with AI" and the AI page simply won't
+open for them. Turn off "Require Safe Exam Browser" and they can't force that
+on students. You can give every teacher a different set.
+
+(Hands-on note: I created a test teacher, switched ON "Generate exams with AI",
+clicked Save, and confirmed the teacher then had exactly that one power — then
+deleted the test teacher. Everything behaved as described.)
+
+4.3  MANAGING STUDENTS
+--------------------------------------------------------------------------------
+Menu: PEOPLE → Students.
+
+Students are shown GROUPED BY CLASS. Students not yet assigned to a class sit
+in a "No class" group. Click "Expand all" (or a single group's "Expand") to see
+the people inside.
+
+Each student row shows: their name, username, their current password (shown in
+plain text so you can read it out), and how many exams they've submitted. Two
+small buttons per student:
+  • Reset password — issue a new one (shown on screen).
+  • Disable        — block their sign-in.
+
+Doing several at once (bulk): tick the checkboxes next to students (or "Select
+all" in a group). A toolbar appears with:
+  • Reset passwords — new passwords for everyone selected.
+  • Deactivate / Reactivate — block or restore sign-in in bulk.
+  • Delete — remove the selected accounts (this also removes their past
+    submissions, so be careful).
+  • Clear selection.
+
+After a bulk password reset you're offered the new credentials to download as a
+spreadsheet (CSV), so you can print and hand them out.
+
+(Where do students come from? Usually teachers import a class list from an
+Excel file on their own side; those students then appear here for you to see
+school-wide.)
+
+
+================================================================================
+5. BUILDING THE RAW MATERIAL (CONTENT)
+================================================================================
+
+5.1  CURRICULUM (Learning Objectives)
+--------------------------------------------------------------------------------
+Menu: CONTENT → Curriculum.
+
+This is where the syllabus lives. There are four framework tabs:
+  • Kurikulum Merdeka
+  • AS / A Level (Cambridge)
+  • International Baccalaureate (IB)
+  • Olympiad
+Each tab keeps its own list and its own count.
+
+Two ways to add objectives:
+  • "Upload Excel → <framework>" — bulk-import a spreadsheet of objectives.
+  • "Add LO" — add one by hand. The little form asks for Topic (e.g.
+    Mechanics), Subtopic (e.g. Kinematics), and the objective text ("Describe
+    what the student should be able to do…").
+
+Why it matters: these objectives become a checklist the AI generator can be
+told to cover, so AI-made exams line up with your real syllabus.
+
+5.2  QUESTION BANK
+--------------------------------------------------------------------------------
+Menu: CONTENT → Question Bank.
+
+A shared library of reusable questions contributed by every teacher. At the top
+are SIX filters — Language, Subject, Topic, Subtopic, Difficulty, Type — plus a
+search box, so you can narrow a big bank quickly. Questions display as a
+collapsible tree (Subject → Topic → Subtopic → Difficulty → Media).
+
+Two buttons:
+  • "New question" — add one by hand. You pick the Type (Single choice, Multi
+    select, Short text, Numeric, or Structured / Essay) and fill in the Prompt,
+    the correct answer/options, an Explanation, Points, Topic, Subtopic,
+    Difficulty, Language and Subject.
+  • "Upload questions" — bulk-import many at once from a file (a .zip, .xlsx, or
+    .json), optionally with images.
+
+Important to know: when a question is added to an exam, the exam keeps its OWN
+COPY. So editing or deleting a bank question later does NOT change exams that
+were already built from it. Bank = the source library; each exam = a snapshot.
+
+5.3  AI GENERATION
+--------------------------------------------------------------------------------
+Menu: CONTENT → AI Generation.
+
+A helper that writes draft questions for you. It works in two phases and the
+screen explains them:
+  Phase 1 — fill in what you want and click "Download question prompt (JSON)".
+            You take that file to ChatGPT / Claude / Gemini and get back a
+            "questions.json".
+  Phase 2 — bring that file back to generate images (if any) and load the
+            questions in.
+
+What you can specify:
+  • Curriculum (or just free-type a Topic), Language, Subject, Grade/level,
+    Topic, Subtopic.
+  • Total questions — and a DIFFICULTY MIX across the seven thinking levels.
+    As you set the mix the screen shows a live estimate per level, e.g.
+    "Remember ≈ 2 q, Understand ≈ 3 q, Apply ≈ 2 q …".
+  • Which question types to include (Single choice, Multi select, Short text,
+    Numeric, Essay) and how much media (Images, Tables).
+  • Optional source URLs for the AI to study first.
+
+(If your server has AI keys configured under SYSTEM → AI settings, there can
+also be a one-click "generate for me" path. Without keys, the download-and-run
+method above always works.)
+
+
+================================================================================
+6. EXAMS
+================================================================================
+Menu: CONTENT → Exams (to build/manage) and RESULTS → All Exams (to launch into
+monitoring). Both lead to the same exams.
+
+6.1  THE EXAMS LIST
+--------------------------------------------------------------------------------
+A table of EVERY exam in the school. Each row shows: exam name, the owning
+teacher, the exam code, its access token (with how many times it's been used,
+e.g. "0 / 1000"), duration, passing grade, number of submissions, average
+score, and number passed. Per-row actions:
+  • Live   — open the real-time monitor.
+  • Audit  — open the answer-integrity check.
+  • Manage — open the full exam editor.
+  • Delete — remove the exam (and everything under it).
+Plus, at the top: "Create exam" and "Import package" (load an exam from a file).
+You can also Regenerate or Delete an exam's access token right from this list.
+
+6.2  MANAGING ONE EXAM ("Manage")
+--------------------------------------------------------------------------------
+The exam editor is organised into clear sections:
+
+  EXAM DETAILS         — name, code, and the core settings.
+  COMPOSITION TARGETS  — your goal mix of question types and difficulties
+                         (click "Show composition targets" to see/set them).
+  QUESTIONS            — the actual questions, grouped by topic (e.g.
+                         "Arithmetic · 2, Geography · 1, Numbers · 1,
+                         Physics · 1"). Here you can:
+                           • "Add question" — write one inline.
+                           • "Pick from bank" — choose existing bank questions.
+                           • "Auto-fill from bank" — let the system top the exam
+                             up automatically to hit your composition targets.
+  TOKENS FOR THIS EXAM — the access codes students use (section 6.3).
+  SUBMISSIONS & GRADING— attempts students have made, with a way into grading.
+
+Two links at the top of the editor: "Edit settings" (full settings form) and
+"Live monitor".
+
+6.3  ACCESS TOKENS — HOW STUDENTS GET IN
+--------------------------------------------------------------------------------
+A token is the code a student types to open an exam. In the Tokens section:
+  • "Generate token" — create a new code. You set:
+       - Max uses (how many students may use it, e.g. 1000)
+       - Expires in days (0 = never)
+  • "Regenerate" — replace the code (the old one stops working).
+  • "Delete"     — remove the code.
+The full code is shown once when created. After that the list shows a safe
+preview and the usage count (e.g. "DEMO-2026 … 0 / 1000 … Active").
+
+6.4  SECURITY (Safe Exam Browser) AND OTHER SETTINGS
+--------------------------------------------------------------------------------
+Click "Edit settings" on an exam. The settings form includes:
+  • Subject, Duration (minutes), Passing grade (%), Language.
+  • Opens at / Closes at — schedule a window when the exam is available.
+  • Exam mode — Strict (one attempt, no answer review afterwards) or Try-out
+    (multiple attempts, full review).
+  • Shuffle questions / Shuffle options — randomise order per student.
+  • SECURITY → "Require Safe Exam Browser" — force students to take the exam
+    inside the locked-down SEB app. (The matching SEB key is configured on the
+    exam detail page.)
+  • The composition controls (question types, the seven difficulty levels,
+    images/tables).
+
+(Hands-on note: the settings form's "Security" panel sits where an old "General
+instructions" box used to be — that box has been removed and replaced by
+Security, confirmed on screen.)
+
+
+================================================================================
+7. RUNNING AN EXAM DAY
+================================================================================
+
+7.1  LIVE MONITOR
+--------------------------------------------------------------------------------
+From an exam, click "Live" (or "Live monitor"). The screen is titled
+"Live monitor: <CODE> — <Exam name>" and refreshes itself every few seconds
+("updated 0s ago"). It shows each student's progress AS IT HAPPENS:
+who's in progress vs submitted, how many questions they've answered, their
+live auto-score, pending essay points, time remaining, and any flagged
+behaviour. Nothing here is shown to the students and nothing is saved — it's
+purely your window into the room.
+
+7.2  ANSWER AUDIT
+--------------------------------------------------------------------------------
+From an exam, click "Audit". This is a safety/integrity tool. For each student
+it lines up the answers the system saved as they worked against the answers
+used for grading, and flags any mismatch in red. In normal use everything
+matches — this is your proof that no answer was lost.
+
+
+================================================================================
+8. AFTER THE EXAM — RESULTS
+================================================================================
+
+8.1  SCORES & GRADING
+--------------------------------------------------------------------------------
+Menu: RESULTS → Scores. Submissions are shown as a tree:
+Teacher → Exam → Class → Student, with totals at each level. A "teacher picker"
+at the top lets you focus on one teacher or see everyone.
+
+Open a student's submission to see a question-by-question breakdown. Everything
+except essays is already graded automatically. For each ESSAY you enter a mark
+(0 up to the question's points) and optional feedback, and the student's total
+and pass/fail update straight away.
+
+Two focused shortcuts in the menu:
+  • Auto Score    — shows only the automatically graded part.
+  • Pending Score — shows only submissions that still have essays waiting to be
+    marked, so you can see the grading backlog (and which teacher owns it).
+
+8.2  REPORTS (Excel export)
+--------------------------------------------------------------------------------
+Menu: RESULTS → Reports. A class-by-class achievement table (students down the
+side, their results across). Tick the columns you want (per-exam scores,
+average, passed/taken, pending, strongest/weakest topic), then click
+"Export this class" or "Export all classes" to download a tidy Excel workbook —
+ideal for end-of-term reporting.
+
+8.3  ANALYZE (the big picture)
+--------------------------------------------------------------------------------
+Menu: RESULTS → Analyze. Two tabs:
+  • Dashboard — school-wide insight: system activity, performance, pass rate
+    per exam, topic insights across teachers, question-bank insights, and the
+    grading workload (pending essays per teacher, oldest pending submissions).
+  • Item analysis — per-question statistics for an exam (how many got each
+    question right, how hard it really was, and the spread of chosen options).
+A teacher picker lets you narrow any of it to one teacher.
+
+
+================================================================================
+9. SYSTEM — AI SETTINGS
+================================================================================
+Menu: SYSTEM → AI settings. Three parts:
+  • API keys — paste keys for Gemini, Claude, or OpenAI if you have them
+    (stored securely; leave blank to use the free, keyless default).
+  • Text generation — pick the provider (Pollinations free / Gemini / Claude /
+    OpenAI), the model, and a "temperature" slider (0 = predictable, higher =
+    more creative).
+  • Image generation — pick an image provider, or "Off".
+Click the matching Save button. These settings power the AI Generation page for
+you and your teachers.
+
+
+================================================================================
+10. A TYPICAL FIRST WEEK AS ADMIN (putting it together)
+================================================================================
+1.  Sign in. Glance at Overview to confirm you're set up.
+2.  PEOPLE → Teachers → Add teacher for each member of staff. Give each a
+    starting password to pass on.
+3.  For each teacher, Edit capabilities and switch on what they're allowed to
+    do (start small — e.g. just the exam-building basics — and add AI or
+    curriculum powers later). SAVE.
+4.  (Optional) SYSTEM → AI settings: choose an AI provider if you'll use AI
+    generation; otherwise the free default is fine.
+5.  Teachers (or you, via "View as this teacher") import their class lists and
+    build their question banks and exams. You can watch it all under CONTENT
+    and PEOPLE → Students.
+6.  For each exam, make sure it has an access token (Manage → Tokens →
+    Generate token) and the right settings (duration, passing grade, exam mode,
+    and Security/SEB if required).
+7.  Hand the access code + each student's username/password to the class.
+8.  On exam day, open RESULTS → All Exams → Live for that exam and watch
+    progress. Use Audit afterwards if you ever need to double-check integrity.
+9.  When students finish, go to RESULTS → Scores (or Pending Score) and grade
+    any essays. Auto-graded questions are already done.
+10. Pull RESULTS → Reports to export results to Excel, and RESULTS → Analyze to
+    review how the cohort and the questions performed.
+
+
+================================================================================
+11. THINGS WORTH REMEMBERING
+================================================================================
+• Teachers start with NO powers. Nothing they can do is an accident — you
+  granted it. Review capabilities if a teacher says "I can't find X".
+• "Disable" is your friend — it blocks access without destroying data. Prefer
+  it over "Delete" unless you're certain.
+• Passwords are visible to you (admin) and the owning teacher so you can re-issue
+  them; treat the credential CSV exports as sensitive.
+• Strict exams = one attempt, no review. Try-out exams = multiple attempts with
+  full review. Choose deliberately per exam.
+• A token is the door to an exam. No valid token (or an expired/used-up one) =
+  students can't get in. Check the token's "uses" and "Active" status if a class
+  is locked out.
+• Nothing students do is lost: the system saves their answers continuously, and
+  even auto-submits for anyone whose time runs out. The Audit screen is your
+  proof.
+• You can always "View as this teacher" to troubleshoot from their point of
+  view, then step back to admin.
+
+================================================================================
+END OF GUIDE
+================================================================================
